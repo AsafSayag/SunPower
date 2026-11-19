@@ -1,0 +1,495 @@
+[
+ {
+  "page": "",
+  "region": "wp-page",
+  "name": "טופס חדש",
+  "fields": [
+   {
+    "text": "שם מלא"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[name]",
+    "placeholder": "שם מלא",
+    "required": "required"
+   },
+   {
+    "text": "טלפון"
+   },
+   {
+    "type": "tel",
+    "name": "form_fields[field_82e59c6]",
+    "placeholder": "טלפון",
+    "required": "required"
+   },
+   {
+    "text": "אימייל"
+   },
+   {
+    "type": "email",
+    "name": "form_fields[email]",
+    "placeholder": "אימייל",
+    "required": "required"
+   },
+   {
+    "type": "checkbox",
+    "name": "form_fields[field_8da8db6]",
+    "required": "required"
+   },
+   {
+    "text": "אני מאשר/ת שקראתי את"
+   },
+   {
+    "text": "מדיניות הפרטיות"
+   },
+   {
+    "text": "של האתר"
+   }
+  ]
+ },
+ {
+  "page": "שטיפת-מערכות-סולאריות",
+  "region": "wp-page",
+  "name": "טופס חדש",
+  "fields": [
+   {
+    "text": "שם מלא"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[name]",
+    "placeholder": "שם מלא",
+    "required": "required"
+   },
+   {
+    "text": "טלפון"
+   },
+   {
+    "type": "tel",
+    "name": "form_fields[field_82e59c6]",
+    "placeholder": "טלפון"
+   },
+   {
+    "text": "אימייל"
+   },
+   {
+    "type": "email",
+    "name": "form_fields[email]",
+    "placeholder": "אימייל",
+    "required": "required"
+   },
+   {
+    "type": "checkbox",
+    "name": "form_fields[field_5c37efd]",
+    "required": "required"
+   },
+   {
+    "text": "אני מאשר/ת שקראתי את"
+   },
+   {
+    "text": "מדיניות הפרטיות"
+   },
+   {
+    "text": "של האתר"
+   }
+  ]
+ },
+ {
+  "page": "אודות-החברה-1",
+  "region": "wp-page",
+  "name": "טופס חדש",
+  "fields": [
+   {
+    "text": "שם פרטי"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[name]",
+    "placeholder": "שם פרטי"
+   },
+   {
+    "text": "שם משפחה"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[field_3846148]",
+    "placeholder": "שם משפחה"
+   },
+   {
+    "text": "טלפון"
+   },
+   {
+    "type": "tel",
+    "name": "form_fields[field_82e59c6]",
+    "placeholder": "טלפון"
+   },
+   {
+    "text": "אימייל"
+   },
+   {
+    "type": "email",
+    "name": "form_fields[email]",
+    "placeholder": "אימייל",
+    "required": "required"
+   },
+   {
+    "type": "checkbox",
+    "name": "form_fields[field_8da8db6]",
+    "required": "required"
+   },
+   {
+    "text": "אני מאשר/ת שקראתי את"
+   },
+   {
+    "text": "מדיניות הפרטיות"
+   },
+   {
+    "text": "של האתר"
+   }
+  ]
+ },
+ {
+  "page": "צרו-קשר-1",
+  "region": "wp-page",
+  "name": "טופס חדש",
+  "fields": [
+   {
+    "text": "שם פרטי"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[name]",
+    "placeholder": "שם פרטי"
+   },
+   {
+    "text": "שם משפחה"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[field_3846148]",
+    "placeholder": "שם משפחה"
+   },
+   {
+    "text": "טלפון"
+   },
+   {
+    "type": "tel",
+    "name": "form_fields[field_82e59c6]",
+    "placeholder": "טלפון"
+   },
+   {
+    "text": "אימייל"
+   },
+   {
+    "type": "email",
+    "name": "form_fields[email]",
+    "placeholder": "אימייל",
+    "required": "required"
+   },
+   {
+    "type": "checkbox",
+    "name": "form_fields[field_bcb7b09]",
+    "required": "required"
+   },
+   {
+    "text": "אני מאשר/ת שקראתי את"
+   },
+   {
+    "text": "מדיניות הפרטיות"
+   },
+   {
+    "text": "של האתר"
+   }
+  ]
+ },
+ {
+  "page": "תחזוקה-כוללת1",
+  "region": "wp-page",
+  "name": "טופס חדש",
+  "fields": [
+   {
+    "text": "שם מלא"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[name]",
+    "placeholder": "שם מלא"
+   },
+   {
+    "text": "טלפון"
+   },
+   {
+    "type": "tel",
+    "name": "form_fields[field_82e59c6]",
+    "placeholder": "טלפון"
+   },
+   {
+    "text": "אימייל"
+   },
+   {
+    "type": "email",
+    "name": "form_fields[email]",
+    "placeholder": "אימייל",
+    "required": "required"
+   },
+   {
+    "type": "checkbox",
+    "name": "form_fields[field_5c37efd]",
+    "required": "required"
+   },
+   {
+    "text": "אני מאשר/ת שקראתי את"
+   },
+   {
+    "text": "מדיניות הפרטיות"
+   },
+   {
+    "text": "של האתר"
+   }
+  ]
+ },
+ {
+  "page": "מנהלת-משרד1",
+  "region": "wp-page",
+  "name": "דרושה מנהלת משרד",
+  "fields": [
+   {
+    "text": "שם מלא *"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[name]",
+    "placeholder": "שם מלא *",
+    "required": "required"
+   },
+   {
+    "text": "טלפון *"
+   },
+   {
+    "type": "tel",
+    "name": "form_fields[field_3846148]",
+    "placeholder": "טלפון *",
+    "required": "required"
+   },
+   {
+    "text": "אזור מגורים *"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[field_82e59c6]",
+    "placeholder": "אזור מגורים *",
+    "required": "required"
+   },
+   {
+    "text": "נשמח אם תרשמי כמה מילים על עצמך (יש ניסיון קודם?)"
+   },
+   {
+    "text": "העלאת קו\"ח"
+   },
+   {
+    "type": "file",
+    "name": "form_fields[field_a98ab95]"
+   },
+   {
+    "type": "checkbox",
+    "name": "form_fields[field_9877436]",
+    "required": "required"
+   },
+   {
+    "text": "אני מאשר/ת שקראתי את"
+   },
+   {
+    "text": "מדיניות הפרטיות"
+   },
+   {
+    "text": "של האתר"
+   }
+  ]
+ },
+ {
+  "page": "יזמות-משותפת1",
+  "region": "wp-page",
+  "name": "טופס חדש",
+  "fields": [
+   {
+    "text": "שם מלא"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[name]",
+    "placeholder": "שם מלא"
+   },
+   {
+    "text": "טלפון"
+   },
+   {
+    "type": "tel",
+    "name": "form_fields[field_82e59c6]",
+    "placeholder": "טלפון"
+   },
+   {
+    "text": "אימייל"
+   },
+   {
+    "type": "email",
+    "name": "form_fields[email]",
+    "placeholder": "אימייל",
+    "required": "required"
+   },
+   {
+    "type": "checkbox",
+    "name": "form_fields[field_5c37efd]",
+    "required": "required"
+   },
+   {
+    "text": "אני מאשר/ת שקראתי את"
+   },
+   {
+    "text": "מדיניות הפרטיות"
+   },
+   {
+    "text": "של האתר"
+   }
+  ]
+ },
+ {
+  "page": "צוות-שטיפת-מערכות-סולאריות1",
+  "region": "wp-page",
+  "name": "דרוש איש צוות ",
+  "fields": [
+   {
+    "text": "שם מלא *"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[name]",
+    "placeholder": "שם מלא *",
+    "required": "required"
+   },
+   {
+    "text": "טלפון *"
+   },
+   {
+    "type": "tel",
+    "name": "form_fields[field_3846148]",
+    "placeholder": "טלפון *",
+    "required": "required"
+   },
+   {
+    "text": "גיל *"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[field_11e1807]",
+    "placeholder": "גיל *",
+    "required": "required"
+   },
+   {
+    "text": "אזור מגורים *"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[field_82e59c6]",
+    "placeholder": "אזור מגורים *",
+    "required": "required"
+   },
+   {
+    "text": "העבודה מתבצעת בזוגות, האם יש לך חבר נוסף?"
+   },
+   {
+    "text": "הערות/התייחסות"
+   },
+   {
+    "text": "העלאת קו\"ח"
+   },
+   {
+    "type": "file",
+    "name": "form_fields[field_a98ab95]"
+   },
+   {
+    "type": "checkbox",
+    "name": "form_fields[field_1ef2d2f]",
+    "required": "required"
+   },
+   {
+    "text": "אני מאשר/ת שקראתי את"
+   },
+   {
+    "text": "מדיניות הפרטיות"
+   },
+   {
+    "text": "של האתר"
+   }
+  ]
+ },
+ {
+  "page": "מנטר-מערכות-סולאריות",
+  "region": "wp-page",
+  "name": "דרוש איש צוות ",
+  "fields": [
+   {
+    "text": "שם מלא *"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[name]",
+    "placeholder": "שם מלא *",
+    "required": "required"
+   },
+   {
+    "text": "טלפון *"
+   },
+   {
+    "type": "tel",
+    "name": "form_fields[field_3846148]",
+    "placeholder": "טלפון *",
+    "required": "required"
+   },
+   {
+    "text": "גיל *"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[field_11e1807]",
+    "placeholder": "גיל *",
+    "required": "required"
+   },
+   {
+    "text": "אזור מגורים *"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[field_82e59c6]",
+    "placeholder": "אזור מגורים *",
+    "required": "required"
+   },
+   {
+    "text": "העבודה מתבצעת בזוגות, האם יש לך חבר נוסף?"
+   },
+   {
+    "text": "הערות/התייחסות"
+   },
+   {
+    "text": "העלאת קו\"ח"
+   },
+   {
+    "type": "file",
+    "name": "form_fields[field_a98ab95]"
+   },
+   {
+    "type": "checkbox",
+    "name": "form_fields[field_1ef2d2f]",
+    "required": "required"
+   },
+   {
+    "text": "אני מאשר/ת שקראתי את"
+   },
+   {
+    "text": "מדיניות הפרטיות"
+   },
+   {
+    "text": "של האתר"
+   }
+  ]
+ }
+]

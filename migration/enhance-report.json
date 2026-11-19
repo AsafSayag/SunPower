@@ -1,0 +1,118 @@
+{
+ "h1": [
+  {
+   "page": "",
+   "change": "extra h1 -> h2",
+   "text": "המערכת שלכם בידיים בטוחות"
+  },
+  {
+   "page": "שטיפת-מערכות-סולאריות",
+   "change": "h2 -> h1",
+   "text": "שטיפת מערכות סולאריות"
+  },
+  {
+   "page": "אודות-החברה-1",
+   "change": "h2 -> h1",
+   "text": "אודות החברה"
+  },
+  {
+   "page": "צרו-קשר-1",
+   "change": "h2 -> h1",
+   "text": "צרו קשר"
+  },
+  {
+   "page": "תחזוקה-כוללת1",
+   "change": "h2 -> h1",
+   "text": "תחזוקה כוללת"
+  },
+  {
+   "page": "פרויקטים-נבחרים1",
+   "change": "h2 -> h1",
+   "text": "פרויקטים נבחרים"
+  },
+  {
+   "page": "מנהלת-משרד1",
+   "change": "h2 -> h1",
+   "text": "דרושה מנהלת משרד"
+  },
+  {
+   "page": "יזמות-משותפת1",
+   "change": "h2 -> h1",
+   "text": "המחלקה היזמית של SunPower"
+  },
+  {
+   "page": "צוות-שטיפת-מערכות-סולאריות1",
+   "change": "h2 -> h1",
+   "text": "דרוש איש צוות שטיפת מערכות סולאריות"
+  },
+  {
+   "page": "מנטר-מערכות-סולאריות",
+   "change": "h2 -> h1",
+   "text": "דרוש מנטר מערכות סולאריות"
+  }
+ ],
+ "dropped_images": [
+  {
+   "page": "",
+   "src": "/wp-content/uploads/2025/03/NEXTCOM.png"
+  },
+  {
+   "page": "",
+   "src": "/wp-content/uploads/2025/03/TRIPLE-S.png"
+  },
+  {
+   "page": "",
+   "src": "/wp-content/uploads/2025/03/SHINY.png"
+  },
+  {
+   "page": "",
+   "src": "/wp-content/uploads/2025/03/AMAREL.png"
+  },
+  {
+   "page": "",
+   "src": "/wp-content/uploads/2025/03/אלקטרה.png"
+  },
+  {
+   "page": "",
+   "src": "/wp-content/uploads/2025/03/DORAL.png"
+  },
+  {
+   "page": "",
+   "src": "/wp-content/uploads/2025/03/RST.png"
+  },
+  {
+   "page": "",
+   "src": "/wp-content/uploads/2025/03/EL-MOR.png"
+  },
+  {
+   "page": "פרויקטים-נבחרים1",
+   "src": "/wp-content/uploads/2026/03/ChatGPT-Image-Mar-18-2026-06_16_04-PM.png"
+  },
+  {
+   "page": "פרויקטים-נבחרים1",
+   "src": "/wp-content/uploads/2026/03/ChatGPT-Image-Mar-18-2026-06_15_21-PM.png"
+  },
+  {
+   "page": "פרויקטים-נבחרים1",
+   "src": "/wp-content/uploads/2022/03/2.png"
+  },
+  {
+   "page": "פרויקטים-נבחרים1",
+   "src": "/wp-content/uploads/2022/03/5.png"
+  },
+  {
+   "page": "פרויקטים-נבחרים1",
+   "src": "/wp-content/uploads/2026/03/ChatGPT-Image-Mar-18-2026-06_22_07-PM.png"
+  }
+ ],
+ "images": 46,
+ "alts_set": 9,
+ "descriptions_set": [
+  "צרו-קשר-1",
+  "תחזוקה-כוללת1",
+  "מנהלת-משרד1",
+  "יזמות-משותפת1",
+  "צוות-שטיפת-מערכות-סולאריות1",
+  "מנטר-מערכות-סולאריות"
+ ]
+}
