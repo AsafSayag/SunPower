@@ -8,6 +8,9 @@ import RoofCalculator from "@/components/RoofCalculator";
 import WashCalculator from "@/components/WashCalculator";
 import LeadForm from "@/components/LeadForm";
 import type { FormField } from "@/lib/forms";
+import CoverageMap from "@/components/CoverageMap";
+import { articles } from "@/content/knowledge";
+import { articlePath, KNOWLEDGE } from "@/lib/knowledge";
 
 type Props = { params: Promise<{ slug?: string[] }> };
 
@@ -53,6 +56,8 @@ export default async function Page({ params }: Props) {
   if (!page) notFound();
 
   const parts = page.html.split(MARKER);
+  // Articles that name this page as a related service.
+  const relatedArticles = articles.filter((a) => a.relatedPages.includes(page.slug));
 
   return (
     <>
@@ -89,6 +94,22 @@ export default async function Page({ params }: Props) {
           }
           return <Fragment key={i}><div dangerouslySetInnerHTML={{ __html: part }} /></Fragment>;
         })}
+        {relatedArticles.length > 0 && (
+          <aside aria-labelledby="related-articles" className="related">
+            <h2 id="related-articles">עוד בנושא במרכז הידע</h2>
+            <ul>
+              {relatedArticles.map((a) => (
+                <li key={a.slug}>
+                  <Link href={articlePath(a.slug)}>{a.title}</Link>
+                </li>
+              ))}
+              <li>
+                <Link href={KNOWLEDGE}>לכל המאמרים, השאלות והמונחים</Link>
+              </li>
+            </ul>
+          </aside>
+        )}
+        {!page.slug && <CoverageMap />}
       </main>
     </>
   );
