@@ -159,6 +159,19 @@ for m in re.finditer(r"</?ul>", hd):
     depth += 1 if m.group(0) == "<ul>" else -1
     if depth == 0: j = m.end(); break
 d["header"] = fix_images(hd[:j], "(header)", True)
+# The old header also had WhatsApp and phone links that were icons with no text, so the text
+# conversion dropped them. Bring them back from the saved home page, with readable labels.
+home_src = open(glob.glob(f"{raw}/html/1950_*.html")[0], encoding="utf-8").read()
+hdr_src = home_src[home_src.find('data-elementor-type="header"'):home_src.find('data-elementor-type="wp-page"')]
+contact = []
+for href in dict.fromkeys(re.findall(r'<a[^>]*href="((?:tel:|https://wa\.me/)[^"]*)"', hdr_src)):
+    if href.startswith("tel:"):
+        n = href[4:].replace("+972", "0"); label = f"{n[:3]}-{n[3:]}"
+        contact.append(f'<li><a href="{href}" aria-label="טלפון {label}">{label}</a></li>')
+    else:
+        contact.append(f'<li><a href="{href}" target="_blank" rel="noopener" aria-label="וואטסאפ">וואטסאפ</a></li>')
+if contact: d["header"] += ' <ul class="header-contact">' + "".join(contact) + "</ul>"
+report["header_contact"] = len(contact)
 d["footer"] = fix_images(d["footer"], "(footer)", False)
 
 # Pages recovered from the archive are linked from nowhere. Add each one to the services lists
