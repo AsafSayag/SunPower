@@ -22,6 +22,10 @@ def fix_images(h, slug, first_eager):
         tag = m.group(0); src = html.unescape(re.search(r'src="([^"]*)"', tag).group(1))
         if not src.startswith("/wp-content/"): return tag
         f = pub + urllib.parse.unquote(src)
+        if not os.path.isfile(f) and os.path.isfile(os.path.splitext(f)[0] + ".webp"):
+            # Original was deleted from the server; the WebP copy was recovered from the hosting backup.
+            f = os.path.splitext(f)[0] + ".webp"; src = os.path.splitext(src)[0] + ".webp"
+            report.setdefault("recovered_images", []).append(urllib.parse.unquote(src))
         if not os.path.isfile(f):
             report["dropped_images"].append({"page": slug, "src": urllib.parse.unquote(src)}); return ""
         wh = dims(f)

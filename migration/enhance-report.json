@@ -103,62 +103,9 @@
   "יזמות-משותפת1: אנחנו פועלים כיזם מלא -> אודות-החברה-1"
  ],
  "links_missing": [],
- "dropped_images": [
-  {
-   "page": "",
-   "src": "/wp-content/uploads/2025/03/NEXTCOM.png"
-  },
-  {
-   "page": "",
-   "src": "/wp-content/uploads/2025/03/TRIPLE-S.png"
-  },
-  {
-   "page": "",
-   "src": "/wp-content/uploads/2025/03/SHINY.png"
-  },
-  {
-   "page": "",
-   "src": "/wp-content/uploads/2025/03/AMAREL.png"
-  },
-  {
-   "page": "",
-   "src": "/wp-content/uploads/2025/03/אלקטרה.png"
-  },
-  {
-   "page": "",
-   "src": "/wp-content/uploads/2025/03/DORAL.png"
-  },
-  {
-   "page": "",
-   "src": "/wp-content/uploads/2025/03/RST.png"
-  },
-  {
-   "page": "",
-   "src": "/wp-content/uploads/2025/03/EL-MOR.png"
-  },
-  {
-   "page": "פרויקטים-נבחרים1",
-   "src": "/wp-content/uploads/2026/03/ChatGPT-Image-Mar-18-2026-06_16_04-PM.png"
-  },
-  {
-   "page": "פרויקטים-נבחרים1",
-   "src": "/wp-content/uploads/2026/03/ChatGPT-Image-Mar-18-2026-06_15_21-PM.png"
-  },
-  {
-   "page": "פרויקטים-נבחרים1",
-   "src": "/wp-content/uploads/2022/03/2.png"
-  },
-  {
-   "page": "פרויקטים-נבחרים1",
-   "src": "/wp-content/uploads/2022/03/5.png"
-  },
-  {
-   "page": "פרויקטים-נבחרים1",
-   "src": "/wp-content/uploads/2026/03/ChatGPT-Image-Mar-18-2026-06_22_07-PM.png"
-  }
- ],
- "images": 58,
- "alts_set": 9,
+ "dropped_images": [],
+ "images": 71,
+ "alts_set": 17,
  "descriptions_set": [
   "מערכת-שטיפה-אוטומטית",
   "צרו-קשר-1",
@@ -167,6 +114,21 @@
   "יזמות-משותפת1",
   "צוות-שטיפת-מערכות-סולאריות1",
   "מנטר-מערכות-סולאריות"
+ ],
+ "recovered_images": [
+  "/wp-content/uploads/2025/03/NEXTCOM.webp",
+  "/wp-content/uploads/2025/03/TRIPLE-S.webp",
+  "/wp-content/uploads/2025/03/SHINY.webp",
+  "/wp-content/uploads/2025/03/AMAREL.webp",
+  "/wp-content/uploads/2025/03/אלקטרה.webp",
+  "/wp-content/uploads/2025/03/DORAL.webp",
+  "/wp-content/uploads/2025/03/RST.webp",
+  "/wp-content/uploads/2025/03/EL-MOR.webp",
+  "/wp-content/uploads/2026/03/ChatGPT-Image-Mar-18-2026-06_16_04-PM.webp",
+  "/wp-content/uploads/2026/03/ChatGPT-Image-Mar-18-2026-06_15_21-PM.webp",
+  "/wp-content/uploads/2022/03/2.webp",
+  "/wp-content/uploads/2022/03/5.webp",
+  "/wp-content/uploads/2026/03/ChatGPT-Image-Mar-18-2026-06_22_07-PM.webp"
  ],
  "header_contact": 2,
  "menu_links": [
