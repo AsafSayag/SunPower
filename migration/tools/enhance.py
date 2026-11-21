@@ -102,6 +102,9 @@ def field_groups(form):
             if ph: f["placeholder"] = html.unescape(ph.group(1)).strip()
         if typ in ("radio", "select", "checkbox"):
             f["options"] = [html.unescape(x) for x in re.findall(r'<(?:input|option)[^>]*value="([^"]*)"', g) if x]
+        if typ == "select" and f.get("placeholder") and label[:8] not in f["placeholder"]:
+            # The old form gave a real answer an empty value, so choosing it failed validation. Make it a normal option.
+            f["options"] = [f["placeholder"]] + f["options"]; f["placeholder"] = label
         if typ == "upload":
             ms = re.search(r'data-maxsize="(\d+)"', g); f["maxMb"] = int(ms.group(1)) if ms else 3
         out.append(f)
@@ -122,6 +125,16 @@ for m in re.finditer(r"</?ul>", hd):
     if depth == 0: j = m.end(); break
 d["header"] = fix_images(hd[:j], "(header)", True)
 d["footer"] = fix_images(d["footer"], "(footer)", False)
+
+# Pages recovered from the archive are linked from nowhere. Add each one to the services lists
+# in the header and footer, right after the page named in overrides.json, so it is not an orphan.
+def enc(slug): return "/" + re.sub(r"%[0-9A-F]{2}", lambda m: m.group(0).lower(), urllib.parse.quote(slug)) + "/"
+for link in OV.get("menu_links", []):
+    for part in ("header", "footer"):
+        m = re.search(r'<li>\s*<a href="%s"[^>]*>.*?</a>\s*</li>' % re.escape(enc(link["after"])), d[part], re.S)
+        if m and enc(link["slug"]) not in d[part]:
+            d[part] = d[part][:m.end()] + ' <li><a href="%s">%s</a></li>' % (enc(link["slug"]), html.escape(link["text"])) + d[part][m.end():]
+            report.setdefault("menu_links", []).append(part + ": " + link["text"])
 json.dump(d, open(path, "w"), ensure_ascii=False, indent=1)
 json.dump(report, open(f"{raw}/../enhance-report.json", "w"), ensure_ascii=False, indent=1)
 print("h1 changes:", len(report["h1"]), "| images kept:", report["images"], "| dropped:", len(report["dropped_images"]))

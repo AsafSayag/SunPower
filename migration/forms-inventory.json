@@ -149,6 +149,57 @@
   ]
  },
  {
+  "page": "מערכת-שטיפה-אוטומטית",
+  "region": "wp-page",
+  "name": "טופס חדש",
+  "fields": [
+   {
+    "text": "שם מלא"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[name]",
+    "placeholder": "שם מלא",
+    "required": "required"
+   },
+   {
+    "text": "בעל מערכת סולארית ביתית?"
+   },
+   {
+    "text": "יישוב"
+   },
+   {
+    "type": "text",
+    "name": "form_fields[field_82e59c6]",
+    "placeholder": "יישוב",
+    "required": "required"
+   },
+   {
+    "text": "טלפון"
+   },
+   {
+    "type": "tel",
+    "name": "form_fields[email]",
+    "placeholder": "טלפון",
+    "required": "required"
+   },
+   {
+    "type": "checkbox",
+    "name": "form_fields[field_41d738a]",
+    "required": "required"
+   },
+   {
+    "text": "אני מאשר/ת שקראתי את"
+   },
+   {
+    "text": "מדיניות הפרטיות"
+   },
+   {
+    "text": "של האתר"
+   }
+  ]
+ },
+ {
   "page": "צרו-קשר-1",
   "region": "wp-page",
   "name": "טופס חדש",

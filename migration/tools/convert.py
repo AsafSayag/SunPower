@@ -85,6 +85,8 @@ def tidy(parts):
     return x.strip()
 pages=[]; header=footer=None; allforms=[]
 meta=json.load(open(f"{raw}/pages.json"))
+# Pages recovered from the Internet Archive after being deleted from the old site.
+if os.path.exists(f"{raw}/pages-archive.json"): meta+=json.load(open(f"{raw}/pages-archive.json"))
 byid={str(p["id"]):p for p in meta}
 for f in sorted(glob.glob(f"{raw}/html/*.html")):
     pid=os.path.basename(f).split("_")[0]; src=open(f,encoding="utf-8").read()

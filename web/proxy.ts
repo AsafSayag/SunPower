@@ -11,7 +11,6 @@ const OLD_SLUGS: Record<string, string> = {
   "פרויקטים-נבחרים": "פרויקטים-נבחרים1",
   // Returned 404 on the old site although Search Console still showed searches landing on them
   // (16 months to Nov 2026). Sent to the closest page that exists today.
-  "מערכת-שטיפה-אוטומטית": "שטיפת-מערכות-סולאריות",
   "required": "דרושים1",
   "office-manager": "מנהלת-משרד1",
   "team": "צוות-שטיפת-מערכות-סולאריות1", // best guess: the washing-team job page
