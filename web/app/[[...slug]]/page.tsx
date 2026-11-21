@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { Fragment } from "react";
 import { getPage, pages } from "@/lib/site";
 import { INDEXABLE } from "@/lib/indexing";
@@ -33,6 +34,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/** Same trail Yoast already declares in the structured data: home, then this page. */
+function breadcrumbName(page: { jsonld: string; title: string }): string {
+  try {
+    const graph = JSON.parse(page.jsonld)["@graph"] as { "@type": string; itemListElement?: { name: string }[] }[];
+    const name = graph.find((n) => n["@type"] === "BreadcrumbList")?.itemListElement?.at(-1)?.name;
+    if (name) return name;
+  } catch {
+    // fall through to the title
+  }
+  return page.title.replace(/ - SunPower$/, "");
+}
+
 const MARKER = /(<div data-(?:calc|form)="[^"]*"><\/div>)/;
 
 export default async function Page({ params }: Props) {
@@ -56,6 +69,16 @@ export default async function Page({ params }: Props) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: page.jsonld }} />
       )}
       <main className="content">
+        {page.slug && (
+          <nav aria-label="פירורי לחם" className="breadcrumbs">
+            <ol>
+              <li>
+                <Link href="/">דף הבית</Link>
+              </li>
+              <li aria-current="page">{breadcrumbName(page)}</li>
+            </ol>
+          </nav>
+        )}
         {parts.map((part, i) => {
           if (part.startsWith('<div data-calc="roof"')) return <RoofCalculator key={i} />;
           if (part.startsWith('<div data-calc="wash"')) return <WashCalculator key={i} />;

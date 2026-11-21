@@ -5,7 +5,7 @@ raw, web = sys.argv[1], sys.argv[2]
 path = f"{web}/content/site.json"
 d = json.load(open(path))
 pub = f"{web}/public"
-report = {"h1": [], "dropped_images": [], "images": 0, "alts_set": 0, "descriptions_set": []}
+report = {"h1": [], "headings": [], "links_added": [], "links_missing": [], "dropped_images": [], "images": 0, "alts_set": 0, "descriptions_set": []}
 OV = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "overrides.json")))
 
 def dims(f):
@@ -57,6 +57,38 @@ def fix_h1(p):
             report["h1"].append({"page": p["slug"], "change": "extra h1 -> h2", "text": re.sub(r"<[^>]+>", "", m.group(1)).strip()})
         h = h[:first] + rest.replace("<h1>", "<h2>").replace("</h1>", "</h2>")
     p["html"] = h
+
+def fix_headings(p):
+    """Close gaps in the outline (h1 followed by h3, and so on) without touching the words."""
+    h = p["html"]
+    if p["slug"] in OV.get("project_heading_pages", []):
+        # Project names were plain paragraphs; make each one a heading under the examples title.
+        h = re.sub(r"<p>((?:שטיפת מערכת|מערכת קרקעי)[^<]{0,80}?[KM]W\.?)</p>", r"<h5>\1</h5>", h)
+    stack = []; before = "".join(re.findall(r"<h([1-6])>", h))
+    def one(m):
+        lvl = int(m.group(1))
+        while stack and stack[-1][0] >= lvl: stack.pop()
+        new = stack[-1][1] + 1 if stack else 1
+        stack.append((lvl, new)); return f"<h{new}>{m.group(2)}</h{new}>"
+    h = re.sub(r"<h([1-6])>(.*?)</h\1>", one, h, flags=re.S)
+    after = "".join(re.findall(r"<h([1-6])>", h))
+    if before != after: report["headings"].append({"page": p["slug"], "before": before, "after": after})
+    p["html"] = h
+
+def add_links(p):
+    """Wrap the first plain-text occurrence of each phrase in a link. Never inside a heading or an existing link."""
+    for phrase, target in OV.get("internal_links", {}).get(p["slug"], []):
+        href = "/" + re.sub(r"%[0-9A-F]{2}", lambda m: m.group(0).lower(), urllib.parse.quote(target)) + "/"
+        parts = re.split(r"(<[^>]+>)", p["html"]); block = 0; done = False
+        for i, t in enumerate(parts):
+            if t.startswith("<"):
+                if re.match(r"<(a|h[1-6])\b", t): block += 1
+                elif re.match(r"</(a|h[1-6])>", t): block -= 1
+            elif not block and html.escape(phrase, quote=False) in t:
+                e = html.escape(phrase, quote=False)
+                parts[i] = t.replace(e, f'<a href="{href}">{e}</a>', 1); done = True; break
+        p["html"] = "".join(parts)
+        report["links_added" if done else "links_missing"].append(f"{p['slug'] or 'home'}: {phrase} -> {target}")
 
 def fix_jsonld(p):
     if not p["jsonld"]: return
@@ -114,7 +146,7 @@ for p in d["pages"]:
     src = open(glob.glob(f"{raw}/html/{p['id']}_*.html")[0], encoding="utf-8").read()
     body = src[src.find('data-elementor-type="wp-page"'):src.find('data-elementor-type="footer"')]
     p["forms"] = [field_groups(f) for f in re.findall(r"<form\b.*?</form>", body, re.S)]
-    fix_h1(p); fix_jsonld(p); fix_meta(p)
+    fix_h1(p); fix_headings(p); add_links(p); fix_jsonld(p); fix_meta(p)
     p["html"] = p["html"].replace("<h2>לחישוב הרווח השנתי שלך לפי גודל המערכת בקילוואט (KW)</h2> <h2>הרווח השנתי שלך:</h2>", '<div data-calc="wash"></div>')
     p["html"] = fix_images(p["html"], p["slug"], True)
 
@@ -137,5 +169,6 @@ for link in OV.get("menu_links", []):
             report.setdefault("menu_links", []).append(part + ": " + link["text"])
 json.dump(d, open(path, "w"), ensure_ascii=False, indent=1)
 json.dump(report, open(f"{raw}/../enhance-report.json", "w"), ensure_ascii=False, indent=1)
+print("links added:", len(report["links_added"]), "missing:", report["links_missing"], "| outlines fixed:", len(report["headings"]))
 print("h1 changes:", len(report["h1"]), "| images kept:", report["images"], "| dropped:", len(report["dropped_images"]))
 for p in d["pages"]: print(p["slug"] or "(home)", [[f.get("type") + ":" + f.get("label", "")[:25] for f in fm] for fm in p["forms"]])
