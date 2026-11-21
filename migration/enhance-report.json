@@ -136,5 +136,20 @@
   "footer: מערכת שטיפה אוטומטית",
   "header: מרכז הידע",
   "footer: מרכז הידע"
+ ],
+ "structure": [
+  "שטיפת-מערכות-סולאריות: galleries [3], features 0, jobs 0, media rows 0",
+  "אודות-החברה-1: galleries [], features 0, jobs 0, media rows 2",
+  "מערכת-שטיפה-אוטומטית: galleries [], features 6, jobs 0, media rows 2",
+  "צרו-קשר-1: galleries [], features 0, jobs 0, media rows 0",
+  "תחזוקה-כוללת1: galleries [], features 4, jobs 0, media rows 0",
+  "דרושים1: galleries [], features 0, jobs 3, media rows 0",
+  "פרויקטים-נבחרים1: galleries [9], features 0, jobs 0, media rows 0",
+  "הצהרת-נגישות1: galleries [], features 0, jobs 0, media rows 0",
+  "מדיניות-פרטיות1: galleries [], features 0, jobs 0, media rows 0",
+  "מנהלת-משרד1: galleries [], features 0, jobs 0, media rows 0",
+  "יזמות-משותפת1: galleries [], features 4, jobs 0, media rows 0",
+  "צוות-שטיפת-מערכות-סולאריות1: galleries [], features 0, jobs 0, media rows 0",
+  "מנטר-מערכות-סולאריות: galleries [], features 0, jobs 0, media rows 0"
  ]
 }

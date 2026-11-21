@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { articles, questions, terms } from "@/content/knowledge";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHero from "@/components/PageHero";
+import Picture from "@/components/Picture";
 import CoverageMap from "@/components/CoverageMap";
 import JsonLd from "@/components/JsonLd";
 import { absolute, articlePath, breadcrumbLd, GLOSSARY, graph, KNOWLEDGE, ORG, QUESTIONS, termPath } from "@/lib/knowledge";
@@ -34,46 +35,69 @@ export default function KnowledgeHub() {
   );
 
   return (
-    <main className="content knowledge" id="main">
+    <main id="main" className="inner knowledge">
       <JsonLd data={ld} />
-      <Breadcrumbs trail={[{ name: "מרכז הידע" }]} />
-      <h1>מרכז הידע</h1>
-      <p className="lead">
-        כל מה שבעלי נכסים ומנהלי מערכות צריכים לדעת על שטיפה, תחזוקה וניהול של מערכות סולאריות, בשפה פשוטה ומהניסיון
-        שלנו בשטח.
-      </p>
+      <PageHero
+        trail={[{ name: "מרכז הידע" }]}
+        title="מרכז הידע"
+        lead={
+          <p>
+            כל מה שבעלי נכסים ומנהלי מערכות צריכים לדעת על שטיפה, תחזוקה וניהול של מערכות סולאריות, בשפה פשוטה
+            ומהניסיון שלנו בשטח.
+          </p>
+        }
+      />
 
-      <section aria-labelledby="hub-articles">
-        <h2 id="hub-articles">מאמרים</h2>
-        <ul className="card-list">
-          {articles.map((a) => (
-            <li key={a.slug}>
-              <h3>
-                <Link href={articlePath(a.slug)}>{a.title}</Link>
-              </h3>
-              <p>{a.description}</p>
-            </li>
-          ))}
-        </ul>
+      <section className="page-section" aria-labelledby="hub-articles">
+        <div className="container-x">
+          <h2 id="hub-articles" className="h2 heading-accent">
+            מאמרים
+          </h2>
+          <ul className="card-list card-list--media">
+            {articles.map((a) => (
+              <li key={a.slug} className="card reveal">
+                <div className="card-media">
+                  <Picture
+                    image={{ src: a.image, alt: "", width: 1500, height: 1000, srcset: [640, 828, 1200].map((w) => `/_next/image/?url=${encodeURIComponent(a.image)}&w=${w}&q=75 ${w}w`).join(", ") }}
+                    sizes="(max-width: 48rem) 100vw, 33vw"
+                  />
+                </div>
+                <h3 className="h3">
+                  <Link href={articlePath(a.slug)}>{a.title}</Link>
+                </h3>
+                <p>{a.description}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
-      <section aria-labelledby="hub-questions">
-        <h2 id="hub-questions">שאלות ותשובות</h2>
-        <ul>
+      <section className="page-section" aria-labelledby="hub-questions">
+        <div className="container-x">
+        <h2 id="hub-questions" className="h2 heading-accent">
+          שאלות ותשובות
+        </h2>
+        <ul className="question-list">
           {questions.map((q) => (
             <li key={q.id}>
               <Link href={`${QUESTIONS}#${q.id}`}>{q.question}</Link>
             </li>
           ))}
         </ul>
-        <p>
-          <Link href={QUESTIONS}>לכל השאלות והתשובות</Link>
+        <p className="section-foot">
+          <Link href={QUESTIONS} className="link-arrow">
+            לכל השאלות והתשובות
+          </Link>
         </p>
+        </div>
       </section>
 
-      <section aria-labelledby="hub-glossary">
-        <h2 id="hub-glossary">מילון מונחים</h2>
-        <p>הסברים קצרים למונחים המקצועיים שחוזרים בכל שיחה על מערכות סולאריות.</p>
+      <section className="page-section" aria-labelledby="hub-glossary">
+        <div className="container-x">
+        <h2 id="hub-glossary" className="h2 heading-accent">
+          מילון מונחים
+        </h2>
+        <p className="section-intro">הסברים קצרים למונחים המקצועיים שחוזרים בכל שיחה על מערכות סולאריות.</p>
         <ul className="term-chips">
           {terms.map((t) => (
             <li key={t.id}>
@@ -81,14 +105,19 @@ export default function KnowledgeHub() {
             </li>
           ))}
         </ul>
-        <p>
-          <Link href={GLOSSARY}>למילון המלא</Link>
+        <p className="section-foot">
+          <Link href={GLOSSARY} className="link-arrow">
+            למילון המלא
+          </Link>
         </p>
+        </div>
       </section>
 
-      <div className="coverage-panel cell-grid">
-        <CoverageMap />
-      </div>
+      <section className="section surface-navy cell-grid">
+        <div className="container-x">
+          <CoverageMap />
+        </div>
+      </section>
     </main>
   );
 }

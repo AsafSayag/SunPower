@@ -1,5 +1,5 @@
 import { terms } from "@/content/knowledge";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHero from "@/components/PageHero";
 import JsonLd from "@/components/JsonLd";
 import { absolute, breadcrumbLd, GLOSSARY, graph, KNOWLEDGE, termPath } from "@/lib/knowledge";
 import { knowledgeMetadata } from "@/lib/knowledgeMeta";
@@ -34,14 +34,18 @@ export default function GlossaryPage() {
   );
 
   return (
-    <main className="content knowledge" id="main">
+    <main id="main" className="inner knowledge">
       <JsonLd data={ld} />
-      <Breadcrumbs trail={[{ name: "מרכז הידע", path: KNOWLEDGE }, { name: "מילון מונחים" }]} />
-      <h1>מילון מונחים</h1>
-      <p className="lead">המונחים המקצועיים שחוזרים בכל שיחה על מערכות סולאריות, עם הסבר קצר לכל אחד.</p>
+      <PageHero
+        trail={[{ name: "מרכז הידע", path: KNOWLEDGE }, { name: "מילון מונחים" }]}
+        title="מילון מונחים"
+        lead={<p>המונחים המקצועיים שחוזרים בכל שיחה על מערכות סולאריות, עם הסבר קצר לכל אחד.</p>}
+      />
+      <section className="page-section">
+        <div className="container-x">
       <dl className="glossary">
         {sorted.map((t) => (
-          <div key={t.id} id={t.id}>
+          <div key={t.id} id={t.id} className="card">
             <dt>
               {t.term}
               {t.alias && <span className="alias"> ({t.alias})</span>}
@@ -50,6 +54,8 @@ export default function GlossaryPage() {
           </div>
         ))}
       </dl>
+        </div>
+      </section>
     </main>
   );
 }

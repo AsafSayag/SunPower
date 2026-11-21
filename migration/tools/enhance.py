@@ -187,13 +187,50 @@ for link in OV.get("menu_links", []):
         if m and enc(link["slug"]) not in d[part]:
             d[part] = d[part][:m.end()] + ' <li><a href="%s">%s</a></li>' % (enc(link["slug"]), html.escape(link["text"])) + d[part][m.end():]
             report.setdefault("menu_links", []).append(part + ": " + link["text"])
-# ---- Home page as structured data, so the designed layout can place each piece.
-# Every string is taken from the converted HTML; nothing is rewritten here.
 def img_obj(tag):
     a = dict(re.findall(r'(\w+)="([^"]*)"', tag))
     return {"src": html.unescape(a.get("src", "")), "alt": html.unescape(a.get("alt", "")), "width": int(a.get("width", 0)),
             "height": int(a.get("height", 0)), "srcset": html.unescape(a.get("srcset", ""))}
 def text(x): return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", x))).strip()
+# ---- Inner pages: group repeating patterns so the design can lay them out. Words are untouched.
+def structure(p):
+    if not p["slug"]: return
+    h = p["html"]; p["galleries"] = []
+    def gallery(items):
+        p["galleries"].append(items); return f'<div data-gallery="{len(p["galleries"]) - 1}"></div>'
+    # Comparison pairs followed by their caption (projects page): first image clean, second dirty.
+    def pairs_with_caption(m):
+        return gallery([{"after": img_obj(a), "before": img_obj(b), "caption": text(c)} for a, b, c in
+                        re.findall(r"(<img[^>]*>)\s*(<img[^>]*>)\s*<h3>(.*?)</h3>", m.group(0), re.S)])
+    h = re.sub(r"(?:<img[^>]*>\s*<img[^>]*>\s*<h3>(?:(?!</h3>).)*</h3>\s*){2,}", pairs_with_caption, h, flags=re.S)
+    # Six images then three captions (washing page).
+    def pairs_then_captions(m):
+        imgs = re.findall(r"<img[^>]*>", m.group(1)); caps = re.findall(r"<p>(.*?)</p>", m.group(2), re.S)
+        return gallery([{"after": img_obj(imgs[2 * k]), "before": img_obj(imgs[2 * k + 1]), "caption": text(caps[k])} for k in range(3)])
+    h = re.sub(r"((?:<img[^>]*>\s*){6})((?:<p>[^<]*</p>\s*){3})", pairs_then_captions, h)
+    # Icon + heading (+ paragraph), repeated: a grid of features.
+    def feature_title(b): return re.sub(r"^<h([23])>", lambda k: '<h%s class="feature-title">' % k.group(1), b)
+    def features(m):
+        items = re.findall(r"(<img[^>]*>)\s*(<h([23])>.*?</h\3>)((?:\s*<p>(?:(?!</p>).)*</p>)?)", m.group(0), re.S)
+        return '<div class="feature-grid">' + "".join(f'<article class="feature"><div class="feature-icon">{a}</div>{feature_title(b)}{d.strip()}</article>' for a, b, _, d in items) + "</div> "
+    h = re.sub(r"(?:<img[^>]*>\s*<h([23])>(?:(?!</h\1>).)*</h\1>(?:\s*<p>(?:(?!</p>).)*</p>)?\s*){2,}", features, h, flags=re.S)
+    # Job cards on the careers page.
+    def jobs(m):
+        items = re.findall(r"<p>(מס' משרה \d+)</p>\s*<p>(.*?)</p>\s*<p>(.*?)</p>\s*<p>(.*?)</p>\s*<a href=\"([^\"]*)\"[^>]*>(.*?)</a>", m.group(0), re.S)
+        return '<div class="job-grid">' + "".join(f'<article class="job-card"><p class="job-num">{n}</p><h2 class="job-title">{t}</h2><p>{d_}</p><p class="job-tags">{g}</p><a class="btn btn--primary" href="{u}">{x.strip()}</a></article>' for n, t, d_, g, u, x in items) + "</div>"
+    h = re.sub(r"(?:<p>מס' משרה \d+</p>\s*(?:<p>(?:(?!</p>).)*</p>\s*){3}<a href=\"[^\"]*\"[^>]*>(?:(?!</a>).)*</a>\s*){2,}", jobs, h, flags=re.S)
+    # Remaining loose images: rows of photos.
+    h = re.sub(r"(?<!feature-icon\">)((?:<img[^>]*>\s*)+)", lambda m: f'<div class="media-row" data-count="{len(re.findall("<img", m.group(1)))}">{m.group(1).strip()}</div> ', h)
+    h = re.sub(r"<figure>\s*<div class=\"media-row\"[^>]*>(<img[^>]*>)</div>\s*</figure>", r"<figure>\1</figure>", h)
+    h = re.sub(r"((?:<figure>\s*<img[^>]*>\s*</figure>\s*)+)", lambda m: '<div class="media-row" data-count="%d">%s</div> ' % (len(re.findall("<img", m.group(1))), m.group(1).strip()), h)
+    p["html"] = h
+    counts = (p["slug"], [len(g) for g in p["galleries"]], h.count('class="feature"'), h.count("job-card"), h.count("media-row"))
+    report.setdefault("structure", []).append("%s: galleries %s, features %d, jobs %d, media rows %d" % counts)
+for p in d["pages"]: structure(p)
+for line in report.get("structure", []): print("  ", line)
+
+# ---- Home page as structured data, so the designed layout can place each piece.
+# Every string is taken from the converted HTML; nothing is rewritten here.
 def parse_home(h):
     cut = lambda a, b: h[h.index(a) + len(a):h.index(b, h.index(a) + len(a))]
     home = {"h1": text(cut("<h1>", "</h1>")), "tagline": text(cut("</h1>", "<h2>"))}

@@ -1,5 +1,5 @@
 import { questions } from "@/content/knowledge";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHero from "@/components/PageHero";
 import JsonLd from "@/components/JsonLd";
 import RichText from "@/components/RichText";
 import { breadcrumbLd, graph, KNOWLEDGE, QUESTIONS, stripLinks } from "@/lib/knowledge";
@@ -28,21 +28,27 @@ export default function QuestionsPage() {
   );
 
   return (
-    <main className="content knowledge" id="main">
+    <main id="main" className="inner knowledge">
       <JsonLd data={ld} />
-      <Breadcrumbs trail={[{ name: "מרכז הידע", path: KNOWLEDGE }, { name: "שאלות ותשובות" }]} />
-      <h1>שאלות ותשובות</h1>
-      <p className="lead">תשובות קצרות לשאלות שאנחנו שומעים הכי הרבה מבעלי נכסים וממנהלי מערכות.</p>
-      {questions.map((q) => (
-        <section key={q.id} id={q.id} className="qa">
-          <h2>{q.question}</h2>
-          {q.answer.map((p, i) => (
-            <p key={i}>
-              <RichText text={p} />
-            </p>
+      <PageHero
+        trail={[{ name: "מרכז הידע", path: KNOWLEDGE }, { name: "שאלות ותשובות" }]}
+        title="שאלות ותשובות"
+        lead={<p>תשובות קצרות לשאלות שאנחנו שומעים הכי הרבה מבעלי נכסים וממנהלי מערכות.</p>}
+      />
+      <section className="page-section">
+        <div className="container-x qa-list">
+          {questions.map((q) => (
+            <section key={q.id} id={q.id} className="qa card reveal">
+              <h2 className="h3">{q.question}</h2>
+              {q.answer.map((p, i) => (
+                <p key={i}>
+                  <RichText text={p} />
+                </p>
+              ))}
+            </section>
           ))}
-        </section>
-      ))}
+        </div>
+      </section>
     </main>
   );
 }

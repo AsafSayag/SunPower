@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { articles, AUTHOR } from "@/content/knowledge";
-import Breadcrumbs from "@/components/Breadcrumbs";
+import PageHero from "@/components/PageHero";
 import JsonLd from "@/components/JsonLd";
 import RichText from "@/components/RichText";
 import { articleLd, articlePath, breadcrumbLd, getArticle, graph, KNOWLEDGE, pagePath } from "@/lib/knowledge";
@@ -43,7 +43,7 @@ export default async function ArticlePage({ params }: Props) {
   const wide = article.image.endsWith(".jpg");
 
   return (
-    <main className="content knowledge" id="main">
+    <main id="main" className="inner knowledge">
       <JsonLd
         data={graph(
           articleLd(article),
@@ -53,12 +53,18 @@ export default async function ArticlePage({ params }: Props) {
           ]),
         )}
       />
-      <Breadcrumbs trail={[{ name: "מרכז הידע", path: KNOWLEDGE }, { name: article.title }]} />
-      <article>
-        <h1>{article.title}</h1>
-        <p className="article-meta">
-          {AUTHOR} · עודכן ב־<time dateTime={article.updated}>{dateFmt.format(new Date(article.updated))}</time>
-        </p>
+      <PageHero
+        trail={[{ name: "מרכז הידע", path: KNOWLEDGE }, { name: article.title }]}
+        title={article.title}
+        meta={
+          <>
+            {AUTHOR} · עודכן ב־<time dateTime={article.updated}>{dateFmt.format(new Date(article.updated))}</time>
+          </>
+        }
+      />
+      <div className="page-section">
+      <div className="container-x article-layout">
+      <article className="prose article-body">
         <Image
           src={article.image}
           alt={article.imageAlt}
@@ -113,8 +119,9 @@ export default async function ArticlePage({ params }: Props) {
         )}
       </article>
 
-      <aside aria-labelledby="related-services">
-        <h2 id="related-services">השירותים שלנו בנושא</h2>
+      <div className="article-side">
+      <aside aria-labelledby="related-services" className="card">
+        <h2 id="related-services" className="h3">השירותים שלנו בנושא</h2>
         <ul>
           {article.relatedPages.map((slug) => (
             <li key={slug}>
@@ -127,8 +134,8 @@ export default async function ArticlePage({ params }: Props) {
         </ul>
       </aside>
 
-      <aside aria-labelledby="more-articles">
-        <h2 id="more-articles">מאמרים נוספים</h2>
+      <aside aria-labelledby="more-articles" className="card">
+        <h2 id="more-articles" className="h3">מאמרים נוספים</h2>
         <ul>
           {others.map((a) => (
             <li key={a.slug}>
@@ -137,6 +144,9 @@ export default async function ArticlePage({ params }: Props) {
           ))}
         </ul>
       </aside>
+      </div>
+      </div>
+      </div>
     </main>
   );
 }
