@@ -146,6 +146,9 @@ for p in d["pages"]:
     src = open(glob.glob(f"{raw}/html/{p['id']}_*.html")[0], encoding="utf-8").read()
     body = src[src.find('data-elementor-type="wp-page"'):src.find('data-elementor-type="footer"')]
     p["forms"] = [field_groups(f) for f in re.findall(r"<form\b.*?</form>", body, re.S)]
+    for a, b, _why in OV.get("text_fixes", {}).get(p["slug"], []):
+        if a not in p["html"]: print("TEXT FIX NOT FOUND:", p["slug"], a[:40])
+        p["html"] = p["html"].replace(a, b)
     fix_h1(p); fix_headings(p); add_links(p); fix_jsonld(p); fix_meta(p)
     p["html"] = p["html"].replace("<h2>לחישוב הרווח השנתי שלך לפי גודל המערכת בקילוואט (KW)</h2> <h2>הרווח השנתי שלך:</h2>", '<div data-calc="wash"></div>')
     p["html"] = fix_images(p["html"], p["slug"], True)

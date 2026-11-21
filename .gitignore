@@ -1,3 +1,6 @@
 .DS_Store
 # Raw copy of the old media library: the same files live in web/public/wp-content/uploads
 migration/raw/media/
+
+# Full site backups (database with personal data and secrets): never commit
+backup-private/

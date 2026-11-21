@@ -101,5 +101,15 @@
   },
   "project_heading_pages": [
     "פרויקטים-נבחרים1"
-  ]
+  ],
+  "text_fixes": {
+    "_note": "Exact replacements approved by the business. Key = page slug ('' is the home page).",
+    "": [
+      [
+        "<div class=\"t\">עובדים בפריסה ארצית</div> <div class=\"t\">+</div>",
+        "<div class=\"t\">עובדים בפריסה ארצית</div> <div class=\"t\">15</div> <div class=\"t\">+</div>",
+        "Employees counter was empty on the old site. Asaf confirmed 15+ on 2026-11-21."
+      ]
+    ]
+  }
 }
