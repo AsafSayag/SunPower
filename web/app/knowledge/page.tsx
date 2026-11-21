@@ -34,7 +34,7 @@ export default function KnowledgeHub() {
   );
 
   return (
-    <main className="content knowledge">
+    <main className="content knowledge" id="main">
       <JsonLd data={ld} />
       <Breadcrumbs trail={[{ name: "מרכז הידע" }]} />
       <h1>מרכז הידע</h1>
@@ -86,7 +86,9 @@ export default function KnowledgeHub() {
         </p>
       </section>
 
-      <CoverageMap />
+      <div className="coverage-panel cell-grid">
+        <CoverageMap />
+      </div>
     </main>
   );
 }

@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Fragment } from "react";
-import { getPage, pages } from "@/lib/site";
+import { getPage, home, pages } from "@/lib/site";
 import { INDEXABLE } from "@/lib/indexing";
 import RoofCalculator from "@/components/RoofCalculator";
 import WashCalculator from "@/components/WashCalculator";
 import LeadForm from "@/components/LeadForm";
 import type { FormField } from "@/lib/forms";
-import CoverageMap from "@/components/CoverageMap";
+import Home from "@/components/home/Home";
 import { articles } from "@/content/knowledge";
 import { articlePath, KNOWLEDGE } from "@/lib/knowledge";
 
@@ -73,7 +73,10 @@ export default async function Page({ params }: Props) {
       {page.jsonld && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: page.jsonld }} />
       )}
-      <main className="content">
+      {!page.slug && home ? (
+        <Home fields={(page.forms as FormField[][])[home.contact.form]} />
+      ) : (
+      <main className="content" id="main">
         {page.slug && (
           <nav aria-label="פירורי לחם" className="breadcrumbs">
             <ol>
@@ -109,8 +112,8 @@ export default async function Page({ params }: Props) {
             </ul>
           </aside>
         )}
-        {!page.slug && <CoverageMap />}
       </main>
+      )}
     </>
   );
 }

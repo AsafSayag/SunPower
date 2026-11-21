@@ -28,7 +28,7 @@ export default function QuestionsPage() {
   );
 
   return (
-    <main className="content knowledge">
+    <main className="content knowledge" id="main">
       <JsonLd data={ld} />
       <Breadcrumbs trail={[{ name: "מרכז הידע", path: KNOWLEDGE }, { name: "שאלות ותשובות" }]} />
       <h1>שאלות ותשובות</h1>

@@ -1690,5 +1690,417 @@
     ]
    ]
   }
+ ],
+ "home": {
+  "h1": "ניהול ותחזוקת מערכות סולאריות",
+  "tagline": "הבית שמנהל עבורך את המערכות הסולאריות מקצה לקצה",
+  "about": {
+   "title": "אודותינו",
+   "paragraphs": [
+    "<strong>סאן פאוור</strong> פועלת מעל 5 שנים בניהול ותחזוקה של מערכות סולאריות בקנה מידה מסחרי, עבור גופים עסקיים ובעלי נכסים בפריסה ארצית. החברה מנהלת מערכות לאורך זמן מתוך ראייה תפעולית, כלכלית ובטיחותית ולא כנותן שירות נקודתי, אלא כגוף שלוקח אחריות מלאה על תפקוד המערכת.",
+    "מהניסיון שלנו, האתגר המרכזי במערכות סולאריות אינו הטכנולוגיה אלא הניהול. סאן פאוור הוקמה כדי לתת מענה לחוסר בקרה, ריבוי ספקים והיעדר אחריות ברורה ולוודא יציבות, בקרה ומקסום תפוקה לאורך חיי המערכת.",
+    "לצד <a href=\"/%d7%aa%d7%97%d7%96%d7%95%d7%a7%d7%94-%d7%9b%d7%95%d7%9c%d7%9c%d7%aa1/\">פעילות התחזוקה</a>, סאן פאוור פועלת גם ב<a href=\"/%d7%99%d7%96%d7%9e%d7%95%d7%aa-%d7%9e%d7%a9%d7%95%d7%aa%d7%a4%d7%aa1/\">יזמות סולארית</a> ופתרונות אגירת אנרגיה במודלי שותפות והשכרה, ומלווה תהליכים מלאים משלב בחינת ההתאמה, דרך הקמה והפעלה, ועד ניהול שוטף, עבור לקוחות המחפשים פתרון אנרגטי כחלק ממהלך אסטרטגי ארוך טווח."
+   ],
+   "cta": {
+    "href": "/%d7%90%d7%95%d7%93%d7%95%d7%aa-%d7%94%d7%97%d7%91%d7%a8%d7%94-1/",
+    "text": "קצת עלינו"
+   }
+  },
+  "stats": [
+   {
+    "label": "שנות ניסיון",
+    "value": "5",
+    "suffix": "+"
+   },
+   {
+    "label": "מערכות שתחזקנו עד היום",
+    "value": "5300",
+    "suffix": "+"
+   },
+   {
+    "label": "שטיפות מערכות מסחריות בשנה",
+    "unit": "MWP",
+    "value": "1150",
+    "suffix": "+"
+   },
+   {
+    "label": "עובדים בפריסה ארצית",
+    "value": "15",
+    "suffix": "+"
+   }
+  ],
+  "safety": {
+   "title": "המערכת שלכם בידיים בטוחות",
+   "text": "בסאן פאוור אנחנו עובדים בנהלי הבטיחות הקפדניים בתחום עם צוות בטיחות פנימי תוך תיעוד מתמיד ועבודה צמודה לנהלי העבודה בגובה"
+  },
+  "why": {
+   "title": "מדוע בוחרים אותנו?",
+   "items": [
+    {
+     "image": {
+      "src": "/wp-content/uploads/2022/03/ניקיון-e1646763711961.png",
+      "alt": "ניקיון שטיפת מערכות סולאריות",
+      "width": 435,
+      "height": 299,
+      "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%A0%D7%99%D7%A7%D7%99%D7%95%D7%9F-e1646763711961.png&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%A0%D7%99%D7%A7%D7%99%D7%95%D7%9F-e1646763711961.png&w=640&q=75 640w"
+     },
+     "title": "הציוד",
+     "text": "ציוד של החברה המובילה בשוק, תוצרת הארץ וייעודי לפאנלים סולארים."
+    },
+    {
+     "image": {
+      "src": "/wp-content/uploads/2022/03/שירות-e1646763743824.png",
+      "alt": "שירות שטיפת מערכות סולאריות",
+      "width": 463,
+      "height": 483,
+      "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%A9%D7%99%D7%A8%D7%95%D7%AA-e1646763743824.png&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%A9%D7%99%D7%A8%D7%95%D7%AA-e1646763743824.png&w=640&q=75 640w"
+     },
+     "title": "השירות",
+     "text": "אנו מתחייבים למתן שירות מקצועי ואמין לכל לקוח, כמו כן נותנים שירות בפריסה ארצית."
+    },
+    {
+     "image": {
+      "src": "/wp-content/uploads/2022/03/צוות-e1646763728449.png",
+      "alt": "צוות שטיפת מערכות סולאריות",
+      "width": 588,
+      "height": 519,
+      "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%A6%D7%95%D7%95%D7%AA-e1646763728449.png&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%A6%D7%95%D7%95%D7%AA-e1646763728449.png&w=640&q=75 640w"
+     },
+     "title": "הצוות",
+     "text": "הצוותים שלנו מונים עובדים איכותיים אשר עברו הסמכה נדרשת ובעלי אישורי עבודה בגובה."
+    },
+    {
+     "image": {
+      "src": "/wp-content/uploads/2022/03/בקקרה-e1646833207855.png",
+      "alt": "שקיפות ובקרה שטיפת מערכות סולאריות",
+      "width": 418,
+      "height": 295,
+      "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%91%D7%A7%D7%A7%D7%A8%D7%94-e1646833207855.png&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%91%D7%A7%D7%A7%D7%A8%D7%94-e1646833207855.png&w=640&q=75 640w"
+     },
+     "title": "שקיפות ובקרה",
+     "text": "מתן דיווחים מהשטח אודות הצללות על פאנלים, פאנלים שבורים ועוד."
+    }
+   ],
+   "cta": {
+    "href": "/%d7%a4%d7%a8%d7%95%d7%99%d7%a7%d7%98%d7%99%d7%9d-%d7%a0%d7%91%d7%97%d7%a8%d7%99%d7%9d1/",
+    "text": "פרויקטים נוספים"
+   }
+  },
+  "clients": {
+   "title": "בין לקוחותינו",
+   "logos": [
+    {
+     "src": "/wp-content/uploads/2025/03/NEXTCOM.webp",
+     "alt": "לוגו נקסטקום",
+     "width": 500,
+     "height": 250,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FNEXTCOM.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FNEXTCOM.webp&w=640&q=75 640w"
+    },
+    {
+     "src": "/wp-content/uploads/2025/03/TRIPLE-S.webp",
+     "alt": "לוגו טריפל S",
+     "width": 500,
+     "height": 250,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FTRIPLE-S.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FTRIPLE-S.webp&w=640&q=75 640w"
+    },
+    {
+     "src": "/wp-content/uploads/2025/03/SHINY.webp",
+     "alt": "לוגו שייני",
+     "width": 500,
+     "height": 250,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FSHINY.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FSHINY.webp&w=640&q=75 640w"
+    },
+    {
+     "src": "/wp-content/uploads/2025/03/AMAREL.webp",
+     "alt": "לוגו אמרל",
+     "width": 500,
+     "height": 250,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FAMAREL.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FAMAREL.webp&w=640&q=75 640w"
+    },
+    {
+     "src": "/wp-content/uploads/2025/03/אלקטרה.webp",
+     "alt": "לוגו אלקטרה",
+     "width": 500,
+     "height": 250,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2F%D7%90%D7%9C%D7%A7%D7%98%D7%A8%D7%94.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2F%D7%90%D7%9C%D7%A7%D7%98%D7%A8%D7%94.webp&w=640&q=75 640w"
+    },
+    {
+     "src": "/wp-content/uploads/2025/03/DORAL.webp",
+     "alt": "לוגו דוראל",
+     "width": 500,
+     "height": 250,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FDORAL.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FDORAL.webp&w=640&q=75 640w"
+    },
+    {
+     "src": "/wp-content/uploads/2025/03/RST.webp",
+     "alt": "לוגו RST",
+     "width": 500,
+     "height": 250,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FRST.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FRST.webp&w=640&q=75 640w"
+    },
+    {
+     "src": "/wp-content/uploads/2025/03/EL-MOR.webp",
+     "alt": "לוגו אל-מור",
+     "width": 500,
+     "height": 250,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FEL-MOR.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2FEL-MOR.webp&w=640&q=75 640w"
+    }
+   ],
+   "testimonials": [
+    {
+     "quote": "\"חברת סאן פאוור עבדו איתנו במהלך השנה האחרונה, העבודה התנהלה בצורה מקצועית ויסודית, תוך שמירה על בטיחות, יסודיות, מקצועיות עמידה בזמנים ויחסי אנוש מעולים.\"",
+     "image": {
+      "src": "/wp-content/uploads/2022/07/לוגו-עיגול.png",
+      "alt": "TRIPLES",
+      "width": 500,
+      "height": 500,
+      "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F07%2F%D7%9C%D7%95%D7%92%D7%95-%D7%A2%D7%99%D7%92%D7%95%D7%9C.png&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F07%2F%D7%9C%D7%95%D7%92%D7%95-%D7%A2%D7%99%D7%92%D7%95%D7%9C.png&w=640&q=75 640w"
+     },
+     "name": "אדיר פורטל",
+     "role": "מנהל תפעול חברת טריפל אס"
+    },
+    {
+     "quote": "״בשלוש השנים האחרונות אני עובד מול חברת סאן פאוור, שטפו לי מעל 30 מגה בחודש, מקצועיות ואמינות ברמה שאין כדוגמתה, עמידה בזמנים ומעל הכול אנשים טובים וערכיים שנעים לעבוד איתם, אני 12 שנים מנכל של חברות סולאריות ואני ממליץ בחום על חברת סאן פאוור.״",
+     "image": {
+      "src": "/wp-content/uploads/2024/02/לוגו-המלצה.png",
+      "alt": "NRG",
+      "width": 500,
+      "height": 500,
+      "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2024%2F02%2F%D7%9C%D7%95%D7%92%D7%95-%D7%94%D7%9E%D7%9C%D7%A6%D7%94.png&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2024%2F02%2F%D7%9C%D7%95%D7%92%D7%95-%D7%94%D7%9E%D7%9C%D7%A6%D7%94.png&w=640&q=75 640w"
+     },
+     "name": "ניר שני",
+     "role": "מנכ\"ל NRG"
+    },
+    {
+     "quote": "\"בעבודתנו עם סאן פאוור חווינו סטנדרט שירות יוצא דופן, מהשירות הטכני ועד לרמת הביצוע בשטח. המקצוענות, העמידה בלוחות זמנים והנכונות למצוא פתרונות בשטח – כל אלו הופכים אותם לשותף אמין ומוערך.\"",
+     "image": {
+      "src": "/wp-content/uploads/2025/03/אמרל-עיגול.png",
+      "alt": "אמרל",
+      "width": 500,
+      "height": 500,
+      "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2F%D7%90%D7%9E%D7%A8%D7%9C-%D7%A2%D7%99%D7%92%D7%95%D7%9C.png&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2025%2F03%2F%D7%90%D7%9E%D7%A8%D7%9C-%D7%A2%D7%99%D7%92%D7%95%D7%9C.png&w=640&q=75 640w"
+     },
+     "name": "חזי",
+     "role": "Amarel"
+    },
+    {
+     "quote": "\"חברת סאן פאוור מספקת לנו שירות ברמה גבוהה, עם זמינות, מקצועיות ובקפדה על בטיחות.לאורך השנים זכינו לליווי צמוד, מענה מהיר ויחס אישי בכל האתרים - שותפות איכותית היא נכס אמיתי – ממליצים בחום\"",
+     "image": {
+      "src": "/wp-content/uploads/2026/04/images.jpeg",
+      "alt": "אבשלום",
+      "width": 262,
+      "height": 146,
+      "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F04%2Fimages.jpeg&w=384&q=75 384w"
+     },
+     "name": "אבשלום",
+     "role": "אלקטרה"
+    }
+   ]
+  },
+  "gallery": [
+   {
+    "after": {
+     "src": "/wp-content/uploads/2026/05/3-00.webp",
+     "alt": "מערכת סולארית צפה על מאגר מים לאחר שטיפה, צילום אווירי",
+     "width": 1500,
+     "height": 1000,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F3-00.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F3-00.webp&w=640&q=75 640w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F3-00.webp&w=828&q=75 828w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F3-00.webp&w=1200&q=75 1200w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F3-00.webp&w=1920&q=75 1920w"
+    },
+    "before": {
+     "src": "/wp-content/uploads/2026/05/4-00.webp",
+     "alt": "מערכת סולארית צפה על מאגר מים לפני שטיפה, צילום אווירי",
+     "width": 1500,
+     "height": 1000,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F4-00.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F4-00.webp&w=640&q=75 640w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F4-00.webp&w=828&q=75 828w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F4-00.webp&w=1200&q=75 1200w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F4-00.webp&w=1920&q=75 1920w"
+    }
+   },
+   {
+    "after": {
+     "src": "/wp-content/uploads/2022/03/2-1.png",
+     "alt": "שטיפת מערכות סולאריות",
+     "width": 600,
+     "height": 400,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F2-1.png&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F2-1.png&w=640&q=75 640w"
+    },
+    "before": {
+     "src": "/wp-content/uploads/2022/03/3-1.png",
+     "alt": "שטיפת מערכות סולאריות",
+     "width": 600,
+     "height": 400,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F3-1.png&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F3-1.png&w=640&q=75 640w"
+    }
+   },
+   {
+    "after": {
+     "src": "/wp-content/uploads/2026/05/2-6.webp",
+     "alt": "פאנלים סולאריים צפים על מאגר מים לאחר שטיפה",
+     "width": 1500,
+     "height": 1000,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F2-6.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F2-6.webp&w=640&q=75 640w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F2-6.webp&w=828&q=75 828w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F2-6.webp&w=1200&q=75 1200w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F2-6.webp&w=1920&q=75 1920w"
+    },
+    "before": {
+     "src": "/wp-content/uploads/2026/05/5-00.webp",
+     "alt": "פאנלים סולאריים צפים מאובקים על מאגר מים לפני שטיפה",
+     "width": 1500,
+     "height": 1000,
+     "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F5-00.webp&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F5-00.webp&w=640&q=75 640w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F5-00.webp&w=828&q=75 828w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F5-00.webp&w=1200&q=75 1200w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2026%2F05%2F5-00.webp&w=1920&q=75 1920w"
+    }
+   }
+  ],
+  "contact": {
+   "title": "לקבלת שיחת ייעוץ ללא תשלום!",
+   "form": 0,
+   "calc": {
+    "href": "/%d7%a9%d7%98%d7%99%d7%a4%d7%aa-%d7%9e%d7%a2%d7%a8%d7%9b%d7%95%d7%aa-%d7%a1%d7%95%d7%9c%d7%90%d7%a8%d7%99%d7%95%d7%aa/",
+    "text": "לחישוב הרווח שלך לחץ כאן!"
+   }
+  }
+ },
+ "nav": [
+  {
+   "href": "/",
+   "text": "דף הבית"
+  },
+  {
+   "href": "/%d7%90%d7%95%d7%93%d7%95%d7%aa-%d7%94%d7%97%d7%91%d7%a8%d7%94-1/",
+   "text": "אודות החברה"
+  },
+  {
+   "href": "/knowledge/",
+   "text": "מרכז הידע"
+  },
+  {
+   "href": "#",
+   "text": "השירותים שלנו",
+   "children": []
+  },
+  {
+   "href": "/%d7%a9%d7%98%d7%99%d7%a4%d7%aa-%d7%9e%d7%a2%d7%a8%d7%9b%d7%95%d7%aa-%d7%a1%d7%95%d7%9c%d7%90%d7%a8%d7%99%d7%95%d7%aa/",
+   "text": "שטיפת מערכות סולאריות"
+  },
+  {
+   "href": "/%d7%9e%d7%a2%d7%a8%d7%9b%d7%aa-%d7%a9%d7%98%d7%99%d7%a4%d7%94-%d7%90%d7%95%d7%98%d7%95%d7%9e%d7%98%d7%99%d7%aa/",
+   "text": "מערכת שטיפה אוטומטית"
+  },
+  {
+   "href": "/%d7%aa%d7%97%d7%96%d7%95%d7%a7%d7%94-%d7%9b%d7%95%d7%9c%d7%9c%d7%aa1/",
+   "text": "תחזוקה כוללת"
+  },
+  {
+   "href": "/%d7%99%d7%96%d7%9e%d7%95%d7%aa-%d7%9e%d7%a9%d7%95%d7%aa%d7%a4%d7%aa1/",
+   "text": "יזמות משותפת"
+  },
+  {
+   "href": "/%d7%93%d7%a8%d7%95%d7%a9%d7%99%d7%9d1/",
+   "text": "דרושים"
+  },
+  {
+   "href": "/%d7%a6%d7%a8%d7%95-%d7%a7%d7%a9%d7%a8-1/",
+   "text": "צרו קשר"
+  }
+ ],
+ "headerContact": [
+  {
+   "href": "https://wa.me/972535554638?text=היי%2C%20הגעתי%20דרך%20האתר%20ואשמח%20שיצרו%20איתי%20קשר%20לקבלת%20פרטים%20נוספים%20😊",
+   "text": "וואטסאפ"
+  },
+  {
+   "href": "tel:+972545622992",
+   "text": "054-5622992"
+  }
+ ],
+ "logo": {
+  "src": "/wp-content/uploads/2022/03/סאן-פאוור-e1767626183785.png",
+  "alt": "לוגו סאן פאוור",
+  "width": 1136,
+  "height": 444,
+  "srcset": "/_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%A1%D7%90%D7%9F-%D7%A4%D7%90%D7%95%D7%95%D7%A8-e1767626183785.png&w=384&q=75 384w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%A1%D7%90%D7%9F-%D7%A4%D7%90%D7%95%D7%95%D7%A8-e1767626183785.png&w=640&q=75 640w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%A1%D7%90%D7%9F-%D7%A4%D7%90%D7%95%D7%95%D7%A8-e1767626183785.png&w=828&q=75 828w, /_next/image/?url=%2Fwp-content%2Fuploads%2F2022%2F03%2F%D7%A1%D7%90%D7%9F-%D7%A4%D7%90%D7%95%D7%95%D7%A8-e1767626183785.png&w=1200&q=75 1200w"
+ },
+ "footerGroups": [
+  {
+   "title": "שמרו על קשר",
+   "links": [
+    {
+     "href": "tel:+972542399782",
+     "text": "054-2399782 - עיליי"
+    },
+    {
+     "href": "tel:+972545622992",
+     "text": "054-5622992 - אוריין"
+    },
+    {
+     "href": "mailto:office@sun-power.co.il",
+     "text": "office@sun-power.co.il"
+    },
+    {
+     "href": "https://waze.com/ul?ll=32.064228,34.774515&navigate=yes",
+     "text": "כתובת: בסר סיטי בניין c קומה 5"
+    },
+    {
+     "href": "https://www.facebook.com/yisunpower1/",
+     "text": "דף הפייסבוק שלנו"
+    }
+   ]
+  },
+  {
+   "title": "ניווט באתר",
+   "links": [
+    {
+     "href": "/",
+     "text": "דף הבית"
+    },
+    {
+     "href": "/%d7%90%d7%95%d7%93%d7%95%d7%aa-%d7%94%d7%97%d7%91%d7%a8%d7%94-1/",
+     "text": "אודות החברה"
+    },
+    {
+     "href": "/knowledge/",
+     "text": "מרכז הידע"
+    },
+    {
+     "href": "/%d7%93%d7%a8%d7%95%d7%a9%d7%99%d7%9d1/",
+     "text": "דרושים"
+    },
+    {
+     "href": "/%d7%a6%d7%a8%d7%95-%d7%a7%d7%a9%d7%a8-1/",
+     "text": "צרו קשר"
+    }
+   ]
+  },
+  {
+   "title": "השירותים שלנו",
+   "links": [
+    {
+     "href": "/%d7%a9%d7%98%d7%99%d7%a4%d7%aa-%d7%9e%d7%a2%d7%a8%d7%9b%d7%95%d7%aa-%d7%a1%d7%95%d7%9c%d7%90%d7%a8%d7%99%d7%95%d7%aa/",
+     "text": "שטיפת מערכות סולאריות"
+    },
+    {
+     "href": "/%d7%9e%d7%a2%d7%a8%d7%9b%d7%aa-%d7%a9%d7%98%d7%99%d7%a4%d7%94-%d7%90%d7%95%d7%98%d7%95%d7%9e%d7%98%d7%99%d7%aa/",
+     "text": "מערכת שטיפה אוטומטית"
+    },
+    {
+     "href": "/%d7%aa%d7%97%d7%96%d7%95%d7%a7%d7%94-%d7%9b%d7%95%d7%9c%d7%9c%d7%aa1/",
+     "text": "תחזוקה כוללת"
+    },
+    {
+     "href": "/%d7%99%d7%96%d7%9e%d7%95%d7%aa-%d7%9e%d7%a9%d7%95%d7%aa%d7%a4%d7%aa1/",
+     "text": "יזמות משותפת"
+    }
+   ]
+  }
+ ],
+ "footerLegal": [
+  {
+   "href": "/%d7%9e%d7%93%d7%99%d7%a0%d7%99%d7%95%d7%aa-%d7%a4%d7%a8%d7%98%d7%99%d7%95%d7%aa1/",
+   "text": "מדיניות פרטיות"
+  },
+  {
+   "href": "/%d7%94%d7%a6%d7%94%d7%a8%d7%aa-%d7%a0%d7%92%d7%99%d7%a9%d7%95%d7%aa1/",
+   "text": "הצהרת נגישות"
+  },
+  {
+   "href": "http://maydigital.co.il/",
+   "text": "עיצוב ופיתוח סטודיו מאי דיגיטל"
+  }
  ]
 }

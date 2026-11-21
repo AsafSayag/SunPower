@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import { INDEXABLE } from "@/lib/indexing";
-import { footerHtml, headerHtml, SITE_URL } from "@/lib/site";
+import { Assistant, Heebo } from "next/font/google";
+import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
+
+const display = Heebo({ variable: "--font-display", subsets: ["hebrew", "latin"], weight: ["700", "800"], display: "swap" });
+const body = Assistant({ variable: "--font-body", subsets: ["hebrew", "latin"], weight: ["400", "600", "700"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -21,11 +28,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="he-IL" dir="rtl">
+    <html lang="he-IL" dir="rtl" className={`${display.variable} ${body.variable}`}>
       <body>
-        <header className="site-header" dangerouslySetInnerHTML={{ __html: headerHtml }} />
+        <a href="#main" className="skip-link">
+          דילוג לתוכן
+        </a>
+        <SiteHeader />
         {children}
-        <footer className="site-footer" dangerouslySetInnerHTML={{ __html: footerHtml }} />
+        <SiteFooter />
+        <WhatsAppButton />
       </body>
       {/* Accessibility widget the old site loads (Enable). The license is tied to the live domain. */}
       {INDEXABLE && (

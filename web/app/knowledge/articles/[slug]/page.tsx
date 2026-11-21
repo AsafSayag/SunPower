@@ -43,7 +43,7 @@ export default async function ArticlePage({ params }: Props) {
   const wide = article.image.endsWith(".jpg");
 
   return (
-    <main className="content knowledge">
+    <main className="content knowledge" id="main">
       <JsonLd
         data={graph(
           articleLd(article),

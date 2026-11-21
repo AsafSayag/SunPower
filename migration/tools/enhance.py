@@ -187,6 +187,72 @@ for link in OV.get("menu_links", []):
         if m and enc(link["slug"]) not in d[part]:
             d[part] = d[part][:m.end()] + ' <li><a href="%s">%s</a></li>' % (enc(link["slug"]), html.escape(link["text"])) + d[part][m.end():]
             report.setdefault("menu_links", []).append(part + ": " + link["text"])
+# ---- Home page as structured data, so the designed layout can place each piece.
+# Every string is taken from the converted HTML; nothing is rewritten here.
+def img_obj(tag):
+    a = dict(re.findall(r'(\w+)="([^"]*)"', tag))
+    return {"src": html.unescape(a.get("src", "")), "alt": html.unescape(a.get("alt", "")), "width": int(a.get("width", 0)),
+            "height": int(a.get("height", 0)), "srcset": html.unescape(a.get("srcset", ""))}
+def text(x): return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", x))).strip()
+def parse_home(h):
+    cut = lambda a, b: h[h.index(a) + len(a):h.index(b, h.index(a) + len(a))]
+    home = {"h1": text(cut("<h1>", "</h1>")), "tagline": text(cut("</h1>", "<h2>"))}
+    about = cut("<h2>אודותינו</h2>", '<div class="t">')
+    m = re.search(r"<p>(.*)</p>\s*<a href=\"([^\"]+)\"[^>]*>(.*?)</a>", about, re.S)
+    home["about"] = {"title": "אודותינו", "paragraphs": [x.strip() for x in m.group(1).split("<br>") if x.strip()],
+                     "cta": {"href": m.group(2), "text": text(m.group(3))}}
+    toks = [text(x) for x in re.findall(r'<div class="t">(.*?)</div>', cut("</a>", "<h2><strong>"))]
+    stats = []; i = 0
+    while i < len(toks):
+        st = {"label": toks[i]}; i += 1
+        if not toks[i].isdigit(): st["unit"] = toks[i]; i += 1
+        st["value"] = toks[i]; i += 1
+        if i < len(toks) and toks[i] == "+": st["suffix"] = "+"; i += 1
+        stats.append(st)
+    home["stats"] = stats
+    sf = re.search(r"<h2><strong>(.*?)</strong></h2><p><b>(.*?)</b></p>", h, re.S)
+    home["safety"] = {"title": text(sf.group(1)), "text": text(sf.group(2))}
+    why = cut("<h2>מדוע בוחרים אותנו?</h2>", "<h3>בין לקוחותינו</h3>")
+    home["why"] = {"title": "מדוע בוחרים אותנו?",
+                   "items": [{"image": img_obj(a), "title": text(b), "text": text(c)} for a, b, c in re.findall(r"(<img[^>]*>)\s*<h2>(.*?)</h2>\s*<p>(.*?)</p>", why, re.S)]}
+    m = re.search(r'<a href="([^"]+)"[^>]*>(.*?)</a>\s*$', why.strip(), re.S)
+    home["why"]["cta"] = {"href": m.group(1), "text": text(m.group(2))}
+    cl = cut("<h3>בין לקוחותינו</h3>", "<h2>לקבלת")
+    home["clients"] = {"title": "בין לקוחותינו", "logos": [img_obj(x) for x in re.findall(r"<figure>(<img[^>]*>)</figure>", cl)],
+                       "testimonials": [{"quote": text(q), "image": img_obj(i_), "name": text(n), "role": text(r)} for q, i_, n, r in
+                                        re.findall(r'<div class="t">(.*?)</div>\s*(<img[^>]*>)\s*<div class="t">(.*?)</div><div class="t">(.*?)</div>', cl, re.S)]}
+    tail = cl[cl.rindex('</div>'):]
+    g = [img_obj(x) for x in re.findall(r"<img[^>]*>", tail)]
+    # The old site showed these as comparison sliders: first image clean, second dirty.
+    home["gallery"] = [{"after": g[k], "before": g[k + 1]} for k in range(0, len(g) - 1, 2)]
+    ct = h[h.index("<h2>לקבלת"):]
+    m = re.search(r"<h2>(.*?)</h2>.*?<a href=\"([^\"]+)\"[^>]*>(.*?)</a>", ct, re.S)
+    home["contact"] = {"title": text(m.group(1)), "form": 0, "calc": {"href": m.group(2), "text": text(m.group(3))}}
+    assert len(home["stats"]) == 4 and len(home["why"]["items"]) == 4 and len(home["clients"]["testimonials"]) == 4 and len(home["gallery"]) == 3 and len(home["clients"]["logos"]) == 8, "home structure changed"
+    return home
+try:
+    d["home"] = parse_home([p for p in d["pages"] if p["slug"] == ""][0]["html"])
+    print("home parsed:", {k: (len(v) if isinstance(v, list) else "ok") for k, v in d["home"].items()})
+except Exception as e:
+    print("HOME PARSE FAILED:", repr(e)); d["home"] = None
+
+# Navigation as data for the designed header and footer.
+def links(block): return [{"href": html.unescape(a), "text": text(b)} for a, b in re.findall(r'<a href="([^"]*)"[^>]*>(.*?)</a>', block, re.S)]
+hdr = d["header"]; top = hdr[hdr.index("<ul>"):hdr.index('<ul class="header-contact">')]
+nav = []
+for li in re.split(r"(?=<li><a href=)", top):
+    ls = links(li)
+    if not ls: continue
+    if "<ul>" in li: nav.append({**ls[0], "children": ls[1:]})
+    elif not any(ls[0] in n.get("children", []) for n in nav): nav.append(ls[0])
+kids = [c for n in nav for c in n.get("children", [])]
+d["nav"] = [n for n in nav if n not in kids]
+d["headerContact"] = links(hdr[hdr.index('<ul class="header-contact">'):])
+d["logo"] = img_obj(re.search(r"<img[^>]*>", hdr).group(0))
+ft = d["footer"]
+d["footerGroups"] = [{"title": text(t), "links": links(b)} for t, b in re.findall(r"<h6>(.*?)</h6>\s*<ul>(.*?)</ul>", ft, re.S)]
+d["footerLegal"] = links(ft[ft.rindex("<ul>"):])
+print("nav:", [(n["text"], len(n.get("children", []))) for n in d["nav"]], "| footer:", [(g["title"], len(g["links"])) for g in d["footerGroups"]], len(d["footerLegal"]))
 json.dump(d, open(path, "w"), ensure_ascii=False, indent=1)
 json.dump(report, open(f"{raw}/../enhance-report.json", "w"), ensure_ascii=False, indent=1)
 print("links added:", len(report["links_added"]), "missing:", report["links_missing"], "| outlines fixed:", len(report["headings"]))

@@ -21,9 +21,9 @@ export default function CoverageMap({ headingLevel = 2 }: { headingLevel?: 2 | 3
   const path = OUTLINE.map(([lon, lat], i) => `${i ? "L" : "M"}${x(lon).toFixed(1)} ${y(lat).toFixed(1)}`).join(" ") + "Z";
 
   return (
-    <section className="coverage" aria-labelledby="coverage-title">
+    <div className="coverage">
       <div className="coverage-text">
-        <Heading id="coverage-title">פריסה ארצית: מהגליל ועד אילת</Heading>
+        <Heading id="coverage-title" className="h2 heading-accent">פריסה ארצית: מהגליל ועד אילת</Heading>
         <p>
           צוותי סאן פאוור פועלים בכל הארץ. אנחנו מנהלים, מתחזקים ושוטפים מערכות סולאריות על גגות, על הקרקע, על
           מאגרי מים ועל דפנות מאגרים, בכל אזור שבו הלקוחות שלנו מחזיקים מערכות.
@@ -60,6 +60,6 @@ export default function CoverageMap({ headingLevel = 2 }: { headingLevel?: 2 | 3
           </g>
         ))}
       </svg>
-    </section>
+    </div>
   );
 }

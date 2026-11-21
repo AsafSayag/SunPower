@@ -34,7 +34,7 @@ export default function GlossaryPage() {
   );
 
   return (
-    <main className="content knowledge">
+    <main className="content knowledge" id="main">
       <JsonLd data={ld} />
       <Breadcrumbs trail={[{ name: "מרכז הידע", path: KNOWLEDGE }, { name: "מילון מונחים" }]} />
       <h1>מילון מונחים</h1>
