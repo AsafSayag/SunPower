@@ -11,7 +11,7 @@ export default function SiteHeader() {
     <header className="site-header">
       <div className="container-x header-row">
         <Link href="/" className="header-logo" aria-label="סאן פאוור, לדף הבית">
-          <Picture image={{ ...logo, alt: "" }} sizes="140px" eager />
+          <Picture image={{ ...logo, alt: "" }} sizes="140px" priority="eager" />
         </Link>
         <input type="checkbox" id="nav-toggle" className="nav-toggle-input" aria-label="פתיחת התפריט" />
         <label htmlFor="nav-toggle" className="nav-toggle" aria-hidden="true">

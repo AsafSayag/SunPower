@@ -359,10 +359,11 @@ body {
 .form-band { display: grid; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; grid-template-columns: 1fr; background: var(--navy-900); border-radius: 28px; padding: clamp(1.5rem, 4vw, 3rem); position: relative; isolation: isolate; overflow: hidden; }
 @media (min-width: 56rem) { .form-band { grid-template-columns: 1fr 1.1fr; } }
 .form-band::before { content: ""; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(rgba(169, 192, 216, 0.13) 1px, transparent 1px), linear-gradient(90deg, rgba(169, 192, 216, 0.13) 1px, transparent 1px); background-size: var(--cell) var(--cell); mask-image: radial-gradient(120% 100% at 80% 20%, #000, transparent 75%); }
-.form-band-side :where(h2, h3, p) { color: #fff; max-width: none; }
+.form-band .form-band-side h2, .form-band .form-band-side h3, .form-band .form-band-side p { color: #fff; max-width: none; }
+.form-band .form-band-side h2 { margin: 0; }
 .form-band-side h3 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0 0 0.5rem; }
-.form-band-side p { color: #d7e3f1; font-size: 1.15rem; }
-.form-band-side p:first-child { font-family: var(--font-display), sans-serif; font-weight: 700; font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.25; color: #fff; }
+.form-band .form-band-side p { color: #d7e3f1; font-size: 1.15rem; }
+.form-band .form-band-side p:first-child { font-family: var(--font-display), sans-serif; font-weight: 700; font-size: clamp(1.4rem, 2.6vw, 1.9rem); line-height: 1.25; color: #fff; }
 .form-band-side:empty { display: none; }
 .form-band:has(.form-band-side:empty) { grid-template-columns: minmax(0, 36rem); justify-content: center; }
 

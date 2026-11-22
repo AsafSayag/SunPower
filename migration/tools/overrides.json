@@ -124,5 +124,15 @@
         "Employees counter was empty on the old site. Asaf confirmed 15+ on 2026-11-21."
       ]
     ]
+  },
+  "business": {
+    "_note": "Used for the Organization structured data. Fill 'address' (streetAddress, addressLocality, postalCode) and optional 'geo' (latitude, longitude) once the business confirms the address; the node then also becomes a LocalBusiness.",
+    "telephone": "+972-54-562-2992",
+    "email": "office@sun-power.co.il",
+    "sameAs": [
+      "https://www.facebook.com/yisunpower1/"
+    ],
+    "address": null,
+    "geo": null
   }
 }

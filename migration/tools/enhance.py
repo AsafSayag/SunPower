@@ -15,7 +15,7 @@ def dims(f):
     except Exception:
         return None
 
-WIDTHS = [384, 640, 828, 1200, 1920]
+WIDTHS = [384, 640, 828, 1080, 1200, 1920]
 def fix_images(h, slug, first_eager):
     state = {"n": 0}
     def one(m):
@@ -100,6 +100,18 @@ def fix_jsonld(p):
     for node in g.get("@graph", []):
         # The new site has no ?s= search page, so the SearchAction would describe something that does not exist.
         if node.get("@type") == "WebSite": node.pop("potentialAction", None)
+        if node.get("@type") == "Organization":
+            # Contact details that already appear on every page. The street address is added
+            # through overrides.json once the business confirms which one is correct.
+            biz = OV.get("business", {})
+            node["email"] = biz.get("email"); node["telephone"] = biz.get("telephone")
+            node["contactPoint"] = [{"@type": "ContactPoint", "telephone": biz.get("telephone"), "email": biz.get("email"),
+                                     "contactType": "customer service", "areaServed": "IL", "availableLanguage": ["he"]}]
+            node["areaServed"] = {"@type": "Country", "name": "ישראל"}
+            if biz.get("sameAs"): node["sameAs"] = sorted(set(node.get("sameAs", []) + biz["sameAs"]))
+            if biz.get("address"):
+                node["@type"] = ["Organization", "LocalBusiness"]; node["address"] = {"@type": "PostalAddress", "addressCountry": "IL", **biz["address"]}
+                if biz.get("geo"): node["geo"] = {"@type": "GeoCoordinates", **biz["geo"]}
     p["jsonld"] = json.dumps(g, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
 def fix_meta(p):

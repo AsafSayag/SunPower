@@ -16,6 +16,8 @@ const OLD_SLUGS: Record<string, string> = {
   "team": "צוות-שטיפת-מערכות-סולאריות1", // best guess: the washing-team job page
   "privacy-policy": "מדיניות-פרטיות1",
   "accessibility": "הצהרת-נגישות1",
+  // Empty WordPress archive of the old site; articles now live in the knowledge center.
+  "category/מאמרים": "knowledge",
 };
 
 export function proxy(request: NextRequest) {

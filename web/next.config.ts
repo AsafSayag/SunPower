@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // The old WordPress site serves every page with a trailing slash; keep it identical.
   trailingSlash: true,
+  // Put the (small) stylesheet inside the HTML so first paint does not wait for a second request.
+  experimental: { inlineCss: true },
   images: {
     formats: ["image/avif", "image/webp"],
     // Uploaded media never changes under the same name, so optimized copies can be kept for a year.
