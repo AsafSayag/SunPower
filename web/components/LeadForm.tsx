@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/components/AnalyticsEvents";
 import { type FormField, MAX_UPLOAD_MB, PRIVACY_PATH, UPLOAD_TYPES } from "@/lib/forms";
 
 type Props = { fields: FormField[]; page: string };
@@ -26,6 +27,8 @@ export default function LeadForm({ fields, page }: Props) {
       const res = await fetch("/api/lead/", { method: "POST", body: data });
       if (!res.ok) throw new Error(String(res.status));
       form.reset();
+      // The conversion: one event per delivered form, with the page it came from.
+      track("generate_lead", { form_page: page });
       setStatus("sent");
       setMessage("הפרטים נשלחו, נחזור אליכם בהקדם.");
     } catch {

@@ -1,7 +1,10 @@
 import { MAX_UPLOAD_MB, UPLOAD_TYPES } from "@/lib/forms";
+import { mailConfigured, sendLead } from "@/lib/mail";
 
-// Receives every site form and passes it on to LEAD_WEBHOOK_URL (the hub that will fan out to
-// WhatsApp, email and the CRM). Until that address is set, submissions are refused, not dropped silently.
+/* Receives every site form. Delivery, in order of preference:
+   1. email through the business mailbox (SMTP_USER / SMTP_PASSWORD)
+   2. a webhook (LEAD_WEBHOOK_URL), kept for a future CRM
+   With neither configured the request is refused, never dropped silently. */
 export async function POST(request: Request) {
   let data: FormData;
   try {
@@ -14,30 +17,41 @@ export async function POST(request: Request) {
   if (data.get("website")) return Response.json({ ok: true });
   if (data.get("accepted") !== "yes") return Response.json({ error: "consent_required" }, { status: 400 });
 
-  const out = new FormData();
-  out.set("page", String(data.get("page") ?? "").slice(0, 200));
-  out.set("submittedAt", new Date().toISOString());
-  let hasContent = false;
+  const page = String(data.get("page") ?? "").slice(0, 200);
+  const fields: [string, string][] = [];
   for (const [key, value] of data.entries()) {
     if (!key.startsWith("field:") || typeof value !== "string") continue;
     const text = value.trim().slice(0, 2000);
-    if (text) hasContent = true;
-    out.set(key.slice(6).slice(0, 100), text);
+    if (text) fields.push([key.slice(6).slice(0, 100), text]);
   }
-  if (!hasContent) return Response.json({ error: "empty" }, { status: 400 });
+  if (!fields.length) return Response.json({ error: "empty" }, { status: 400 });
 
-  const file = data.get("file");
-  if (file instanceof File && file.size > 0) {
-    const ext = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
-    if (file.size > MAX_UPLOAD_MB * 1024 * 1024 || !UPLOAD_TYPES.includes(ext))
+  const upload = data.get("file");
+  let file: { name: string; data: Buffer } | undefined;
+  if (upload instanceof File && upload.size > 0) {
+    const ext = upload.name.slice(upload.name.lastIndexOf(".")).toLowerCase();
+    if (upload.size > MAX_UPLOAD_MB * 1024 * 1024 || !UPLOAD_TYPES.includes(ext))
       return Response.json({ error: "bad_file" }, { status: 400 });
-    out.set("file", file, file.name);
+    file = { name: upload.name.slice(-120), data: Buffer.from(await upload.arrayBuffer()) };
   }
 
   const hook = process.env.LEAD_WEBHOOK_URL;
-  if (!hook) return Response.json({ error: "not_configured" }, { status: 503 });
+  if (!mailConfigured() && !hook) return Response.json({ error: "not_configured" }, { status: 503 });
 
-  const res = await fetch(hook, { method: "POST", body: out });
-  if (!res.ok) return Response.json({ error: "delivery_failed" }, { status: 502 });
+  try {
+    if (mailConfigured()) await sendLead({ page, fields, file });
+    if (hook) {
+      const out = new FormData();
+      out.set("page", page);
+      out.set("submittedAt", new Date().toISOString());
+      for (const [k, v] of fields) out.set(k, v);
+      const res = await fetch(hook, { method: "POST", body: out });
+      if (!res.ok && !mailConfigured()) throw new Error(`webhook ${res.status}`);
+    }
+  } catch (err) {
+    // Logged for the site owner; the visitor sees a retry message with the phone number.
+    console.error("lead delivery failed", err instanceof Error ? err.message : err);
+    return Response.json({ error: "delivery_failed" }, { status: 502 });
+  }
   return Response.json({ ok: true });
 }

@@ -120,8 +120,8 @@
     "": [
       [
         "<div class=\"t\">עובדים בפריסה ארצית</div> <div class=\"t\">+</div>",
-        "<div class=\"t\">עובדים בפריסה ארצית</div> <div class=\"t\">15</div> <div class=\"t\">+</div>",
-        "Employees counter was empty on the old site. Asaf confirmed 15+ on 2026-11-21."
+        "<div class=\"t\">עובדים בפריסה ארצית</div> <div class=\"t\">30</div> <div class=\"t\">+</div>",
+        "Employees counter was empty on the old site. Asaf confirmed 30+ on 2026-11-22 (earlier figure was 15+)."
       ]
     ]
   },
@@ -132,7 +132,12 @@
     "sameAs": [
       "https://www.facebook.com/yisunpower1/"
     ],
-    "address": null,
-    "geo": null
+    "address": {
+      "streetAddress": "ניר דוד 49",
+      "addressLocality": "ראשון לציון"
+    },
+    "geo": null,
+    "address_display": "ניר דוד 49, ראשון לציון",
+    "_address_note": "Confirmed by Asaf on 2026-11-22. Replaces the three conflicting addresses of the old site (footer, contact page, Waze pin)."
   }
 }

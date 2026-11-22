@@ -3,6 +3,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import { INDEXABLE } from "@/lib/indexing";
 import { Assistant, Heebo } from "next/font/google";
+import AnalyticsEvents from "@/components/AnalyticsEvents";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <SiteFooter />
         <WhatsAppButton />
+        <AnalyticsEvents />
       </body>
       {/* Accessibility widget the old site loads (Enable). The license is tied to the live domain. */}
       {INDEXABLE && (

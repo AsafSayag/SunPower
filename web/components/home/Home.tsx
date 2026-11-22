@@ -3,6 +3,7 @@ import CoverageMap from "@/components/CoverageMap";
 import LeadForm from "@/components/LeadForm";
 import Picture from "@/components/Picture";
 import BeforeAfter from "@/components/home/BeforeAfter";
+import HeroVideo from "@/components/home/HeroVideo";
 import type { FormField } from "@/lib/forms";
 import { footerGroups, headerContact, home as data, type Img } from "@/lib/site";
 
@@ -24,7 +25,8 @@ export default function Home({ fields }: { fields: FormField[] }) {
 
   return (
     <main id="main">
-      <section className="hero cell-grid">
+      <HeroVideo />
+      <section className="hero cell-grid" id="intro">
         <div className="container-x hero-grid">
           <div>
             <h1 className="h1 reveal-immediate">{home.h1}</h1>
@@ -42,7 +44,7 @@ export default function Home({ fields }: { fields: FormField[] }) {
           </div>
           <div className="hero-art">
             <div className="hero-photo">
-              <Picture image={heroPhoto} sizes="(max-width: 62rem) 100vw, 50vw" eager />
+              <Picture image={heroPhoto} sizes="(max-width: 62rem) 100vw, 50vw" />
               <div className="hero-cells" aria-hidden="true">
                 {HERO_CELLS.map((c, i) => (
                   <i key={i} style={{ gridColumn: c.col, gridRow: c.row, animationDelay: c.delay }} />

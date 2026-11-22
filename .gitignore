@@ -4,3 +4,6 @@ migration/raw/media/
 
 # Full site backups (database with personal data and secrets): never commit
 backup-private/
+
+# Source clips and masters for the opening film (hundreds of MB); the web versions are in web/public/video
+video-src/

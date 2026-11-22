@@ -15,6 +15,11 @@ def dims(f):
     except Exception:
         return None
 
+def img_obj(tag):
+    a = dict(re.findall(r'(\w+)="([^"]*)"', tag))
+    return {"src": html.unescape(a.get("src", "")), "alt": html.unescape(a.get("alt", "")), "width": int(a.get("width", 0)),
+            "height": int(a.get("height", 0)), "srcset": html.unescape(a.get("srcset", ""))}
+def text(x): return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", x))).strip()
 WIDTHS = [384, 640, 828, 1080, 1200, 1920]
 def fix_images(h, slug, first_eager):
     state = {"n": 0}
@@ -158,7 +163,20 @@ def field_groups(form):
         out.append(f)
     return out
 
+# The business address: every navigation link (Waze) gets the confirmed address and a search-based link.
+def fix_address(h):
+    addr = OV.get("business", {}).get("address_display")
+    if not addr: return h
+    href = "https://waze.com/ul?q=" + urllib.parse.quote(addr) + "&amp;navigate=yes"
+    def one(m):
+        prefix = "כתובת: " if "כתובת:" in m.group(2) else ""
+        report.setdefault("address_links", []).append(text(m.group(2)))
+        return f'<a href="{href}"{m.group(1)}> {prefix}{addr} </a>'
+    return re.sub(r'<a href="https://waze\.com/[^"]*"([^>]*)>(.*?)</a>', one, h, flags=re.S)
+d["footer"] = fix_address(d["footer"])
+
 for p in d["pages"]:
+    p["html"] = fix_address(p["html"])
     src = open(glob.glob(f"{raw}/html/{p['id']}_*.html")[0], encoding="utf-8").read()
     body = src[src.find('data-elementor-type="wp-page"'):src.find('data-elementor-type="footer"')]
     p["forms"] = [field_groups(f) for f in re.findall(r"<form\b.*?</form>", body, re.S)]
@@ -199,11 +217,6 @@ for link in OV.get("menu_links", []):
         if m and enc(link["slug"]) not in d[part]:
             d[part] = d[part][:m.end()] + ' <li><a href="%s">%s</a></li>' % (enc(link["slug"]), html.escape(link["text"])) + d[part][m.end():]
             report.setdefault("menu_links", []).append(part + ": " + link["text"])
-def img_obj(tag):
-    a = dict(re.findall(r'(\w+)="([^"]*)"', tag))
-    return {"src": html.unescape(a.get("src", "")), "alt": html.unescape(a.get("alt", "")), "width": int(a.get("width", 0)),
-            "height": int(a.get("height", 0)), "srcset": html.unescape(a.get("srcset", ""))}
-def text(x): return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", x))).strip()
 # ---- Inner pages: group repeating patterns so the design can lay them out. Words are untouched.
 def structure(p):
     if not p["slug"]: return
