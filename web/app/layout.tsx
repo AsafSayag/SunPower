@@ -4,6 +4,7 @@ import Script from "next/script";
 import { INDEXABLE } from "@/lib/indexing";
 import { Assistant, Heebo } from "next/font/google";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
+import HeaderState from "@/components/HeaderState";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           דילוג לתוכן
         </a>
         <SiteHeader />
+        <HeaderState />
         {children}
         <SiteFooter />
         <WhatsAppButton />
