@@ -71,12 +71,22 @@ for p in pages:
 
 section("Old addresses redirect")
 proxy = open(os.path.join(ROOT, "web", "proxy.ts"), encoding="utf-8").read()
-for old, new in re.findall(r'^\s*"([^"]+)":\s*"([^"]+)"', proxy, re.M):
+old_slugs = proxy[proxy.index("const OLD_SLUGS"):]
+old_slugs = old_slugs[:old_slugs.index("};")]
+for old, new in re.findall(r'^\s*"([^"]+)":\s*"([^"]+)"', old_slugs, re.M):
     st, hd, _ = fetch(f"{BASE}/{old}/")
     loc = urllib.parse.unquote(hd.get("Location", hd.get("location", "")))
     target_ok = loc.rstrip("/").endswith("/" + new)
     st2 = fetch(urllib.parse.urljoin(BASE + "/", hd.get("Location", hd.get("location", ""))))[0] if target_ok else 0
     check(f"301 /{old}/ -> /{new}/", st == 301 and target_ok and st2 == 200, f"{st} {loc} then {st2}")
+page_ids = proxy[proxy.index("const PAGE_IDS"):]
+page_ids = dict(re.findall(r'^\s*"(\d+)":\s*"([^"]*)"', page_ids[:page_ids.index("};")], re.M))
+for pid in ("22", "1950"):
+    st, hd, _ = fetch(f"{BASE}/?p={pid}")
+    loc = urllib.parse.unquote(hd.get("Location", hd.get("location", "")))
+    check(f"301 /?p={pid} -> /{page_ids[pid]}", st == 301 and loc.rstrip("/").endswith(page_ids[pid].rstrip("/")) , f"{st} {loc}")
+st, hd, _ = fetch(BASE + "/feed/")
+check("old feed redirects", st in (301, 308), str(st))
 st, hd, _ = fetch(BASE + "/" + pages[1]["slug"])
 check("missing trailing slash redirects", st in (301, 308), str(st))
 st, _, _ = fetch(BASE + "/no-such-page-xyz/")
@@ -97,6 +107,9 @@ for sm in re.findall(r"<loc>(.*?)</loc>", body.decode()):
     locs += re.findall(r"<loc>(.*?)</loc>", b2.decode())
 bad = [u for u in locs if fetch(u.replace(SITE, BASE))[0] != 200]
 check(f"all {len(locs)} sitemap addresses load", not bad and len(locs) >= len(pages), str(bad[:3]))
+imgs_in_map = [u for u in re.findall(r"<image:loc>(.*?)</image:loc>", "".join(fetch(sm.replace(SITE, BASE))[2].decode() for sm in re.findall(r"<loc>(.*?)</loc>", fetch(BASE + "/sitemap_index.xml")[2].decode())))]
+bad = [u for u in imgs_in_map if fetch(html.unescape(u).replace(SITE, BASE))[0] != 200]
+check(f"all {len(imgs_in_map)} sitemap images load", imgs_in_map and not bad, str(bad[:3]))
 
 section("Images and links on the home page")
 home = bodies["/"]
@@ -115,6 +128,12 @@ ct = {"Content-Type": f"multipart/form-data; boundary={boundary}"}
 st, _, body = fetch(BASE + "/api/lead/", "POST", form([("page", "launch-check"), ("field:name", "check")]), ct)
 check("form endpoint refuses a submission without consent", st == 400 and b"consent_required" in body, f"{st} {body[:80]!r}")
 print("       (a real submission is not sent by this script: send one by hand and confirm it arrives)")
+
+section("Security headers")
+hd = fetch(BASE + "/")[1]; low = {k.lower(): v for k, v in hd.items()}
+for h in ("x-content-type-options", "referrer-policy", "x-frame-options", "content-security-policy", "strict-transport-security"):
+    check(f"header {h}", h in low)
+check("no x-powered-by header", "x-powered-by" not in low)
 
 section("Tracking and verification")
 check("Search Console verification tag present", "google-site-verification" in home)

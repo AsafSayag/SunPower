@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SunPower — sun-power.co.il
 
-## Getting Started
+The company site, moved from WordPress (uPress) to Next.js on Vercel with every address,
+text and SEO tag of the old site preserved.
 
-First, run the development server:
+## Layout of the repository
+
+| Path | What it holds |
+| --- | --- |
+| `web/` | The site (Next.js App Router) |
+| `web/content/site.json` | All converted pages, generated — do not edit by hand |
+| `web/content/knowledge.ts` | Knowledge center: articles, questions, glossary, map data |
+| `web/proxy.ts` | Redirects for old addresses (slugs, `/?p=` ids) |
+| `web/app/api/lead/route.ts` | Form endpoint (email through the business mailbox) |
+| `migration/raw/` | Copy of the old site: page HTML, REST data, archived pages |
+| `migration/tools/` | Conversion, overrides, launch check and site comparison |
+| `LAUNCH_PLAN.md` | DNS changes and launch-day steps |
+
+## Changing content
+
+Text of the converted pages comes from the old site. Approved changes (descriptions, alt
+texts, internal links, figures, address) live in `migration/tools/overrides.json`. After
+editing it, regenerate:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+python3 -I migration/tools/convert.py migration/raw web/content
+python3 -I migration/tools/enhance.py migration/raw web
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Running
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd web && npm install && npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment variables
 
-## Learn More
+See `web/.env.example`. On test environments leave `SITE_INDEXABLE` unset: the site then
+sends `noindex` everywhere. Set it to `true` only on the live domain.
 
-To learn more about Next.js, take a look at the following resources:
+## Checks before and after a deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+python3 -I migration/tools/launch_check.py https://sunpower-staging.vercel.app
+python3 -I migration/tools/compare_sites.py https://sunpower-staging.vercel.app
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+On launch day add `--live` to the first command, against `https://sun-power.co.il`.
 
-## Deploy on Vercel
+## Deploying
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Two Vercel projects: `sunpower-staging` (test, linked in `web/.vercel`) and `sunpower`
+(production, attached to the domain).

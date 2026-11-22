@@ -20,7 +20,33 @@ const OLD_SLUGS: Record<string, string> = {
   "category/מאמרים": "knowledge",
 };
 
+// WordPress page ids, for old links of the form /?p=22 or /?page_id=22.
+const PAGE_IDS: Record<string, string> = {
+  "22": "שטיפת-מערכות-סולאריות",
+  "26": "מערכת-שטיפה-אוטומטית",
+  "1950": "",
+  "2548": "אודות-החברה-1",
+  "2751": "צרו-קשר-1",
+  "3250": "תחזוקה-כוללת1",
+  "3265": "דרושים1",
+  "3330": "פרויקטים-נבחרים1",
+  "3552": "הצהרת-נגישות1",
+  "3554": "מדיניות-פרטיות1",
+  "3556": "מנהלת-משרד1",
+  "3562": "יזמות-משותפת1",
+  "3781": "צוות-שטיפת-מערכות-סולאריות1",
+  "4389": "מנטר-מערכות-סולאריות",
+};
+
+function pagePath(slug: string) {
+  return slug ? `/${encodeURIComponent(slug).replace(/%[0-9A-F]{2}/g, (m) => m.toLowerCase())}/` : "/";
+}
+
 export function proxy(request: NextRequest) {
+  const id = request.nextUrl.searchParams.get("p") ?? request.nextUrl.searchParams.get("page_id");
+  if (id && request.nextUrl.pathname === "/" && id in PAGE_IDS) {
+    return NextResponse.redirect(new URL(pagePath(PAGE_IDS[id]), request.url), 301);
+  }
   let path = request.nextUrl.pathname;
   try {
     path = decodeURIComponent(path);
@@ -29,10 +55,9 @@ export function proxy(request: NextRequest) {
   }
   const target = OLD_SLUGS[path.replace(/^\/|\/$/g, "")];
   if (!target) return NextResponse.next();
-  const enc = encodeURIComponent(target).replace(/%[0-9A-F]{2}/g, (m) => m.toLowerCase());
-  return NextResponse.redirect(new URL(`/${enc}/`, request.url), 301);
+  return NextResponse.redirect(new URL(pagePath(target), request.url), 301);
 }
 
 export const config = {
-  matcher: "/((?!_next/|wp-content/|.*\\.[a-z0-9]+$).*)",
+  matcher: "/((?!_next/|wp-content/|video/|share/|.*\\.[a-z0-9]+$).*)",
 };
