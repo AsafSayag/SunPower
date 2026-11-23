@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeroField from "@/components/HeroField";
 import { KNOWLEDGE } from "@/lib/knowledge";
 import { nav } from "@/lib/site";
 
@@ -9,7 +10,8 @@ export default function NotFound() {
   const contact = nav.find((n) => n.text === "צרו קשר");
   return (
     <main id="main" className="inner">
-      <section className="page-hero cell-grid notfound">
+      <section className="page-hero notfound">
+        <HeroField />
         <div className="container-x">
           <p className="notfound-code" aria-hidden="true">
             404

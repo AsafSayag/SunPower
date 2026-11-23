@@ -4,10 +4,10 @@ import LeadForm from "@/components/LeadForm";
 import Picture from "@/components/Picture";
 import BeforeAfter from "@/components/home/BeforeAfter";
 import HeroVideo from "@/components/home/HeroVideo";
+import StatsPanel from "@/components/home/StatsPanel";
 import type { FormField } from "@/lib/forms";
 import { footerGroups, headerContact, home as data, type Img } from "@/lib/site";
 
-const nf = new Intl.NumberFormat("en-US");
 const HERO_CELLS = [
   { col: 2, row: 1, delay: "0s" },
   { col: 3, row: 2, delay: "1.4s" },
@@ -56,20 +56,7 @@ export default function Home({ fields }: { fields: FormField[] }) {
       </section>
 
       <div className="container-x stats-wrap">
-        <dl className="stats">
-          {home.stats.map((s) => (
-            <div key={s.label} className="stat">
-              <dt className="stat-label">{s.label}</dt>
-              <dd className="stat-value">
-                {"unit" in s && s.unit && <span className="stat-unit">{s.unit}</span>}
-                <span>
-                  {nf.format(Number(s.value))}
-                  {s.suffix}
-                </span>
-              </dd>
-            </div>
-          ))}
-        </dl>
+        <StatsPanel stats={home.stats} />
       </div>
 
       <section className="section">
@@ -104,8 +91,9 @@ export default function Home({ fields }: { fields: FormField[] }) {
             <h2 className="h2 heading-accent heading-accent--center">{home.why.title}</h2>
           </div>
           <div className="why-grid">
-            {home.why.items.map((item) => (
-              <article key={item.title} className="card reveal">
+            {home.why.items.map((item, i) => (
+              <article key={item.title} className={i === 0 ? "tile tile--lead reveal" : "tile reveal"}>
+                {i === 0 && <Picture image={{ ...aboutPhoto, alt: "" }} sizes="(max-width: 62rem) 100vw, 40vw" className="tile-photo" />}
                 <div className="why-icon">
                   <Picture image={item.image as Img} sizes="88px" />
                 </div>
@@ -117,10 +105,11 @@ export default function Home({ fields }: { fields: FormField[] }) {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section ba-section">
+        <BeforeAfter before={home.gallery[0].before as Img} after={home.gallery[0].after as Img} heading="איך נראית עבודה יסודית" />
         <div className="container-x">
           <div className="ba-grid">
-            {home.gallery.map((pair, i) => (
+            {home.gallery.slice(1).map((pair, i) => (
               <div key={i} className="reveal">
                 <BeforeAfter before={pair.before as Img} after={pair.after as Img} />
               </div>

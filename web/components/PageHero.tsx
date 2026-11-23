@@ -1,4 +1,5 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
+import HeroField from "@/components/HeroField";
 
 type Props = {
   trail: { name: string; path?: string }[];
@@ -11,7 +12,8 @@ type Props = {
 /** Opening band of every inner page: breadcrumb, the page's single H1 and an optional lead. */
 export default function PageHero({ trail, title, titleHtml, lead, meta }: Props) {
   return (
-    <header className="page-hero cell-grid">
+    <header className="page-hero">
+      <HeroField />
       <div className="container-x">
         <Breadcrumbs trail={trail} />
         {titleHtml ? (

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeroField from "@/components/HeroField";
 import Picture from "@/components/Picture";
 import { footerGroups, footerLegal, home, logo } from "@/lib/site";
 
@@ -7,7 +8,8 @@ const isNumber = (text: string) => /^[\d\s-]+/.test(text);
 
 export default function SiteFooter() {
   return (
-    <footer className="site-footer cell-grid">
+    <footer className="site-footer">
+      <HeroField />
       <div className="container-x">
         <div className="footer-grid">
           <div className="footer-brand">
