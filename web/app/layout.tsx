@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import { INDEXABLE } from "@/lib/indexing";
 import { Assistant, Heebo } from "next/font/google";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
+import CookieNotice from "@/components/CookieNotice";
 import HeaderState from "@/components/HeaderState";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -41,6 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteFooter />
         <WhatsAppButton />
         <AnalyticsEvents />
+        {/* Set NEXT_PUBLIC_GA_ID only on the live site, so test visits do not reach the business's data.
+            Analytics loads only after the visitor agrees in the cookie notice. */}
+        <CookieNotice gaId={process.env.NEXT_PUBLIC_GA_ID} />
       </body>
       {/* Accessibility widget the old site loads (Enable). The license is tied to the live domain. */}
       {INDEXABLE && (
@@ -49,8 +52,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           strategy="lazyOnload"
         />
       )}
-      {/* Set NEXT_PUBLIC_GA_ID only on the live site, so test visits do not reach the business's data. */}
-      {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
     </html>
   );
 }
