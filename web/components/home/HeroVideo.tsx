@@ -47,6 +47,7 @@ export default function HeroVideo() {
           onPlaying={() => setPlaying(true)}
         />
       )}
+      <p className="hero-film-title">היי זיו מה המצב</p>
       <a href="#intro" className="hero-film-hint" aria-label="המשך לתוכן">
         <span />
       </a>
