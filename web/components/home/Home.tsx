@@ -8,19 +8,10 @@ import StatsCube from "@/components/home/StatsCube";
 import type { FormField } from "@/lib/forms";
 import { footerGroups, headerContact, home as data, type Img } from "@/lib/site";
 
-const HERO_CELLS = [
-  { col: 2, row: 1, delay: "0s" },
-  { col: 3, row: 2, delay: "1.4s" },
-  { col: 4, row: 3, delay: "2.8s" },
-  { col: 1, row: 2, delay: "4.2s" },
-  { col: 2, row: 3, delay: "5.6s" },
-];
-
 export default function Home({ fields }: { fields: FormField[] }) {
   const home = data!;
   const wa = headerContact.find((l) => l.href.includes("wa.me"));
   const contactLinks = footerGroups[0]?.links.filter((l) => /^(tel:|mailto:)/.test(l.href)) ?? [];
-  const heroPhoto = home.gallery[0].after as Img;
   const aboutPhoto = home.gallery[2].after as Img;
 
   return (
@@ -42,20 +33,11 @@ export default function Home({ fields }: { fields: FormField[] }) {
               )}
             </div>
           </div>
-          <div className="hero-art">
-            <div className="hero-photo">
-              <Picture image={heroPhoto} sizes="(max-width: 62rem) 100vw, 50vw" />
-              <div className="hero-cells" aria-hidden="true">
-                {HERO_CELLS.map((c, i) => (
-                  <i key={i} style={{ gridColumn: c.col, gridRow: c.row, animationDelay: c.delay }} />
-                ))}
-              </div>
-            </div>
+          <div className="hero-cube">
+            <StatsCube stats={home.stats} />
           </div>
         </div>
       </section>
-
-      <StatsCube stats={home.stats} />
 
       <section className="section">
         <div className="container-x about-grid">

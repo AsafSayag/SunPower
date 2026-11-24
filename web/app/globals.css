@@ -601,36 +601,75 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 }
 
 /* ============================================================
-   Home: the four figures on a turning cube of panel glass
+   Home hero: the four figures on a cube of dark glass (StatsCube)
    ============================================================ */
-.cube-band { background: var(--navy-950); color: #fff; padding-block: clamp(3.5rem, 8vw, 6.5rem); position: relative; isolation: isolate; overflow: clip; }
-.cube-band::before { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none; background-image: linear-gradient(rgba(169, 192, 216, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(169, 192, 216, 0.1) 1px, transparent 1px); background-size: var(--cell) var(--cell); mask-image: radial-gradient(90% 90% at 50% 50%, #000, transparent 78%); }
-.cube-layout { display: grid; gap: clamp(2rem, 6vw, 5rem); align-items: center; grid-template-columns: 1fr; }
-@media (min-width: 62rem) { .cube-layout { grid-template-columns: 1fr 1fr; } }
+.hero-cube { display: grid; place-items: center; }
+.cube-scene { --s: clamp(13rem, 56vw, 21rem); --r: 4px; position: relative; width: 100%; height: calc(var(--s) * 1.74); display: grid; place-items: center; perspective: 1150px; perspective-origin: 50% 38%; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; outline-offset: -0.5rem; }
+.cube-scene:active { cursor: grabbing; }
+/* A soft pool of light behind the cube that breathes slowly */
+.cube-scene::before { content: ""; position: absolute; left: 50%; top: 46%; width: calc(var(--s) * 2.3); aspect-ratio: 1; translate: -50% -50%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, rgba(255, 255, 255, 0.9), color-mix(in srgb, #7fb6f2 38%, transparent) 46%, transparent 72%); pointer-events: none; animation: cubeGlow 9s ease-in-out infinite; }
+@keyframes cubeGlow { 0%, 100% { transform: scale(0.94); opacity: 0.7; } 50% { transform: scale(1.06); opacity: 1; } }
+.cube-float { transform-style: preserve-3d; animation: cubeFloat 7s ease-in-out infinite; }
+@keyframes cubeFloat { 0%, 100% { transform: translateY(-3%); } 50% { transform: translateY(3%); } }
+.cube { width: var(--s); height: var(--s); position: relative; transform-style: preserve-3d; }
 
-.cube-scene { --s: clamp(13rem, 58vw, 20rem); position: relative; height: calc(var(--s) * 1.62); display: grid; place-items: center; perspective: 1100px; cursor: pointer; }
-/* The warm light of the sun behind the cube */
-.cube-scene::before { content: ""; position: absolute; left: 50%; top: 46%; width: calc(var(--s) * 2.3); aspect-ratio: 1; translate: -50% -50%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--sun-400) 30%, transparent), color-mix(in srgb, var(--accent-400) 10%, transparent) 45%, transparent 70%); }
-.cube-float { transform-style: preserve-3d; animation: cubeFloat 6s ease-in-out infinite; }
-@keyframes cubeFloat { 0%, 100% { transform: translateY(-1.5%); } 50% { transform: translateY(2.5%); } }
-.cube { width: var(--s); height: var(--s); position: relative; transform-style: preserve-3d; transform: rotateX(-13deg) rotateY(calc(var(--turn) * -90deg - 20deg)); transition: transform 1.25s cubic-bezier(0.65, 0, 0.2, 1); }
-.cube-face { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(var(--s) * 0.035); padding: calc(var(--s) * 0.09); text-align: center; backface-visibility: hidden; border: 2px solid rgba(214, 225, 236, 0.6); border-radius: 3px; overflow: hidden; transform: rotateY(calc(var(--i) * 90deg)) translateZ(calc(var(--s) / 2));
-  background-image: linear-gradient(115deg, rgba(255, 255, 255, 0.2), transparent 34%), linear-gradient(rgba(190, 210, 232, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(190, 210, 232, 0.2) 1px, transparent 1px), linear-gradient(155deg, #1f5590, #10305a 55%, #0a1c38);
-  background-size: 100% 100%, 100% 16.666%, 16.666% 100%, 100% 100%;
-  box-shadow: inset 0 0 calc(var(--s) * 0.22) rgba(6, 14, 30, 0.6); }
-.cube-face--top { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); background-image: linear-gradient(200deg, color-mix(in srgb, var(--sun-400) 55%, transparent), transparent 55%), linear-gradient(rgba(190, 210, 232, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(190, 210, 232, 0.3) 1px, transparent 1px), linear-gradient(#2a66a6, #163d6c); }
-.cube-face--bottom { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); background: #060f20; }
-.cube-value { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: min(calc(var(--s) * 0.27), calc(var(--s) * 1.28 / var(--n, 5))); line-height: 1; color: var(--accent-400); text-shadow: 0 0 calc(var(--s) * 0.1) rgba(154, 213, 143, 0.5), 0 2px 0 rgba(6, 14, 30, 0.5); font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; display: inline-flex; align-items: baseline; gap: 0.12em; }
+.cube-core { position: absolute; inset: 4px; background: #050d1c; backface-visibility: hidden; transform: rotateY(calc(var(--i) * 90deg)) translateZ(calc(var(--s) / 2 - 5px)); }
+.cube-core--top { transform: rotateX(90deg) translateZ(calc(var(--s) / 2 - 5px)); }
+.cube-core--bottom { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2 - 5px)); }
+
+/* A side of the block: blue glass with a glow deep inside it and a chamfered edge (the four borders
+   are lit from the top left, so their mitred corners read as a cut bevel). Two layers of light follow
+   --l (how much light the side receives) and --f (how squarely it faces the visitor), so the cube is
+   lit from one place while it turns. */
+.cube-face { --l: 0.5; --f: 1; --bevel: 2px; position: absolute; inset: 0; display: grid; place-items: center; transform-style: preserve-3d; backface-visibility: hidden; transform: rotateY(calc(var(--i) * 90deg)) translateZ(calc(var(--s) / 2));
+  border: var(--bevel) solid; border-color: rgba(214, 234, 255, 0.5) rgba(120, 165, 220, 0.3) rgba(60, 100, 160, 0.3) rgba(190, 220, 250, 0.42);
+  background:
+    radial-gradient(46% 42% at calc(50% + (1 - var(--f)) * 34%) 60%, color-mix(in srgb, var(--accent-400) 30%, transparent), transparent 100%) padding-box,
+    radial-gradient(130% 100% at 20% 0%, #4a93e6, transparent 58%) padding-box,
+    linear-gradient(168deg, #2767b4 0%, #10305f 46%, #050f24 100%) padding-box,
+    #0a1e3e border-box;
+  box-shadow: inset 0 0 calc(var(--s) * 0.1) rgba(2, 8, 20, 0.35); }
+/* shade: a side turned away from the light goes dark */
+.cube-face::before { content: ""; position: absolute; inset: calc(var(--bevel) * -1); background: #01040c; opacity: calc(0.86 - var(--l) * 0.86); pointer-events: none; }
+/* gloss: a hard-edged reflection, as on polished glass, that slides across as the cube turns */
+.cube-face::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: calc(0.15 + var(--l) * 0.85);
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.1) 49.8%, transparent 50%) no-repeat, linear-gradient(to bottom, rgba(255, 255, 255, 0.22), transparent 18%) no-repeat;
+  background-size: 190% 100%, 100% 100%; background-position: calc(58% - var(--f) * 26%) 0, 0 0; }
+.cube-face--top { --l: 1; transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); border-color: rgba(240, 248, 255, 0.8); background: linear-gradient(150deg, #b4d8fb 0%, #5c9ce4 46%, #2f6cb8 100%) padding-box, #3f7fcc border-box; }
+.cube-face--top::before, .cube-face--top::after { content: none; }
+.cube-face--bottom { --l: 0; transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); background: #020611; border-color: #020611; outline: none; }
+
+/* The figure floats a little above the glass, so it shifts against the surface as the cube turns */
+.cube-text { margin: 0; padding: calc(var(--s) * 0.08); display: flex; flex-direction: column; align-items: center; gap: calc(var(--s) * 0.04); text-align: center; transform: translateZ(calc(var(--s) * 0.03)); backface-visibility: hidden; position: relative; z-index: 1; opacity: clamp(0, calc(var(--f) * 2 - 0.3), 1); }
+.cube-value { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: min(calc(var(--s) * 0.27), calc(var(--s) * 1.28 / var(--n, 5))); line-height: 1; font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; display: inline-flex; align-items: baseline; gap: 0.12em;
+  color: #a9e39d; text-shadow: 0 1px 0 #2f7a35, 0 2px 0 rgba(4, 12, 28, 0.85), 0 0 calc(var(--s) * 0.05) rgba(154, 213, 143, 0.32); -webkit-font-smoothing: antialiased; }
 .cube-unit { font-size: 0.34em; font-weight: 700; color: var(--steel-300); letter-spacing: 0.04em; }
-.cube-label { font-size: calc(var(--s) * 0.068); line-height: 1.35; font-weight: 700; color: #fff; text-wrap: balance; text-shadow: 0 1px 2px rgba(6, 14, 30, 0.7); }
-.cube-shadow { position: absolute; left: 50%; bottom: calc(var(--s) * 0.02); width: calc(var(--s) * 1.15); height: calc(var(--s) * 0.16); translate: -50% 0; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), transparent); filter: blur(6px); }
+.cube-label { font-size: calc(var(--s) * 0.07); line-height: 1.35; font-weight: 700; color: #fff; text-wrap: balance; text-shadow: 0 1px 0 rgba(2, 8, 20, 0.9); }
 
-.cube-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
-.cube-stat { width: 100%; height: 100%; display: flex; flex-direction: column; gap: 0.35rem; text-align: start; padding: clamp(0.9rem, 2.4vw, 1.4rem); border-radius: 16px; border: 1px solid rgba(169, 192, 216, 0.22); background: rgba(255, 255, 255, 0.03); color: #fff; cursor: pointer; position: relative; overflow: hidden; transition: border-color 0.4s, background 0.4s, transform 0.4s var(--ease-brand); }
-.cube-stat::after { content: ""; position: absolute; inset-inline: 0; inset-block-end: 0; height: 3px; background: var(--accent-400); transform: scaleX(0); transform-origin: inline-start; }
-.cube-stat[aria-pressed="true"] { border-color: color-mix(in srgb, var(--accent-400) 70%, transparent); background: rgba(154, 213, 143, 0.08); }
-.cube-stat[aria-pressed="true"]::after { transform: scaleX(1); transition: transform 3.2s linear; }
-@media (hover: hover) { .cube-stat:hover { transform: translateY(-3px); border-color: rgba(169, 192, 216, 0.5); } }
-.cube-stat-value { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: clamp(1.6rem, 3.6vw, 2.5rem); line-height: 1; color: var(--accent-400); font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; display: inline-flex; align-items: baseline; gap: 0.3rem; align-self: flex-start; }
-.cube-stat-label { font-size: 0.98rem; line-height: 1.4; color: #d7e3f1; font-weight: 600; }
-@media (prefers-reduced-motion: reduce) { .cube-float { animation: none; } }
+/* WebGL version (cubeGl.ts). The CSS cube stays in the page as its text, out of sight. */
+.cube-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.cube-scene.is-gl .cube-float { opacity: 0; animation: none; }
+
+/* The floor: a tight contact shadow inside a wide soft one */
+.cube-shadow { position: absolute; left: 50%; bottom: calc(var(--s) * 0.03); width: calc(var(--s) * 1.5); height: calc(var(--s) * 0.3); translate: -50% 0; z-index: -1; border-radius: 50%; pointer-events: none; background: radial-gradient(closest-side, rgba(4, 12, 30, 0.9), rgba(4, 12, 30, 0.5) 30%, rgba(4, 12, 30, 0.16) 58%, transparent 76%); filter: blur(5px); animation: cubeShadow 7s ease-in-out infinite; }
+@keyframes cubeShadow { 0%, 100% { transform: scale(0.94); opacity: 0.85; } 50% { transform: scale(1.03); opacity: 1; } }
+@media (max-width: 61.99rem) { .hero-cube { margin-block-start: -1rem; } }
+@media (prefers-reduced-motion: reduce) { .cube-float, .cube-shadow, .cube-scene::before, .page-aura i { animation: none; } }
+
+/* ============================================================
+   Page backdrop (page-aura, in the layout): a pale sky, faint panel lines and coloured light that
+   drifts slowly. It stays fixed behind the page; every light section is transparent over it, and
+   the navy bands, cards and forms keep their own surfaces.
+   ============================================================ */
+.page-aura { position: fixed; inset: 0; z-index: -1; overflow: clip; pointer-events: none; background: linear-gradient(115deg, #dcebfb 0%, #eef5fc 42%, #f4f8fb 62%, #e6f3e4 100%); }
+.page-aura::after { content: ""; position: absolute; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: var(--cell) var(--cell); mask-image: radial-gradient(110% 90% at 20% 30%, #000, transparent 72%); opacity: 0.38; }
+.page-aura i { position: absolute; border-radius: 50%; filter: blur(64px); will-change: transform; }
+.page-aura i:nth-child(1) { width: 48vw; height: 48vw; min-width: 24rem; min-height: 24rem; inset-inline-start: 44%; top: -18%; background: #9fc8f5; opacity: 0.75; animation: auraA 19s ease-in-out infinite alternate; }
+.page-aura i:nth-child(2) { width: 40vw; height: 40vw; min-width: 20rem; min-height: 20rem; inset-inline-start: 56%; top: 42%; background: color-mix(in srgb, var(--accent-400) 72%, #fff); opacity: 0.6; animation: auraB 24s ease-in-out infinite alternate; }
+.page-aura i:nth-child(3) { width: 36vw; height: 36vw; min-width: 18rem; min-height: 18rem; inset-inline-start: -10%; top: 28%; background: #ffd896; opacity: 0.5; animation: auraC 21s ease-in-out infinite alternate; }
+@keyframes auraA { to { transform: translate(-16%, 20%) scale(1.22); } }
+@keyframes auraB { to { transform: translate(18%, -22%) scale(0.82); } }
+@keyframes auraC { to { transform: translate(22%, -14%) scale(1.3); } }
+/* Light sections let the backdrop through; their own grids give way to the one behind the page */
+.hero, .surface-ice, .ba-stage, .inner:not(.inner--plain) > .page-section:nth-of-type(even):not(.statement) { background: transparent; }
+.cell-grid:not(.surface-navy)::before { content: none; }
