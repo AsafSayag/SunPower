@@ -41,8 +41,8 @@ sends `noindex` everywhere. Set it to `true` only on the live domain.
 ## Checks before and after a deploy
 
 ```bash
-python3 -I migration/tools/launch_check.py <preview address of branch asaf>
-python3 -I migration/tools/compare_sites.py <preview address of branch asaf>
+python3 -I migration/tools/launch_check.py https://sunpower-git-asaf-asafsayags-projects.vercel.app
+python3 -I migration/tools/compare_sites.py https://sunpower-git-asaf-asafsayags-projects.vercel.app
 ```
 
 On launch day add `--live` to the first command, against `https://sun-power.co.il`.

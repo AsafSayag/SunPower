@@ -32,9 +32,10 @@ There is one Vercel project, `sunpower`, with `web` as its root directory.
 | Environment | Builds from | Address |
 | --- | --- | --- |
 | Production | branch `main` | `sun-power.co.il`, after the DNS change |
-| Preview (the test site) | branch `asaf`, and any other branch | The branch's preview address, shown on its deployment in Vercel |
+| Preview (the test site) | branch `asaf`, and any other branch | `asaf`: `sunpower-git-asaf-asafsayags-projects.vercel.app`. Other branches: shown on their deployment in Vercel |
 
-The separate `sunpower-staging` project was dropped on 25.11.2026.
+Preview addresses open only for people logged in to Vercel as members of the team (Vercel
+Authentication is on). The separate `sunpower-staging` project was deleted on 25.11.2026.
 
 ## Layout
 
