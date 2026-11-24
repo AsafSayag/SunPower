@@ -41,13 +41,13 @@ sends `noindex` everywhere. Set it to `true` only on the live domain.
 ## Checks before and after a deploy
 
 ```bash
-python3 -I migration/tools/launch_check.py https://sunpower-staging.vercel.app
-python3 -I migration/tools/compare_sites.py https://sunpower-staging.vercel.app
+python3 -I migration/tools/launch_check.py <preview address of branch asaf>
+python3 -I migration/tools/compare_sites.py <preview address of branch asaf>
 ```
 
 On launch day add `--live` to the first command, against `https://sun-power.co.il`.
 
 ## Deploying
 
-Two Vercel projects: `sunpower-staging` (test, linked in `web/.vercel`) and `sunpower`
-(production, attached to the domain).
+One Vercel project, `sunpower`: production builds from `main` and is attached to the domain;
+every other branch gets a preview deployment, and the preview of `asaf` is the test site.

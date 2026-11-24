@@ -2,7 +2,7 @@
 
 The company site for SunPower (solar systems: washing, maintenance, installation), in Hebrew and
 right-to-left. It was moved from WordPress to Next.js on Vercel, keeping every address, text and
-SEO tag of the old site. The new site is on staging and has not launched yet; the launch steps
+SEO tag of the old site. The new site is on a preview address and has not launched yet; the launch steps
 are in `LAUNCH_PLAN.md`.
 
 Two people work on this repository, each from their own computer with their own Claude.
@@ -27,12 +27,14 @@ Two people work on this repository, each from their own computer with their own 
 
 Deploys happen only through GitHub. Never deploy from the computer with the Vercel CLI.
 
-| Vercel project | Builds from | Address |
-| --- | --- | --- |
-| `sunpower-staging` | branch `asaf` | `sunpower-staging.vercel.app` |
-| `sunpower` (production) | branch `main` | `sun-power.co.il`, after the DNS change |
+There is one Vercel project, `sunpower`, with `web` as its root directory.
 
-Both projects use `web` as their root directory.
+| Environment | Builds from | Address |
+| --- | --- | --- |
+| Production | branch `main` | `sun-power.co.il`, after the DNS change |
+| Preview (the test site) | branch `asaf`, and any other branch | The branch's preview address, shown on its deployment in Vercel |
+
+The separate `sunpower-staging` project was dropped on 25.11.2026.
 
 ## Layout
 
@@ -85,8 +87,9 @@ npm --prefix web run lint
 - Design and layout changes go in the components and `globals.css`, not in `site.json`.
 - Everything is Hebrew and right-to-left. Check every visual change at phone width as well as
   desktop.
-- `SITE_INDEXABLE` and `NEXT_PUBLIC_GA_ID` are set only on the production project, on launch
-  day. Never set them for staging or local work.
+- `SITE_INDEXABLE` and `NEXT_PUBLIC_GA_ID` are set only for the Production environment of the
+  Vercel project, on launch day. Never set them for Preview or local work: the test site would
+  then be open to search engines.
 
 ## What is not in the repository
 
