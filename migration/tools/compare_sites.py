@@ -1,5 +1,5 @@
 """Page-by-page comparison of the old WordPress site and a deployment of the new one.
-Usage: python3 -I compare_sites.py https://sunpower-staging.vercel.app [--old https://sun-power.co.il]
+Usage: python3 -I compare_sites.py https://sunpower-git-asaf-asafsayags-projects.vercel.app [--old https://sun-power.co.il]
 Reports every difference in SEO tags, text, links, images and contact details, so each one
 can be confirmed as intentional before launch."""
 import collections, html, json, os, re, sys, urllib.error, urllib.parse, urllib.request

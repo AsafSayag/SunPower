@@ -1,7 +1,7 @@
 """Checks a deployment of the SunPower site against everything the move must preserve.
 
 Usage:
-  python3 -I launch_check.py https://sunpower-staging.vercel.app          # test environment
+  python3 -I launch_check.py https://sunpower-git-asaf-asafsayags-projects.vercel.app   # test environment
   python3 -I launch_check.py https://sun-power.co.il --live               # launch day
 
 --live additionally expects: search engines allowed, Analytics loaded, www and http

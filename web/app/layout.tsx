@@ -32,6 +32,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="he-IL" dir="rtl" className={`${display.variable} ${body.variable}`}>
       <body>
+        {/* The backdrop of every light section: a pale sky, faint panel lines and slow drifting light. */}
+        <div className="page-aura" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </div>
         <a href="#main" className="skip-link">
           דילוג לתוכן
         </a>

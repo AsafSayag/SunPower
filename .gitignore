@@ -7,3 +7,6 @@ backup-private/
 
 # Source clips and masters for the opening film (hundreds of MB); the web versions are in web/public/video
 video-src/
+
+# Personal Claude notes (each person keeps their own, e.g. which branch they push to)
+CLAUDE.local.md
