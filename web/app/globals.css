@@ -599,3 +599,38 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
   .page-hero--split .page-hero-actions { margin-block-start: 2.25rem; }
   .page-hero--split > .container-x { gap: 2.75rem; }
 }
+
+/* ============================================================
+   Home: the four figures on a turning cube of panel glass
+   ============================================================ */
+.cube-band { background: var(--navy-950); color: #fff; padding-block: clamp(3.5rem, 8vw, 6.5rem); position: relative; isolation: isolate; overflow: clip; }
+.cube-band::before { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none; background-image: linear-gradient(rgba(169, 192, 216, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(169, 192, 216, 0.1) 1px, transparent 1px); background-size: var(--cell) var(--cell); mask-image: radial-gradient(90% 90% at 50% 50%, #000, transparent 78%); }
+.cube-layout { display: grid; gap: clamp(2rem, 6vw, 5rem); align-items: center; grid-template-columns: 1fr; }
+@media (min-width: 62rem) { .cube-layout { grid-template-columns: 1fr 1fr; } }
+
+.cube-scene { --s: clamp(13rem, 58vw, 20rem); position: relative; height: calc(var(--s) * 1.62); display: grid; place-items: center; perspective: 1100px; cursor: pointer; }
+/* The warm light of the sun behind the cube */
+.cube-scene::before { content: ""; position: absolute; left: 50%; top: 46%; width: calc(var(--s) * 2.3); aspect-ratio: 1; translate: -50% -50%; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--sun-400) 30%, transparent), color-mix(in srgb, var(--accent-400) 10%, transparent) 45%, transparent 70%); }
+.cube-float { transform-style: preserve-3d; animation: cubeFloat 6s ease-in-out infinite; }
+@keyframes cubeFloat { 0%, 100% { transform: translateY(-1.5%); } 50% { transform: translateY(2.5%); } }
+.cube { width: var(--s); height: var(--s); position: relative; transform-style: preserve-3d; transform: rotateX(-13deg) rotateY(calc(var(--turn) * -90deg - 20deg)); transition: transform 1.25s cubic-bezier(0.65, 0, 0.2, 1); }
+.cube-face { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(var(--s) * 0.035); padding: calc(var(--s) * 0.09); text-align: center; backface-visibility: hidden; border: 2px solid rgba(214, 225, 236, 0.6); border-radius: 3px; overflow: hidden; transform: rotateY(calc(var(--i) * 90deg)) translateZ(calc(var(--s) / 2));
+  background-image: linear-gradient(115deg, rgba(255, 255, 255, 0.2), transparent 34%), linear-gradient(rgba(190, 210, 232, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(190, 210, 232, 0.2) 1px, transparent 1px), linear-gradient(155deg, #1f5590, #10305a 55%, #0a1c38);
+  background-size: 100% 100%, 100% 16.666%, 16.666% 100%, 100% 100%;
+  box-shadow: inset 0 0 calc(var(--s) * 0.22) rgba(6, 14, 30, 0.6); }
+.cube-face--top { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); background-image: linear-gradient(200deg, color-mix(in srgb, var(--sun-400) 55%, transparent), transparent 55%), linear-gradient(rgba(190, 210, 232, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(190, 210, 232, 0.3) 1px, transparent 1px), linear-gradient(#2a66a6, #163d6c); }
+.cube-face--bottom { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); background: #060f20; }
+.cube-value { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: min(calc(var(--s) * 0.27), calc(var(--s) * 1.28 / var(--n, 5))); line-height: 1; color: var(--accent-400); text-shadow: 0 0 calc(var(--s) * 0.1) rgba(154, 213, 143, 0.5), 0 2px 0 rgba(6, 14, 30, 0.5); font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; display: inline-flex; align-items: baseline; gap: 0.12em; }
+.cube-unit { font-size: 0.34em; font-weight: 700; color: var(--steel-300); letter-spacing: 0.04em; }
+.cube-label { font-size: calc(var(--s) * 0.068); line-height: 1.35; font-weight: 700; color: #fff; text-wrap: balance; text-shadow: 0 1px 2px rgba(6, 14, 30, 0.7); }
+.cube-shadow { position: absolute; left: 50%; bottom: calc(var(--s) * 0.02); width: calc(var(--s) * 1.15); height: calc(var(--s) * 0.16); translate: -50% 0; z-index: -1; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), transparent); filter: blur(6px); }
+
+.cube-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+.cube-stat { width: 100%; height: 100%; display: flex; flex-direction: column; gap: 0.35rem; text-align: start; padding: clamp(0.9rem, 2.4vw, 1.4rem); border-radius: 16px; border: 1px solid rgba(169, 192, 216, 0.22); background: rgba(255, 255, 255, 0.03); color: #fff; cursor: pointer; position: relative; overflow: hidden; transition: border-color 0.4s, background 0.4s, transform 0.4s var(--ease-brand); }
+.cube-stat::after { content: ""; position: absolute; inset-inline: 0; inset-block-end: 0; height: 3px; background: var(--accent-400); transform: scaleX(0); transform-origin: inline-start; }
+.cube-stat[aria-pressed="true"] { border-color: color-mix(in srgb, var(--accent-400) 70%, transparent); background: rgba(154, 213, 143, 0.08); }
+.cube-stat[aria-pressed="true"]::after { transform: scaleX(1); transition: transform 3.2s linear; }
+@media (hover: hover) { .cube-stat:hover { transform: translateY(-3px); border-color: rgba(169, 192, 216, 0.5); } }
+.cube-stat-value { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: clamp(1.6rem, 3.6vw, 2.5rem); line-height: 1; color: var(--accent-400); font-variant-numeric: tabular-nums; direction: ltr; unicode-bidi: isolate; display: inline-flex; align-items: baseline; gap: 0.3rem; align-self: flex-start; }
+.cube-stat-label { font-size: 0.98rem; line-height: 1.4; color: #d7e3f1; font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .cube-float { animation: none; } }

@@ -4,7 +4,7 @@ import LeadForm from "@/components/LeadForm";
 import Picture from "@/components/Picture";
 import BeforeAfter from "@/components/home/BeforeAfter";
 import HeroVideo from "@/components/home/HeroVideo";
-import StatsPanel from "@/components/home/StatsPanel";
+import StatsCube from "@/components/home/StatsCube";
 import type { FormField } from "@/lib/forms";
 import { footerGroups, headerContact, home as data, type Img } from "@/lib/site";
 
@@ -55,9 +55,7 @@ export default function Home({ fields }: { fields: FormField[] }) {
         </div>
       </section>
 
-      <div className="container-x stats-wrap">
-        <StatsPanel stats={home.stats} />
-      </div>
+      <StatsCube stats={home.stats} />
 
       <section className="section">
         <div className="container-x about-grid">
