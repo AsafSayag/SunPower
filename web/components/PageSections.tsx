@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { Fragment } from "react";
+import FormJump from "@/components/FormJump";
 import Gallery, { type GalleryItem } from "@/components/Gallery";
 import LeadForm from "@/components/LeadForm";
 import PageHero from "@/components/PageHero";
 import RoofCalculator from "@/components/RoofCalculator";
 import WashCalculator from "@/components/WashCalculator";
+import BeforeAfter from "@/components/home/BeforeAfter";
 import { articles } from "@/content/knowledge";
 import type { FormField } from "@/lib/forms";
 import { articlePath, KNOWLEDGE } from "@/lib/knowledge";
-import type { Page } from "@/lib/site";
+import { home, type Img, type Page } from "@/lib/site";
 
 const MARKER = /(<div data-(?:calc|form|gallery)="[^"]*"><\/div>)/;
 const FORM = /<div data-form="(\d+)"><\/div>/;
@@ -29,6 +31,52 @@ function Blocks({ html, page }: { html: string; page: Page }) {
       })}
     </>
   );
+}
+
+// Service pages laid out with the richer modules: opening statement and a comparison in the hero,
+// text beside its calculator, key statements as a dark band, and a button that follows to the form.
+const SERVICE = new Set(["שטיפת-מערכות-סולאריות"]);
+const FORM_ID = "lead-form";
+const FORM_CTA = "לשיחת ייעוץ ללא תשלום";
+const STATEMENT = /^\s*(<h3>[\s\S]*?<\/h3>\s*<p>[\s\S]*?<\/p>)([\s\S]*)$/;
+
+type Band = { node: React.ReactNode; className?: string };
+
+/** Splits one block of a service page into bands. The text and its order stay as converted. */
+function serviceBands(html: string, page: Page): Band[] {
+  const parts = html.split(MARKER).filter((p) => p.trim());
+  const bands: Band[] = [];
+  let buffer = "";
+  const flush = () => {
+    if (buffer.trim()) bands.push({ node: <Blocks html={buffer} page={page} /> });
+    buffer = "";
+  };
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    const next = parts[i + 1] ?? "";
+    const marker = part.startsWith("<div data-");
+    const statement = marker ? null : part.match(STATEMENT);
+    if (!marker && !statement && next.startsWith("<div data-calc=")) {
+      flush();
+      bands.push({
+        node: (
+          <div className="split">
+            <div className="prose split-text reveal" dangerouslySetInnerHTML={{ __html: part }} />
+            <div className="split-side reveal">{next.startsWith('<div data-calc="roof"') ? <RoofCalculator /> : <WashCalculator />}</div>
+          </div>
+        ),
+      });
+      i++;
+    } else if (statement) {
+      flush();
+      bands.push({ className: "statement surface-navy cell-grid", node: <div className="prose reveal" dangerouslySetInnerHTML={{ __html: statement[1] }} /> });
+      buffer = statement[2];
+    } else {
+      buffer += part;
+    }
+  }
+  flush();
+  return bands;
 }
 
 function breadcrumbName(page: Page): string {
@@ -52,16 +100,26 @@ export default function PageSections({ page }: { page: Page }) {
   const lead = leadMatch && !/data-|<img/.test(leadMatch[1]) ? leadMatch[1] : "";
   if (lead) rest = rest.replace(leadMatch![0], "");
 
+  // On a service page that opens with a statement (an H2 right after the title), the statement joins the hero.
+  const service = SERVICE.has(page.slug);
+  const opening = service && !lead ? rest.match(/^\s*<h2>([\s\S]*?)<\/h2>/) : null;
+  if (opening) rest = rest.replace(opening[0], "");
+  const compare = service ? home?.gallery[1] : undefined;
+
   const blocks = rest.split(/(?=<h2>)/).filter((b) => b.trim());
   const plain = blocks.length > 6; // long documents (privacy policy) read better as one column
   const related = articles.filter((a) => a.relatedPages.includes(page.slug));
   const forms = page.forms as FormField[][];
 
-  const sections: React.ReactNode[] = [];
+  const sections: Band[] = [];
+  const add = (key: string, html: string) => {
+    if (service) sections.push(...serviceBands(html, page));
+    else sections.push({ node: <Blocks key={key} html={html} page={page} /> });
+  };
   blocks.forEach((block, i) => {
     const form = block.match(FORM);
     if (!form) {
-      sections.push(<Blocks key={i} html={block} page={page} />);
+      add(`${i}`, block);
       return;
     }
     const before = block.slice(0, form.index);
@@ -70,28 +128,37 @@ export default function PageSections({ page }: { page: Page }) {
     const onlyHeading = /^\s*<h2>[\s\S]*<\/h2>\s*$/.test(before);
     const body = onlyHeading ? "" : intro ? before.slice(0, intro.index) : before;
     const side = onlyHeading ? before : intro ? intro[1] : "";
-    if (body.trim()) sections.push(<Blocks key={`${i}-body`} html={body} page={page} />);
-    sections.push(
-      <div key={`${i}-form`} className="form-band" data-band="form">
+    if (body.trim()) add(`${i}-body`, body);
+    sections.push({ node: (
+      <div key={`${i}-form`} className="form-band" data-band="form" id={form[1] === "0" ? FORM_ID : undefined}>
         <div className="form-band-side prose" dangerouslySetInnerHTML={{ __html: side }} />
         <div className="form-card">
           <LeadForm fields={forms[Number(form[1])]} page={page.slug} />
         </div>
-      </div>,
-    );
-    if (after.trim()) sections.push(<Blocks key={`${i}-after`} html={after} page={page} />);
+      </div>
+    ) });
+    if (after.trim()) add(`${i}-after`, after);
   });
 
   return (
-    <main id="main" className={plain ? "inner inner--plain" : "inner"}>
+    <main id="main" className={plain ? "inner inner--plain" : service ? "inner inner--service" : "inner"}>
       <PageHero
         trail={[{ name: breadcrumbName(page) }]}
         titleHtml={h1?.[1] ?? breadcrumbName(page)}
         lead={lead ? <div dangerouslySetInnerHTML={{ __html: lead }} /> : undefined}
+        statementHtml={opening?.[1]}
+        actions={
+          service && forms.length > 0 ? (
+            <a href={`#${FORM_ID}`} className="btn btn--primary">
+              {FORM_CTA}
+            </a>
+          ) : undefined
+        }
+        aside={compare ? <BeforeAfter before={compare.before as Img} after={compare.after as Img} /> : undefined}
       />
       {sections.map((s, i) => (
-        <section key={i} className="page-section">
-          <div className="container-x">{s}</div>
+        <section key={i} className={s.className ? `page-section ${s.className}` : "page-section"}>
+          <div className="container-x">{s.node}</div>
         </section>
       ))}
       {related.length > 0 && (
@@ -118,6 +185,7 @@ export default function PageSections({ page }: { page: Page }) {
           </div>
         </section>
       )}
+      {service && forms.length > 0 && <FormJump target={FORM_ID} label={FORM_CTA} />}
     </main>
   );
 }

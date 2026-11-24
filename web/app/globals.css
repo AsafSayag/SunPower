@@ -545,3 +545,50 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .page-hero .breadcrumbs ol, .page-hero .breadcrumbs a { color: var(--steel-300); }
 .page-hero .breadcrumbs [aria-current="page"] { color: #fff; }
 @media (max-width: 47.99rem) { .ba--feature { aspect-ratio: 1; } }
+
+/* ============================================================
+   Service pages (inner--service): statement and comparison in the hero, text beside its
+   calculator, key statements as a dark band, a button that follows to the form.
+   ============================================================ */
+.page-hero--split > .container-x { display: grid; gap: clamp(1.75rem, 4vw, 3.5rem); align-items: center; grid-template-columns: 1fr; }
+@media (min-width: 62rem) { .page-hero--split > .container-x { grid-template-columns: 1.05fr 0.95fr; } }
+.page-hero-statement { font-family: var(--font-display), sans-serif; font-weight: 700; font-size: clamp(1.2rem, 2.2vw, 1.6rem); line-height: 1.4; color: #fff; text-wrap: balance; max-width: 34ch; margin-block-start: 1.25rem; padding-inline-start: 1rem; border-inline-start: 3px solid var(--accent-500); }
+.page-hero-statement strong { font-weight: inherit; }
+.page-hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-block-start: 1.75rem; }
+.page-hero-aside .ba { box-shadow: var(--shadow-lift); border-color: rgba(255, 255, 255, 0.28); }
+.page-hero-aside { animation-delay: 0.2s; }
+
+.split { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: start; grid-template-columns: 1fr; }
+@media (min-width: 62rem) { .split { grid-template-columns: minmax(0, 1fr) minmax(0, 27rem); } .split-side { position: sticky; top: 7rem; } }
+.split-text p { font-size: 1.15rem; line-height: 1.85; }
+.split-text p:first-child { margin-block-start: 0; }
+
+/* The calculator as a monitoring screen, in the language of the statistics panel on the home page */
+.split-side .calc { max-width: none; background: var(--navy-950); border-color: var(--navy-700); border-radius: 24px; box-shadow: var(--shadow-lift); isolation: isolate; }
+.split-side .calc::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background-image: linear-gradient(rgba(169, 192, 216, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(169, 192, 216, 0.08) 1px, transparent 1px); background-size: 28px 28px; mask-image: linear-gradient(#000, transparent 90%); }
+.split-side .calc h2 { color: #fff; }
+.split-side .calc p { color: #d7e3f1; }
+.split-side .calc-row input { accent-color: var(--accent-400); }
+.split-side .calc-row output { background: rgba(255, 255, 255, 0.06); border-color: rgba(169, 192, 216, 0.3); color: #fff; }
+.split-side .calc-scale { color: var(--steel-300); }
+.split-side .calc-result { color: var(--accent-400) !important; text-shadow: 0 0 22px rgba(154, 213, 143, 0.35); font-variant-numeric: tabular-nums; }
+.split-side .calc-note { border-color: rgba(169, 192, 216, 0.22); color: var(--steel-300); }
+
+.inner:not(.inner--plain) > .page-section.statement { background: var(--navy-900); padding-block: clamp(3.5rem, 8vw, 6.5rem); }
+.statement .prose { display: grid; gap: clamp(1.25rem, 4vw, 4rem); align-items: start; grid-template-columns: 1fr; }
+@media (min-width: 62rem) { .statement .prose { grid-template-columns: 0.9fr 1.1fr; } }
+.statement .prose h3 { font-size: clamp(1.75rem, 3.6vw, 2.75rem); line-height: 1.2; letter-spacing: -0.01em; color: #fff; margin: 0; text-wrap: balance; padding-block-end: 1.1rem; position: relative; }
+.statement .prose h3::after { content: ""; position: absolute; inset-inline-start: 0; inset-block-end: 0; width: 3.25rem; height: 3px; border-radius: 2px; background: var(--accent-500); }
+.statement .prose h3 strong { font-weight: inherit; }
+.statement .prose p { color: #d7e3f1; font-size: 1.1rem; line-height: 1.9; margin: 0; }
+.statement .prose p strong { color: #fff; }
+.statement .prose a:not(.btn) { color: #fff; }
+
+/* A link that stands alone after a gallery reads as the section's button */
+.inner--service .prose:has(> a:only-child) { text-align: center; }
+.inner--service .prose > a:only-child { text-decoration: none; border: 1.5px solid var(--navy-900); border-radius: 999px; padding: 0.8rem 1.75rem; transition: background 0.35s, color 0.35s, transform 0.35s var(--ease-brand); }
+@media (hover: hover) { .inner--service .prose > a:only-child:hover { background: var(--navy-900); color: #fff; transform: translateY(-2px); } }
+
+.form-jump { position: fixed; left: 1.25rem; bottom: 1.25rem; z-index: 54; display: inline-flex; align-items: center; min-height: 3.5rem; padding: 0 1.4rem; border-radius: 999px; background: var(--accent-500); border: 1.5px solid var(--accent-700); color: var(--navy-950); font-weight: 700; text-decoration: none; box-shadow: 0 14px 30px -12px rgba(14, 31, 56, 0.55); opacity: 0; visibility: hidden; transform: translateY(1rem); transition: opacity 0.35s, transform 0.35s var(--ease-brand), visibility 0.35s; }
+.form-jump[data-show="true"] { opacity: 1; visibility: visible; transform: none; }
+@media (max-width: 26rem) { .form-jump { min-height: 3.25rem; padding: 0 1.1rem; font-size: 1rem; } }
