@@ -196,10 +196,30 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .about-photo { position: relative; border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-card); aspect-ratio: 5 / 4; border: 1px solid var(--line); }
 .about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* ---------- Safety band ---------- */
-.safety { text-align: center; }
-.safety p { max-width: 48rem; margin-inline: auto; font-size: clamp(1.1rem, 2vw, 1.35rem); color: #d7e3f1; font-weight: 600; }
-.safety .heading-accent { margin-block-end: 1.25rem; }
+/* ---------- Safety: the team at work, filmed from the air (SafetyFilm) ---------- */
+.safety-film { position: relative; isolation: isolate; overflow: clip; background: var(--navy-950); color: #fff; min-height: clamp(34rem, 88svh, 46rem); display: flex; align-items: center; padding-block: clamp(4rem, 9vw, 7rem); }
+.safety-film > .container-x { width: 100%; }
+.safety-media { position: absolute; inset: 0; z-index: -1; overflow: clip; }
+.safety-media-inner { position: absolute; inset: -8% 0; will-change: translate; }
+.safety-media img, .safety-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 35% 40%; display: block; }
+.safety-media video { opacity: 0; transition: opacity 1s var(--ease-brand); }
+.safety-media video.is-playing { opacity: 1; }
+/* Shade: deep on the side of the text, clear over the team */
+.safety-film::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(to left, rgba(14, 31, 56, 0.95) 0%, rgba(14, 31, 56, 0.84) 32%, rgba(14, 31, 56, 0.3) 66%, rgba(14, 31, 56, 0.1) 100%), linear-gradient(to top, rgba(14, 31, 56, 0.55), transparent 32%); }
+.safety-body { max-width: 34rem; }
+.safety-body .h2 { color: #fff; font-size: clamp(2rem, 4.4vw, 3.25rem); line-height: 1.12; }
+.safety-body p { color: #e3ecf6; font-size: clamp(1.1rem, 1.7vw, 1.3rem); font-weight: 600; margin-block: 1.25rem 2rem; }
+.safety-points { display: grid; gap: 0.75rem; }
+.safety-points li { display: flex; align-items: center; gap: 0.9rem; padding: 0.8rem 1.1rem; border-radius: 16px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.24); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 1.12rem; transition: background 0.35s, border-color 0.35s, translate 0.35s var(--ease-brand); }
+.safety-points svg { width: 2.5rem; height: 2.5rem; flex: none; padding: 0.45rem; border-radius: 12px; background: var(--accent-500); fill: none; stroke: var(--navy-950); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+@media (hover: hover) { .safety-points li:hover { background: rgba(255, 255, 255, 0.18); border-color: var(--accent-400); translate: -6px 0; } }
+/* On a phone the film sits above the text instead of behind it, so the team stays in view */
+@media (max-width: 47.99rem) {
+  .safety-film { display: block; min-height: 0; padding-block: 62vw 3.5rem; }
+  .safety-media { inset: 0 0 auto 0; height: 84vw; }
+  .safety-media img, .safety-media video { object-position: 42% 40%; }
+  .safety-film::after { background: linear-gradient(to bottom, rgba(14, 31, 56, 0.3) 0, rgba(14, 31, 56, 0.05) 26vw, rgba(14, 31, 56, 0.75) 60vw, var(--navy-950) 82vw); }
+}
 
 /* ---------- Why us: four cells ---------- */
 .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-card); padding: 1.75rem 1.5rem; box-shadow: var(--shadow-card); position: relative; overflow: hidden; transition: transform 0.5s var(--ease-brand), box-shadow 0.5s var(--ease-brand), border-color 0.5s; }
@@ -366,10 +386,10 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .cookie-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-block-start: 0.9rem; }
 .cookie-actions .btn { padding: 0.7rem 1.2rem; font-size: 0.95rem; }
 
-/* ---------- Scroll reveal (progressive enhancement, no JavaScript) ---------- */
-@supports (animation-timeline: view()) {
-  .reveal { animation: revealRise linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
-}
+/* ---------- Scroll reveal (Motion.tsx adds rv to blocks below the screen, rv-in as they arrive) ---------- */
+.rv { opacity: 0; transform: translateY(30px); }
+:is(.about-photo, .gallery-item, .media-row > *, .ba-grid > *, .logos li).rv { transform: translateY(30px) scale(0.96); }
+.rv.rv-in { opacity: 1; transform: none; transition: opacity 0.8s var(--ease-brand), transform 0.9s var(--ease-brand); }
 
 /* ============================================================
    Inner pages
@@ -731,4 +751,59 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
   .sld-pulse { display: none; }
   .sld-wire::before, .sld-part svg, .sld-note::before, .sld-note::after, .chip svg path { animation: none; }
   .chip svg path { stroke-dashoffset: 0; }
+}
+
+/* ============================================================
+   Inner-page hero on a photo from the field (PageHero with `image`): the photo settles slowly
+   and drifts behind the text on scroll; the title sits low, on a shade that deepens toward it.
+   ============================================================ */
+.page-hero--photo { min-height: clamp(27rem, 72svh, 43rem); display: flex; align-items: flex-end; padding-block-end: clamp(2.5rem, 5vw, 4.25rem); background: var(--navy-950); }
+.page-hero--photo > .container-x { width: 100%; }
+@media (max-width: 47.99rem) { .page-hero--photo { min-height: clamp(24rem, 60svh, 34rem); } }
+.page-hero-media { position: absolute; inset: 0; z-index: -1; will-change: translate; }
+.page-hero-media img { width: 100%; height: 100%; object-fit: cover; display: block; animation: heroSettle 14s var(--ease-brand) both; }
+@keyframes heroSettle { from { scale: 1.16; } }
+.page-hero--photo::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(to top, rgba(14, 31, 56, 0.93) 0%, rgba(14, 31, 56, 0.66) 26%, rgba(14, 31, 56, 0.16) 58%, rgba(14, 31, 56, 0.1) 78%, rgba(14, 31, 56, 0.5) 100%), linear-gradient(to left, rgba(14, 31, 56, 0.42), transparent 62%); }
+.page-hero--photo .h1 { font-size: clamp(2.6rem, 6.4vw, 4.75rem); line-height: 1.05; max-width: 17ch; margin-block-start: 1rem; text-shadow: 0 2px 30px rgba(8, 19, 38, 0.5); }
+.page-hero--photo .page-hero-lead { max-width: 42rem; color: #e6eef7; text-shadow: 0 1px 14px rgba(8, 19, 38, 0.55); }
+.page-hero--photo .page-hero-meta { color: #d7e3f1; }
+/* The company's figures on a strip of glass */
+.page-hero-figures { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; max-width: 48rem; margin-block-start: 2rem; border: 1px solid rgba(255, 255, 255, 0.24); border-radius: 18px; overflow: hidden; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); animation-delay: 0.24s; }
+@media (min-width: 48rem) { .page-hero-figures { grid-template-columns: repeat(4, 1fr); } }
+.page-hero-figures li { display: grid; gap: 0.2rem; align-content: start; padding: 0.9rem 1rem 1rem; background: rgba(14, 31, 56, 0.62); }
+.fig-value { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.05; color: var(--accent-400); direction: ltr; unicode-bidi: isolate; text-align: right; font-variant-numeric: tabular-nums; }
+.fig-value small { font-size: 0.42em; font-weight: 700; color: #c3d3e6; letter-spacing: 0.04em; margin-inline-start: 0.35em; }
+.fig-label { font-size: 0.92rem; line-height: 1.3; color: #d7e3f1; }
+
+/* ============================================================
+   Small things: reading progress, page change, pointer light and hover on cards and pictures.
+   ============================================================ */
+.scroll-progress { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 60; pointer-events: none; opacity: 0; transition: opacity 0.4s; }
+.scroll-progress[data-on="true"] { opacity: 1; }
+.scroll-progress::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to left, var(--accent-700), var(--accent-400)); transform-origin: right center; transform: scaleX(var(--p, 0)); box-shadow: 0 0 10px rgba(120, 192, 108, 0.6); }
+
+.page-enter { animation: pageEnter 0.55s var(--ease-brand); }
+@keyframes pageEnter { from { opacity: 0; transform: translateY(14px); } }
+
+/* A photo in a frame drifts a little slower than the page (Motion.tsx moves it) */
+.about-photo img { scale: 1.12; }
+
+.job-card { position: relative; overflow: hidden; transition: transform 0.5s var(--ease-brand), box-shadow 0.5s var(--ease-brand), border-color 0.5s; }
+.logos li { transition: transform 0.4s var(--ease-brand), box-shadow 0.4s var(--ease-brand), border-color 0.4s; }
+.ba { transition: box-shadow 0.5s var(--ease-brand), translate 0.5s var(--ease-brand); }
+.ba-line::after { transition: scale 0.35s var(--ease-brand); }
+.media-row > * { overflow: hidden; border-radius: var(--radius-card); }
+.media-row img { transition: transform 0.9s var(--ease-brand); }
+.form-card { transition: box-shadow 0.4s var(--ease-brand), border-color 0.4s; }
+.form-card:focus-within { border-color: var(--steel-300); box-shadow: var(--shadow-lift); }
+:is(.card, .feature, .job-card) { isolation: isolate; }
+@media (hover: hover) {
+  .job-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lift); border-color: var(--steel-300); }
+  .logos li:hover { transform: translateY(-4px); box-shadow: var(--shadow-card); border-color: var(--steel-300); }
+  .gallery-item .ba:hover, .ba-grid .ba:hover { box-shadow: var(--shadow-lift); translate: 0 -4px; }
+  .ba:hover .ba-line::after { scale: 1.12; }
+  .media-row > *:hover img { transform: scale(1.05); }
+  /* A soft light under the pointer */
+  :is(.card, .feature, .job-card)::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(18rem circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent-400) 26%, transparent), transparent 70%); opacity: 0; transition: opacity 0.45s; }
+  :is(.card, .feature, .job-card):hover::before { opacity: 1; }
 }
