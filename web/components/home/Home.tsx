@@ -4,7 +4,8 @@ import LeadForm from "@/components/LeadForm";
 import Picture from "@/components/Picture";
 import BeforeAfter from "@/components/home/BeforeAfter";
 import HeroVideo from "@/components/home/HeroVideo";
-import StatsCube from "@/components/home/StatsCube";
+import SolarPanel3d from "@/components/home/SolarPanel3d";
+import WhySchematic from "@/components/home/WhySchematic";
 import type { FormField } from "@/lib/forms";
 import { footerGroups, headerContact, home as data, type Img } from "@/lib/site";
 
@@ -17,7 +18,7 @@ export default function Home({ fields }: { fields: FormField[] }) {
   return (
     <main id="main">
       <HeroVideo />
-      <section className="hero cell-grid" id="intro">
+      <section className="hero" id="intro">
         <div className="container-x hero-grid">
           <div>
             <h1 className="h1 reveal-immediate">{home.h1}</h1>
@@ -33,8 +34,8 @@ export default function Home({ fields }: { fields: FormField[] }) {
               )}
             </div>
           </div>
-          <div className="hero-cube">
-            <StatsCube stats={home.stats} />
+          <div className="hero-panel">
+            <SolarPanel3d stats={home.stats} />
           </div>
         </div>
       </section>
@@ -58,32 +59,14 @@ export default function Home({ fields }: { fields: FormField[] }) {
         </div>
       </section>
 
-      <section className="section surface-navy cell-grid safety">
+      <section className="section surface-navy safety">
         <div className="container-x reveal">
           <h2 className="h2 heading-accent heading-accent--center">{home.safety.title}</h2>
           <p>{home.safety.text}</p>
         </div>
       </section>
 
-      <section className="section surface-ice cell-grid">
-        <div className="container-x">
-          <div className="section-head section-head--center reveal">
-            <h2 className="h2 heading-accent heading-accent--center">{home.why.title}</h2>
-          </div>
-          <div className="why-grid">
-            {home.why.items.map((item, i) => (
-              <article key={item.title} className={i === 0 ? "tile tile--lead reveal" : "tile reveal"}>
-                {i === 0 && <Picture image={{ ...aboutPhoto, alt: "" }} sizes="(max-width: 62rem) 100vw, 40vw" className="tile-photo" />}
-                <div className="why-icon">
-                  <Picture image={item.image as Img} sizes="88px" />
-                </div>
-                <h3 className="h3">{item.title}</h3>
-                <p>{item.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <WhySchematic title={home.why.title} items={home.why.items} />
 
       <section className="section ba-section">
         <BeforeAfter before={home.gallery[0].before as Img} after={home.gallery[0].after as Img} heading="איך נראית עבודה יסודית" />
@@ -132,13 +115,13 @@ export default function Home({ fields }: { fields: FormField[] }) {
         </div>
       </section>
 
-      <section className="section surface-navy cell-grid">
+      <section className="section surface-navy">
         <div className="container-x">
           <CoverageMap />
         </div>
       </section>
 
-      <section className="section cell-grid" id="contact">
+      <section className="section" id="contact">
         <div className="container-x contact-grid">
           <div className="contact-side reveal">
             <h2 className="h2 heading-accent">{home.contact.title}</h2>

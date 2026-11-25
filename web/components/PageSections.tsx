@@ -69,7 +69,7 @@ function serviceBands(html: string, page: Page): Band[] {
       i++;
     } else if (statement) {
       flush();
-      bands.push({ className: "statement surface-navy cell-grid", node: <div className="prose reveal" dangerouslySetInnerHTML={{ __html: statement[1] }} /> });
+      bands.push({ className: "statement surface-navy", node: <div className="prose reveal" dangerouslySetInnerHTML={{ __html: statement[1] }} /> });
       buffer = statement[2];
     } else {
       buffer += part;
