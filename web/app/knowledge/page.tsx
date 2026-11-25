@@ -113,7 +113,7 @@ export default function KnowledgeHub() {
         </div>
       </section>
 
-      <section className="section surface-navy cell-grid">
+      <section className="section surface-navy">
         <div className="container-x">
           <CoverageMap />
         </div>
