@@ -4,10 +4,18 @@ import LeadForm from "@/components/LeadForm";
 import Picture from "@/components/Picture";
 import BeforeAfter from "@/components/home/BeforeAfter";
 import HeroVideo from "@/components/home/HeroVideo";
+import SafetyFilm from "@/components/home/SafetyFilm";
 import SolarPanel3d from "@/components/home/SolarPanel3d";
 import WhySchematic from "@/components/home/WhySchematic";
 import type { FormField } from "@/lib/forms";
 import { footerGroups, headerContact, home as data, type Img } from "@/lib/site";
+
+// The three commitments named in the safety sentence of the old site, each with its sign.
+const SAFETY_POINTS = [
+  { label: "צוות בטיחות פנימי", icon: "M12 3l7 3v5c0 4.5-2.9 8.3-7 10-4.1-1.7-7-5.5-7-10V6l7-3z M9 11.5l2.2 2.2L15.2 9.7" },
+  { label: "תיעוד מתמיד", icon: "M9 4h6l1 2h3v14H5V6h3l1-2z M9 12l2 2 4-4 M9 17h6" },
+  { label: "נהלי עבודה בגובה", icon: "M5 15.5a7 7 0 0 1 14 0 M3 15.5h18v2.5H3z M10 8.8V6.5h4v2.3" },
+];
 
 export default function Home({ fields }: { fields: FormField[] }) {
   const home = data!;
@@ -59,10 +67,25 @@ export default function Home({ fields }: { fields: FormField[] }) {
         </div>
       </section>
 
-      <section className="section surface-navy safety">
-        <div className="container-x reveal">
-          <h2 className="h2 heading-accent heading-accent--center">{home.safety.title}</h2>
-          <p>{home.safety.text}</p>
+      <section className="safety-film" aria-labelledby="safety-title">
+        <SafetyFilm />
+        <div className="container-x">
+          <div className="safety-body">
+            <h2 id="safety-title" className="h2 heading-accent reveal">
+              {home.safety.title}
+            </h2>
+            <p className="reveal">{home.safety.text}</p>
+            <ul className="safety-points">
+              {SAFETY_POINTS.map((p) => (
+                <li key={p.label} className="reveal">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d={p.icon} />
+                  </svg>
+                  {p.label}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 

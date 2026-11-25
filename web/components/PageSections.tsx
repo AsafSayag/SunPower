@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import FormJump from "@/components/FormJump";
 import Gallery, { type GalleryItem } from "@/components/Gallery";
 import LeadForm from "@/components/LeadForm";
-import PageHero from "@/components/PageHero";
+import PageHero, { type HeroFigure, type HeroImage } from "@/components/PageHero";
 import RoofCalculator from "@/components/RoofCalculator";
 import WashCalculator from "@/components/WashCalculator";
 import BeforeAfter from "@/components/home/BeforeAfter";
@@ -36,6 +36,22 @@ function Blocks({ html, page }: { html: string; page: Page }) {
 // Service pages laid out with the richer modules: opening statement and a comparison in the hero,
 // text beside its calculator, key statements as a dark band, and a button that follows to the form.
 const SERVICE = new Set(["שטיפת-מערכות-סולאריות"]);
+// The photo that opens each page, from the company's own drone footage. Pages not listed here
+// (the washing page with its comparison, and the legal documents) keep the drawn field of panels.
+const HERO: Record<string, HeroImage> = {
+  "אודות-החברה-1": { name: "reservoir-horizon", alt: "מערכת סולארית צפה על מאגר מים, צילום אווירי", focus: "50% 60%" },
+  "תחזוקה-כוללת1": { name: "roof-team", alt: "צוות סאן פאוור בקסדות ורתמות עובד על גג סולארי", focus: "40% 35%" },
+  "מערכת-שטיפה-אוטומטית": { name: "panels-close", alt: "שורות של פאנלים סולאריים, צילום אווירי מקרוב" },
+  "פרויקטים-נבחרים1": { name: "reservoir-wide", alt: "מערכת סולארית צפה על מאגר מים בין שדות, צילום אווירי" },
+  "יזמות-משותפת1": { name: "reservoir-grid", alt: "מערכת סולארית צפה רחבת היקף, צילום אווירי" },
+  "צרו-קשר-1": { name: "roof-wide", alt: "גג סולארי רחב עם צוות סאן פאוור בעבודה, צילום אווירי", focus: "12% 45%" },
+  "דרושים1": { name: "roof-wide", alt: "צוות סאן פאוור בעבודה על גג סולארי, צילום אווירי", focus: "12% 45%" },
+  "צוות-שטיפת-מערכות-סולאריות1": { name: "roof-team", alt: "צוות שטיפה של סאן פאוור על גג סולארי", focus: "40% 35%" },
+  "מנטר-מערכות-סולאריות": { name: "panels-close", alt: "שורות של פאנלים סולאריים, צילום אווירי מקרוב" },
+  "מנהלת-משרד1": { name: "reservoir-horizon", alt: "מערכת סולארית צפה על מאגר מים, צילום אווירי", focus: "50% 60%" },
+};
+// The about page opens with the company's four figures (the same ones the home page shows).
+const FIGURES = new Set(["אודות-החברה-1"]);
 const FORM_ID = "lead-form";
 const FORM_CTA = "לשיחת ייעוץ ללא תשלום";
 const STATEMENT = /^\s*(<h3>[\s\S]*?<\/h3>\s*<p>[\s\S]*?<\/p>)([\s\S]*)$/;
@@ -154,6 +170,8 @@ export default function PageSections({ page }: { page: Page }) {
             </a>
           ) : undefined
         }
+        image={HERO[page.slug]}
+        figures={FIGURES.has(page.slug) ? (home?.stats as HeroFigure[] | undefined) : undefined}
         aside={compare ? <BeforeAfter before={compare.before as Img} after={compare.after as Img} /> : undefined}
       />
       {sections.map((s, i) => (
