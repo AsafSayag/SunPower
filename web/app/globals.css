@@ -137,6 +137,8 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .has-sub > .nav-link::before { content: "▾"; font-size: 0.7em; margin-inline-end: 0.3rem; opacity: 0.6; }
 .sub-nav { position: absolute; inset-inline-start: 0; top: 100%; min-width: 15rem; padding: 0.5rem; background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-card); opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity 0.25s, transform 0.25s var(--ease-brand), visibility 0.25s; }
 .has-sub:hover .sub-nav, .has-sub:focus-within .sub-nav { opacity: 1; visibility: visible; transform: none; }
+/* Set by HeaderState after a pick in the menu; cleared once the pointer leaves the item. */
+@media (min-width: 62.01rem) { .has-sub[data-closed] .sub-nav { opacity: 0; visibility: hidden; transform: translateY(6px); } }
 .sub-nav a { display: block; padding: 0.55rem 0.75rem; border-radius: 9px; color: var(--navy-900); text-decoration: none; font-weight: 600; font-size: 0.98rem; }
 .sub-nav a:hover { background: var(--ice-050); }
 .header-actions { display: flex; align-items: center; gap: 0.75rem; }
