@@ -25,10 +25,14 @@ export default function BeforeAfter({ before, after, heading }: { before: Img; a
       frame = 0;
       if (manual.current) return;
       const rect = el.getBoundingClientRect();
-      const travel = rect.height - window.innerHeight;
+      // The stage is full height on wide screens and only as tall as its content on phones,
+      // where it sticks under the header: the scroll it stays pinned for is what is left over.
+      const stage = el.firstElementChild as HTMLElement;
+      const stick = parseFloat(getComputedStyle(stage).top) || 0;
+      const travel = rect.height - stage.offsetHeight;
       if (travel <= 0) return;
       // Clean a little before the picture is released, so the finished result holds for a moment.
-      const t = Math.min(1, Math.max(0, -rect.top / (travel * 0.88)));
+      const t = Math.min(1, Math.max(0, (stick - rect.top) / (travel * 0.88)));
       setPos(Math.round(96 * (1 - t)));
     };
     const schedule = () => {
