@@ -126,11 +126,11 @@ body {
 .site-header[data-scrolled="true"] .header-logo img { height: 2.2rem; }
 .site-header[data-scrolled="true"] .container-x { padding-inline: calc(clamp(12px, 2.5vw, 32px) + 1.5rem); max-width: calc(var(--container) + 3rem); }
 /* Over the opening film and the dark inner-page hero the header reads in white, with a soft shade behind it. */
-body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked))::before { opacity: 1; background: linear-gradient(to bottom, rgba(14, 31, 56, 0.6), rgba(14, 31, 56, 0.15) 70%, transparent); }
-body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) :is(.nav-link, .header-phone) { color: #fff; }
-body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .header-logo img { filter: brightness(0) invert(1); }
-body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.5); }
-body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span, body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span::before, body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span::after { background: #fff; }
+body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked))::before { opacity: 1; background: linear-gradient(to bottom, rgba(14, 31, 56, 0.6), rgba(14, 31, 56, 0.15) 70%, transparent); }
+body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) :is(.nav-link, .header-phone) { color: #fff; }
+body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .header-logo img { filter: brightness(0) invert(1); }
+body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.5); }
+body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span, body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span::before, body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span::after { background: #fff; }
 .header-row { display: flex; align-items: center; gap: 1.5rem; min-height: 4.75rem; }
 .header-logo img { width: auto; height: 2.75rem; display: block; }
 .main-nav { margin-inline-start: auto; }
@@ -821,4 +821,54 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
   /* A soft light under the pointer */
   :is(.card, .feature, .job-card)::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(18rem circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent-400) 26%, transparent), transparent 70%); opacity: 0; transition: opacity 0.45s; }
   :is(.card, .feature, .job-card):hover::before { opacity: 1; }
+}
+
+/* ---------- Contact page ----------
+   A field photo opens the page with the title and the ways to reach us on it; the form card starts
+   inside the photo and runs below it. The section is one grid so the overlap is a fixed row: the
+   photo ends at the bottom of row 3, the card starts at its top. The blocks keep their order in the
+   document (title, form, contact links); only their place on screen changes. */
+.contact-stage { --overlap: clamp(7rem, 16vw, 12rem); position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(var(--gutter), 1fr) minmax(0, calc(var(--container) - 2 * var(--gutter))) minmax(var(--gutter), 1fr); grid-template-rows: auto auto var(--overlap) auto; padding-block-end: var(--section-y); }
+.contact-photo { grid-column: 1 / -1; grid-row: 1 / 4; position: relative; z-index: -1; overflow: hidden; background: var(--navy-950); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - clamp(2.5rem, 6vw, 5rem))); }
+.contact-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; animation: heroSettle 14s var(--ease-brand) both; }
+.contact-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(14, 31, 56, 0.9), rgba(14, 31, 56, 0.82) 55%, rgba(14, 31, 56, 0.9)); }
+
+.contact-intro { grid-column: 2; grid-row: 1; text-align: center; padding-block-start: calc(var(--header-h) + clamp(2.5rem, 6vw, 4.5rem)); }
+.contact-intro .breadcrumbs ol { justify-content: center; }
+.contact-intro .breadcrumbs ol, .contact-intro .breadcrumbs a { color: var(--steel-300); }
+.contact-intro .breadcrumbs [aria-current="page"] { color: #fff; }
+.contact-intro .h1 { color: #fff; font-size: clamp(2.75rem, 6.4vw, 4.75rem); line-height: 1.05; margin-block-start: 1rem; text-shadow: 0 2px 30px rgba(8, 19, 38, 0.5); }
+
+/* The ways to reach us, on the photo: a centred title and a row of links each with a round sign */
+.contact-talk { grid-column: 2; grid-row: 2; text-align: center; padding-block: clamp(1.5rem, 4vw, 2.25rem) clamp(2rem, 5vw, 3rem); }
+.contact-talk h2 { color: #fff; font-size: clamp(1.3rem, 2.4vw, 1.6rem); margin-inline: auto; }
+.contact-talk h2::after { inset-inline-start: 50%; translate: 50% 0; }
+.contact-talk ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.85rem 2rem; margin: 0; max-width: none; }
+.contact-talk ul > li { padding: 0; }
+/* Stacked on narrow screens: one column, centred as a whole, with the signs in a line */
+@media (max-width: 47.99rem) { .contact-talk ul { display: grid; justify-content: center; justify-items: start; gap: 0.75rem; } }
+.contact-talk ul > li::before { content: none; }
+.contact-talk a:not(.btn) { display: inline-flex; align-items: center; gap: 0.7rem; color: #fff; text-decoration: none; font-size: 1.08rem; }
+.contact-talk a:not(.btn)::before { content: ""; flex: none; width: 2.75rem; height: 2.75rem; border-radius: 50%; background-color: var(--accent-500); background-image: var(--icon); background-repeat: no-repeat; background-position: center; background-size: 1.35rem; transition: transform 0.4s var(--ease-brand), background-color 0.3s; }
+@media (hover: hover) { .contact-talk a:not(.btn):hover::before { transform: translateY(-2px); background-color: var(--accent-400); } }
+.contact-talk a[href*="whatsapp"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e1f38' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20l1.3-3.9A8 8 0 1 1 8.1 19L4 20z'/%3E%3Cpath d='M9.2 8.6c.3 2.6 2.1 4.6 4.6 5.4l1-1.2 1.8.8-.4 1.6c-3.6.2-7.4-3.3-7.4-7.2l1.6-.4.8 1.8-1 .9'/%3E%3C/svg%3E"); }
+.contact-talk a[href^="mailto:"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e1f38' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='M3.5 7l8.5 6 8.5-6'/%3E%3C/svg%3E"); }
+.contact-talk a[href*="waze"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e1f38' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z'/%3E%3Ccircle cx='12' cy='10' r='2.6'/%3E%3C/svg%3E"); }
+.contact-talk a[href*="facebook"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e1f38' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 8H17V4.5h-2.5A3.5 3.5 0 0 0 11 8v3H8.5v3.5H11V21h3.5v-6.5H17l.5-3.5h-3V8z'/%3E%3C/svg%3E"); }
+
+/* The form card: starts on the photo, centred */
+.contact-card { grid-column: 2; grid-row: 3 / 5; justify-self: center; width: min(100%, 52rem); position: relative; z-index: 1; background: #fff; border: 1px solid var(--line); border-radius: 28px; padding: clamp(1.5rem, 4.5vw, 3.25rem); box-shadow: var(--shadow-lift); }
+.contact-card > .prose:first-child { margin-block-end: 1.75rem; }
+.contact-card .prose h2 { text-align: center; margin-inline: auto; }
+.contact-card .prose h2::after { inset-inline-start: 50%; translate: 50% 0; }
+.contact-card .lead-form { gap: 0.9rem; }
+/* Each field shows its placeholder only; the label text stays for screen readers. */
+.contact-card .lead-form label:not(.accept) { font-size: 0; gap: 0; }
+.contact-card .lead-form input:not([type="checkbox"]) { font-size: 1rem; border-radius: 999px; padding-inline: 1.15rem; }
+/* The phone field stays left-to-right so the number types in order, but sits on the right like the others. */
+.contact-card .lead-form input[type="tel"] { text-align: right; }
+.contact-card .lead-form button { width: 100%; }
+@media (min-width: 36rem) {
+  .contact-card .lead-form { grid-template-columns: 1fr 1fr; }
+  .contact-card .lead-form > :is(.accept, button, [role="status"]) { grid-column: 1 / -1; }
 }
