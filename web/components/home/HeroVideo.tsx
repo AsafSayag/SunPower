@@ -21,17 +21,24 @@ export default function HeroVideo() {
 
   return (
     <section className="hero-film" aria-label="צילומי אוויר של מערכות סולאריות">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/video/hero-poster-1600.webp"
-        srcSet="/video/hero-poster-800.webp 800w, /video/hero-poster-1600.webp 1600w"
-        sizes="100vw"
-        alt=""
-        width={1600}
-        height={900}
-        fetchPriority="high"
-        decoding="async"
-      />
+      {/* AVIF for current browsers, JPEG for the rest (this Mac's encoder cannot write WebP). */}
+      <picture>
+        <source
+          type="image/avif"
+          srcSet="/video/hero-poster-800.avif 800w, /video/hero-poster-1600.avif 1600w"
+          sizes="100vw"
+        />
+        <img
+          src="/video/hero-poster-1600.jpg"
+          srcSet="/video/hero-poster-800.jpg 800w, /video/hero-poster-1600.jpg 1600w"
+          sizes="100vw"
+          alt=""
+          width={1600}
+          height={900}
+          fetchPriority="high"
+          decoding="async"
+        />
+      </picture>
       {src && (
         <video
           ref={ref}

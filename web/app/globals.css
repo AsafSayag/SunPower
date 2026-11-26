@@ -33,6 +33,8 @@
   --ease-brand: cubic-bezier(0.2, 0.8, 0.2, 1);
   --container: 1200px;
   --gutter: clamp(1.25rem, 4vw, 3rem);
+  /* The one vertical rhythm of the site: the space at the top and bottom of every band. */
+  --section-y: clamp(3.5rem, 7vw, 5.5rem);
   --cell: 56px;
   --radius-card: 20px;
   --shadow-card: 0 18px 40px -24px rgba(14, 31, 56, 0.28);
@@ -78,12 +80,15 @@ body {
 
 /* ---------- Layout ---------- */
 .container-x { max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
-.section { padding-block: clamp(4rem, 8vw, 7rem); position: relative; isolation: isolate; }
+.section { padding-block: var(--section-y); position: relative; isolation: isolate; }
 .surface-ice { background: var(--ice-050); }
 .surface-navy { background: var(--navy-900); color: #fff; }
 .surface-navy .h2, .surface-navy .h3 { color: #fff; }
 .section-head { max-width: 46rem; margin-block-end: clamp(2rem, 4vw, 3.25rem); }
 .section-head--center { margin-inline: auto; text-align: center; }
+/* A band's padding alone sets the space at its edges: what sits first or last inside drops its outer margin. */
+:is(.section, .page-section) > .container-x:first-child > :first-child, .prose > :first-child { margin-block-start: 0; }
+:is(.section, .page-section) > .container-x:last-child > :last-child, .prose > :last-child, .prose > section:last-child > :last-child { margin-block-end: 0; }
 
 
 /* ---------- Buttons ---------- */
@@ -121,11 +126,11 @@ body {
 .site-header[data-scrolled="true"] .header-logo img { height: 2.2rem; }
 .site-header[data-scrolled="true"] .container-x { padding-inline: calc(clamp(12px, 2.5vw, 32px) + 1.5rem); max-width: calc(var(--container) + 3rem); }
 /* Over the opening film and the dark inner-page hero the header reads in white, with a soft shade behind it. */
-body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked))::before { opacity: 1; background: linear-gradient(to bottom, rgba(14, 31, 56, 0.6), rgba(14, 31, 56, 0.15) 70%, transparent); }
-body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) :is(.nav-link, .header-phone) { color: #fff; }
-body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .header-logo img { filter: brightness(0) invert(1); }
-body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.5); }
-body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span, body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span::before, body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span::after { background: #fff; }
+body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked))::before { opacity: 1; background: linear-gradient(to bottom, rgba(14, 31, 56, 0.6), rgba(14, 31, 56, 0.15) 70%, transparent); }
+body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) :is(.nav-link, .header-phone) { color: #fff; }
+body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .header-logo img { filter: brightness(0) invert(1); }
+body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.5); }
+body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span, body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span::before, body:has(:is(.hero-film, .page-hero, .contact-photo)) .site-header:not([data-scrolled="true"]):not(:has(.nav-toggle-input:checked)) .nav-toggle span::after { background: #fff; }
 .header-row { display: flex; align-items: center; gap: 1.5rem; min-height: 4.75rem; }
 .header-logo img { width: auto; height: 2.75rem; display: block; }
 .main-nav { margin-inline-start: auto; }
@@ -137,6 +142,8 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .has-sub > .nav-link::before { content: "▾"; font-size: 0.7em; margin-inline-end: 0.3rem; opacity: 0.6; }
 .sub-nav { position: absolute; inset-inline-start: 0; top: 100%; min-width: 15rem; padding: 0.5rem; background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-card); opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity 0.25s, transform 0.25s var(--ease-brand), visibility 0.25s; }
 .has-sub:hover .sub-nav, .has-sub:focus-within .sub-nav { opacity: 1; visibility: visible; transform: none; }
+/* Set by HeaderState after a pick in the menu; cleared once the pointer leaves the item. */
+@media (min-width: 62.01rem) { .has-sub[data-closed] .sub-nav { opacity: 0; visibility: hidden; transform: translateY(6px); } }
 .sub-nav a { display: block; padding: 0.55rem 0.75rem; border-radius: 9px; color: var(--navy-900); text-decoration: none; font-weight: 600; font-size: 0.98rem; }
 .sub-nav a:hover { background: var(--ice-050); }
 .header-actions { display: flex; align-items: center; gap: 0.75rem; }
@@ -173,7 +180,7 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 @keyframes hintBounce { 0%, 100% { translate: 0 -3px; } 50% { translate: 0 4px; } }
 
 /* ---------- Hero ---------- */
-.hero { padding-block: clamp(3rem, 7vw, 6rem) clamp(5.5rem, 9vw, 8rem); background: var(--ice-050); position: relative; isolation: isolate; overflow: clip; }
+.hero { padding-block: var(--section-y); background: var(--ice-050); position: relative; isolation: isolate; overflow: clip; }
 .hero-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; grid-template-columns: 1fr; }
 @media (min-width: 62rem) { .hero-grid { grid-template-columns: 1.05fr 1fr; } }
 .hero-tagline { font-size: clamp(1.15rem, 2vw, 1.45rem); color: var(--ink-700); margin-block: 1.25rem 2rem; max-width: 32rem; font-weight: 600; }
@@ -197,7 +204,7 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ---------- Safety: the team at work, filmed from the air (SafetyFilm) ---------- */
-.safety-film { position: relative; isolation: isolate; overflow: clip; background: var(--navy-950); color: #fff; min-height: clamp(34rem, 88svh, 46rem); display: flex; align-items: center; padding-block: clamp(4rem, 9vw, 7rem); }
+.safety-film { position: relative; isolation: isolate; overflow: clip; background: var(--navy-950); color: #fff; min-height: clamp(34rem, 88svh, 46rem); display: flex; align-items: center; padding-block: var(--section-y); }
 .safety-film > .container-x { width: 100%; }
 .safety-media { position: absolute; inset: 0; z-index: -1; overflow: clip; }
 .safety-media-inner { position: absolute; inset: -8% 0; will-change: translate; }
@@ -215,7 +222,7 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 @media (hover: hover) { .safety-points li:hover { background: rgba(255, 255, 255, 0.18); border-color: var(--accent-400); translate: -6px 0; } }
 /* On a phone the film sits above the text instead of behind it, so the team stays in view */
 @media (max-width: 47.99rem) {
-  .safety-film { display: block; min-height: 0; padding-block: 62vw 3.5rem; }
+  .safety-film { display: block; min-height: 0; padding-block: 62vw var(--section-y); }
   .safety-media { inset: 0 0 auto 0; height: 84vw; }
   .safety-media img, .safety-media video { object-position: 42% 40%; }
   .safety-film::after { background: linear-gradient(to bottom, rgba(14, 31, 56, 0.3) 0, rgba(14, 31, 56, 0.05) 26vw, rgba(14, 31, 56, 0.75) 60vw, var(--navy-950) 82vw); }
@@ -242,7 +249,7 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .ba-tag--after { inset-inline-start: 0.75rem; background: var(--accent-500); color: var(--navy-950); }
 /* Featured comparison: held in place while the scroll washes the panel (data-pin is set by the script,
    so without it, or with reduced motion, this is a plain section). */
-.ba-stage { padding-block-start: clamp(3.5rem, 7vw, 6rem); background: var(--white); }
+.ba-stage { padding-block-start: var(--section-y); background: var(--white); }
 .ba-stage > .container-x { width: 100%; }
 .ba-stage .section-head { margin-block-end: clamp(1.25rem, 2.5vw, 2rem); }
 .ba--feature { width: min(100%, 60rem); margin-inline: auto; box-shadow: var(--shadow-lift); }
@@ -252,6 +259,14 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 @media (min-width: 48rem) { .ba-pin[data-pin="true"] { height: calc(100svh + 85vh); } }
 .ba-pin[data-pin="true"] .ba-stage { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-block: calc(var(--header-h) + 1rem) 1.5rem; }
 .ba-pin[data-pin="true"] .ba--feature { width: min(100%, 60rem, calc((100svh - var(--header-h) - 11.5rem) * 1.5)); }
+/* On phones the comparison is far shorter than the screen; a full-height stage would leave a screen's
+   worth of empty space around it. There the stage is as tall as its content and sticks under the
+   header, and an empty block after it gives the scroll it stays pinned for. */
+@media (max-width: 47.99rem) {
+  .ba-pin[data-pin="true"] { height: auto; }
+  .ba-pin[data-pin="true"]::after { content: ""; display: block; height: 60vh; }
+  .ba-pin[data-pin="true"] .ba-stage { top: var(--header-h); height: auto; display: block; padding-block: var(--section-y) 1.5rem; }
+}
 
 /* ---------- Clients ---------- */
 .logos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-block-end: clamp(2.5rem, 5vw, 4rem); }
@@ -363,7 +378,7 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
    the field of panels runs along the bottom, and the sun already stands on the horizon. */
 .site-footer { background: linear-gradient(190deg, var(--navy-900), var(--navy-950) 60%); color: #c9d7e8; position: relative; isolation: isolate; overflow: clip; --ground: clamp(5rem, 10vw, 8rem); --horizon: calc(100% - var(--ground)); padding-block-end: var(--ground); }
 .site-footer .hero-sun { animation: none; }
-.footer-grid { display: grid; gap: 2.5rem 2rem; grid-template-columns: 1fr; padding-block: clamp(3rem, 6vw, 4.5rem) 2rem; }
+.footer-grid { display: grid; gap: 2.5rem 2rem; grid-template-columns: 1fr; padding-block: var(--section-y) 2rem; }
 @media (min-width: 48rem) { .footer-grid { grid-template-columns: 1.3fr repeat(3, 1fr); } }
 .footer-brand img { height: 3rem; width: auto; filter: brightness(0) invert(1); opacity: 0.95; }
 .footer-brand p { margin-block-start: 1rem; max-width: 20rem; font-size: 1rem; }
@@ -428,11 +443,11 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .breadcrumbs a { color: var(--ink-700); text-decoration: underline; text-decoration-color: var(--steel-300); text-underline-offset: 3px; }
 .breadcrumbs li + li::before { content: "‹"; margin-inline-end: 0.5rem; color: var(--steel-300); }
 
-.page-section { padding-block: clamp(2.75rem, 6vw, 5rem); position: relative; isolation: isolate; }
+.page-section { padding-block: var(--section-y); position: relative; isolation: isolate; }
 .inner:not(.inner--plain) > .page-section:nth-of-type(even) { background: var(--ice-050); }
 .inner--plain > .page-section { padding-block: clamp(1.25rem, 3vw, 2rem); }
-.inner--plain > .page-section:first-of-type { padding-block-start: clamp(2.5rem, 5vw, 4rem); }
-.inner--plain > .page-section:last-of-type { padding-block-end: clamp(3rem, 6vw, 5rem); }
+.inner--plain > .page-section:first-of-type { padding-block-start: var(--section-y); }
+.inner--plain > .page-section:last-of-type { padding-block-end: var(--section-y); }
 .page-section > .container-x > * + * { margin-block-start: clamp(1.5rem, 3vw, 2.5rem); }
 
 /* Running text converted from the old site */
@@ -585,7 +600,7 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .split-side .calc-result { color: var(--accent-400) !important; text-shadow: 0 0 22px rgba(154, 213, 143, 0.35); font-variant-numeric: tabular-nums; }
 .split-side .calc-note { border-color: rgba(169, 192, 216, 0.22); color: var(--steel-300); }
 
-.inner:not(.inner--plain) > .page-section.statement { background: var(--navy-900); padding-block: clamp(3.5rem, 8vw, 6.5rem); }
+.inner:not(.inner--plain) > .page-section.statement { background: var(--navy-900); }
 .statement .prose { display: grid; gap: clamp(1.25rem, 4vw, 4rem); align-items: start; grid-template-columns: 1fr; }
 @media (min-width: 62rem) { .statement .prose { grid-template-columns: 0.9fr 1.1fr; } }
 .statement .prose h3 { font-size: clamp(1.75rem, 3.6vw, 2.75rem); line-height: 1.2; letter-spacing: -0.01em; color: #fff; margin: 0; text-wrap: balance; padding-block-end: 1.1rem; position: relative; }
@@ -763,7 +778,7 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .page-hero-media { position: absolute; inset: 0; z-index: -1; will-change: translate; }
 .page-hero-media img { width: 100%; height: 100%; object-fit: cover; display: block; animation: heroSettle 14s var(--ease-brand) both; }
 @keyframes heroSettle { from { scale: 1.16; } }
-.page-hero--photo::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(to top, rgba(14, 31, 56, 0.93) 0%, rgba(14, 31, 56, 0.66) 26%, rgba(14, 31, 56, 0.16) 58%, rgba(14, 31, 56, 0.1) 78%, rgba(14, 31, 56, 0.5) 100%), linear-gradient(to left, rgba(14, 31, 56, 0.42), transparent 62%); }
+.page-hero--photo::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(to top, rgba(14, 31, 56, 0.95) 0%, rgba(14, 31, 56, 0.86) 30%, rgba(14, 31, 56, 0.6) 60%, rgba(14, 31, 56, 0.36) 80%, rgba(14, 31, 56, 0.6) 100%), linear-gradient(to left, rgba(14, 31, 56, 0.72), rgba(14, 31, 56, 0.42) 45%, transparent 80%); }
 .page-hero--photo .h1 { font-size: clamp(2.6rem, 6.4vw, 4.75rem); line-height: 1.05; max-width: 17ch; margin-block-start: 1rem; text-shadow: 0 2px 30px rgba(8, 19, 38, 0.5); }
 .page-hero--photo .page-hero-lead { max-width: 42rem; color: #e6eef7; text-shadow: 0 1px 14px rgba(8, 19, 38, 0.55); }
 .page-hero--photo .page-hero-meta { color: #d7e3f1; }
@@ -806,4 +821,54 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
   /* A soft light under the pointer */
   :is(.card, .feature, .job-card)::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(18rem circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent-400) 26%, transparent), transparent 70%); opacity: 0; transition: opacity 0.45s; }
   :is(.card, .feature, .job-card):hover::before { opacity: 1; }
+}
+
+/* ---------- Contact page ----------
+   A field photo opens the page with the title and the ways to reach us on it; the form card starts
+   inside the photo and runs below it. The section is one grid so the overlap is a fixed row: the
+   photo ends at the bottom of row 3, the card starts at its top. The blocks keep their order in the
+   document (title, form, contact links); only their place on screen changes. */
+.contact-stage { --overlap: clamp(7rem, 16vw, 12rem); position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(var(--gutter), 1fr) minmax(0, calc(var(--container) - 2 * var(--gutter))) minmax(var(--gutter), 1fr); grid-template-rows: auto auto var(--overlap) auto; padding-block-end: var(--section-y); }
+.contact-photo { grid-column: 1 / -1; grid-row: 1 / 4; position: relative; z-index: -1; overflow: hidden; background: var(--navy-950); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - clamp(2.5rem, 6vw, 5rem))); }
+.contact-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; animation: heroSettle 14s var(--ease-brand) both; }
+.contact-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(14, 31, 56, 0.9), rgba(14, 31, 56, 0.82) 55%, rgba(14, 31, 56, 0.9)); }
+
+.contact-intro { grid-column: 2; grid-row: 1; text-align: center; padding-block-start: calc(var(--header-h) + clamp(2.5rem, 6vw, 4.5rem)); }
+.contact-intro .breadcrumbs ol { justify-content: center; }
+.contact-intro .breadcrumbs ol, .contact-intro .breadcrumbs a { color: var(--steel-300); }
+.contact-intro .breadcrumbs [aria-current="page"] { color: #fff; }
+.contact-intro .h1 { color: #fff; font-size: clamp(2.75rem, 6.4vw, 4.75rem); line-height: 1.05; margin-block-start: 1rem; text-shadow: 0 2px 30px rgba(8, 19, 38, 0.5); }
+
+/* The ways to reach us, on the photo: a centred title and a row of links each with a round sign */
+.contact-talk { grid-column: 2; grid-row: 2; text-align: center; padding-block: clamp(1.5rem, 4vw, 2.25rem) clamp(2rem, 5vw, 3rem); }
+.contact-talk h2 { color: #fff; font-size: clamp(1.3rem, 2.4vw, 1.6rem); margin-inline: auto; }
+.contact-talk h2::after { inset-inline-start: 50%; translate: 50% 0; }
+.contact-talk ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.85rem 2rem; margin: 0; max-width: none; }
+.contact-talk ul > li { padding: 0; }
+/* Stacked on narrow screens: one column, centred as a whole, with the signs in a line */
+@media (max-width: 47.99rem) { .contact-talk ul { display: grid; justify-content: center; justify-items: start; gap: 0.75rem; } }
+.contact-talk ul > li::before { content: none; }
+.contact-talk a:not(.btn) { display: inline-flex; align-items: center; gap: 0.7rem; color: #fff; text-decoration: none; font-size: 1.08rem; }
+.contact-talk a:not(.btn)::before { content: ""; flex: none; width: 2.75rem; height: 2.75rem; border-radius: 50%; background-color: var(--accent-500); background-image: var(--icon); background-repeat: no-repeat; background-position: center; background-size: 1.35rem; transition: transform 0.4s var(--ease-brand), background-color 0.3s; }
+@media (hover: hover) { .contact-talk a:not(.btn):hover::before { transform: translateY(-2px); background-color: var(--accent-400); } }
+.contact-talk a[href*="whatsapp"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e1f38' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20l1.3-3.9A8 8 0 1 1 8.1 19L4 20z'/%3E%3Cpath d='M9.2 8.6c.3 2.6 2.1 4.6 4.6 5.4l1-1.2 1.8.8-.4 1.6c-3.6.2-7.4-3.3-7.4-7.2l1.6-.4.8 1.8-1 .9'/%3E%3C/svg%3E"); }
+.contact-talk a[href^="mailto:"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e1f38' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='M3.5 7l8.5 6 8.5-6'/%3E%3C/svg%3E"); }
+.contact-talk a[href*="waze"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e1f38' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z'/%3E%3Ccircle cx='12' cy='10' r='2.6'/%3E%3C/svg%3E"); }
+.contact-talk a[href*="facebook"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e1f38' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 8H17V4.5h-2.5A3.5 3.5 0 0 0 11 8v3H8.5v3.5H11V21h3.5v-6.5H17l.5-3.5h-3V8z'/%3E%3C/svg%3E"); }
+
+/* The form card: starts on the photo, centred */
+.contact-card { grid-column: 2; grid-row: 3 / 5; justify-self: center; width: min(100%, 52rem); position: relative; z-index: 1; background: #fff; border: 1px solid var(--line); border-radius: 28px; padding: clamp(1.5rem, 4.5vw, 3.25rem); box-shadow: var(--shadow-lift); }
+.contact-card > .prose:first-child { margin-block-end: 1.75rem; }
+.contact-card .prose h2 { text-align: center; margin-inline: auto; }
+.contact-card .prose h2::after { inset-inline-start: 50%; translate: 50% 0; }
+.contact-card .lead-form { gap: 0.9rem; }
+/* Each field shows its placeholder only; the label text stays for screen readers. */
+.contact-card .lead-form label:not(.accept) { font-size: 0; gap: 0; }
+.contact-card .lead-form input:not([type="checkbox"]) { font-size: 1rem; border-radius: 999px; padding-inline: 1.15rem; }
+/* The phone field stays left-to-right so the number types in order, but sits on the right like the others. */
+.contact-card .lead-form input[type="tel"] { text-align: right; }
+.contact-card .lead-form button { width: 100%; }
+@media (min-width: 36rem) {
+  .contact-card .lead-form { grid-template-columns: 1fr 1fr; }
+  .contact-card .lead-form > :is(.accept, button, [role="status"]) { grid-column: 1 / -1; }
 }

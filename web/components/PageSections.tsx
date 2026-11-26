@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Fragment } from "react";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import FormJump from "@/components/FormJump";
 import Gallery, { type GalleryItem } from "@/components/Gallery";
 import LeadForm from "@/components/LeadForm";
@@ -53,6 +54,52 @@ const HERO: Record<string, HeroImage> = {
 // The about page opens with the company's four figures (the same ones the home page shows).
 const FIGURES = new Set(["אודות-החברה-1"]);
 const FORM_ID = "lead-form";
+const CONTACT = "צרו-קשר-1";
+
+/** The contact page: a field photo opens it with the title and the ways to reach us on it, and the
+    form card starts on the photo and runs below it. The converted text and its order in the page stay
+    as they are; only where each block sits on the screen changes. */
+function ContactStage({ page, titleHtml, blocks, forms }: { page: Page; titleHtml: string; blocks: string[]; forms: FormField[][] }) {
+  const photo = HERO[page.slug];
+  return (
+    <main id="main" className="inner contact-page">
+      <section className="contact-stage">
+        <div className="contact-photo">
+          {photo && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={`/media/${photo.name}-1920.webp`}
+              srcSet={`/media/${photo.name}-960.webp 960w, /media/${photo.name}-1920.webp 1920w`}
+              sizes="100vw"
+              alt={photo.alt}
+              width={1920}
+              height={1080}
+              fetchPriority="high"
+              decoding="async"
+              style={photo.focus ? { objectPosition: photo.focus } : undefined}
+            />
+          )}
+        </div>
+        <div className="contact-intro">
+          <Breadcrumbs trail={[{ name: breadcrumbName(page) }]} />
+          <h1 className="h1 reveal-immediate" dangerouslySetInnerHTML={{ __html: titleHtml }} />
+        </div>
+        {blocks.map((block, i) => {
+          const form = block.match(FORM);
+          if (!form) return <div key={i} className="contact-talk prose reveal-immediate" dangerouslySetInnerHTML={{ __html: block }} />;
+          const after = block.slice(form.index! + form[0].length);
+          return (
+            <div key={i} className="contact-card reveal-immediate" id={form[1] === "0" ? FORM_ID : undefined}>
+              <div className="prose" dangerouslySetInnerHTML={{ __html: block.slice(0, form.index) }} />
+              <LeadForm fields={forms[Number(form[1])]} page={page.slug} />
+              {after.trim() && <div className="prose" dangerouslySetInnerHTML={{ __html: after }} />}
+            </div>
+          );
+        })}
+      </section>
+    </main>
+  );
+}
 const FORM_CTA = "לשיחת ייעוץ ללא תשלום";
 const STATEMENT = /^\s*(<h3>[\s\S]*?<\/h3>\s*<p>[\s\S]*?<\/p>)([\s\S]*)$/;
 
@@ -126,6 +173,10 @@ export default function PageSections({ page }: { page: Page }) {
   const plain = blocks.length > 6; // long documents (privacy policy) read better as one column
   const related = articles.filter((a) => a.relatedPages.includes(page.slug));
   const forms = page.forms as FormField[][];
+
+  if (page.slug === CONTACT) {
+    return <ContactStage page={page} titleHtml={h1?.[1] ?? breadcrumbName(page)} blocks={blocks} forms={forms} />;
+  }
 
   const sections: Band[] = [];
   const add = (key: string, html: string) => {

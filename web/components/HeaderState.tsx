@@ -25,8 +25,18 @@ export default function HeaderState() {
       if (toggle) toggle.checked = false;
     };
     // A tap on any header link closes the menu, including a link to the page already open.
+    // On desktop the services dropdown opens on hover and focus, so after a pick it would stay
+    // open under the pointer: drop focus and hold it closed until the pointer leaves the item.
     const onClick = (e: MouseEvent) => {
-      if ((e.target as Element).closest("a")) closeMenu();
+      const link = (e.target as Element).closest("a");
+      if (!link) return;
+      closeMenu();
+      const sub = link.closest<HTMLElement>(".has-sub");
+      if (sub) {
+        link.blur();
+        sub.dataset.closed = "";
+        sub.addEventListener("mouseleave", () => delete sub.dataset.closed, { once: true });
+      }
     };
     closeMenu(); // covers back/forward navigation while the menu was open
     update();
