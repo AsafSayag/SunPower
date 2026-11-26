@@ -765,7 +765,7 @@ body:has(:is(.hero-film, .page-hero)) .site-header:not([data-scrolled="true"]):n
 .page-hero-media { position: absolute; inset: 0; z-index: -1; will-change: translate; }
 .page-hero-media img { width: 100%; height: 100%; object-fit: cover; display: block; animation: heroSettle 14s var(--ease-brand) both; }
 @keyframes heroSettle { from { scale: 1.16; } }
-.page-hero--photo::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(to top, rgba(14, 31, 56, 0.93) 0%, rgba(14, 31, 56, 0.66) 26%, rgba(14, 31, 56, 0.16) 58%, rgba(14, 31, 56, 0.1) 78%, rgba(14, 31, 56, 0.5) 100%), linear-gradient(to left, rgba(14, 31, 56, 0.42), transparent 62%); }
+.page-hero--photo::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(to top, rgba(14, 31, 56, 0.95) 0%, rgba(14, 31, 56, 0.86) 30%, rgba(14, 31, 56, 0.6) 60%, rgba(14, 31, 56, 0.36) 80%, rgba(14, 31, 56, 0.6) 100%), linear-gradient(to left, rgba(14, 31, 56, 0.72), rgba(14, 31, 56, 0.42) 45%, transparent 80%); }
 .page-hero--photo .h1 { font-size: clamp(2.6rem, 6.4vw, 4.75rem); line-height: 1.05; max-width: 17ch; margin-block-start: 1rem; text-shadow: 0 2px 30px rgba(8, 19, 38, 0.5); }
 .page-hero--photo .page-hero-lead { max-width: 42rem; color: #e6eef7; text-shadow: 0 1px 14px rgba(8, 19, 38, 0.55); }
 .page-hero--photo .page-hero-meta { color: #d7e3f1; }
